@@ -1,3 +1,3 @@
 tasks:
   - init: cd approveman && npm install
-    command: cd approveman && npm run dev
+    command: source scripts/bash/get_credentials.sh 
