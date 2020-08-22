@@ -10,7 +10,7 @@ export = (app: Application) => {
     'pull_request.synchronize'
   ],
   async (context) => {
-    context.log.info('Pull request reopen event detected')
+    context.log.info('Pull request creation event detected')
     await maybeApproveChange(context)
   })
 }
