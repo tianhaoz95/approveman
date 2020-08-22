@@ -1,8 +1,8 @@
 import { Context } from 'probot' // eslint-disable-line no-unused-vars
 import Webhooks from 'probot/node_modules/@octokit/webhooks' // eslint-disable-line no-unused-vars
-import {UserInfo} from '../types' // eslint-disable-line no-unused-vars
-import {getOwnershipRules} from '../config_parser'
-import {ownsAllFiles} from '../rule_matcher'
+import { UserInfo } from '../types' // eslint-disable-line no-unused-vars
+import { getOwnershipRules } from '../config_parser'
+import { ownsAllFiles } from '../rule_matcher'
 
 function getPullAuthor (context: Context<Webhooks.WebhookPayloadPullRequest>): string {
   return context.payload.pull_request.user.login
