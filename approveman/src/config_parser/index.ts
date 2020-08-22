@@ -11,16 +11,16 @@ export function parseOwnershipRules (rules: any, context: Context<Webhooks.Webho
     const ownershipRulesData = rules.ownership_rules
     if ('directory_matching_rules' in ownershipRulesData) {
       context.log.info('Found directory_matching_rules in the config')
-      for (const directory_matching_rule of ownershipRulesData.directory_matching_rules) {
+      for (const rule of ownershipRulesData.directory_matching_rules) {
         const directoryMatchingRule: DirectoryMatchingRule = {
           name: 'Default directory matching rule name',
           path: 'Undefined'
         }
-        if ('name' in directory_matching_rule) {
-          directoryMatchingRule.name = directory_matching_rule.name
+        if ('name' in rule) {
+          directoryMatchingRule.name = rule.name
         }
-        if ('path' in directory_matching_rule) {
-          directoryMatchingRule.path = directory_matching_rule.path
+        if ('path' in rule) {
+          directoryMatchingRule.path = rule.path
         }
         ownershipRules.directoryMatchingRules.push(directoryMatchingRule)
       }

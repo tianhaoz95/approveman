@@ -1,0 +1,23 @@
+{
+  "action": "synchronize",
+  "number": 1,
+  "pull_request": {
+      "user": {
+          "login": "tianhaoz95"
+      },
+      "body": "",
+      "number": 1,
+      "draft": false
+  },
+  "repository": {
+      "name": "approveman-test",
+      "full_name": "tianhaoz95/approveman-test",
+      "private": false,
+      "owner": {
+          "login": "tianhaoz95"
+      }
+  },
+  "sender": {
+      "login": "tianhaoz95"
+  }
+}
