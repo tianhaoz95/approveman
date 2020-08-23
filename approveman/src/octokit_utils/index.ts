@@ -3,19 +3,20 @@ import Webhooks from 'probot/node_modules/@octokit/webhooks' // eslint-disable-l
 import { UserInfo, ReviewLookupResult } from '../types' // eslint-disable-line no-unused-vars
 import { getOwnershipRules } from '../config_parser'
 import { ownsAllFiles } from '../rule_matcher'
+import { composeReviewDismissalMsg } from '../msg_composer'
 
-function getPullAuthor (context: Context<Webhooks.WebhookPayloadPullRequest>): string {
+function getPullAuthor(context: Context<Webhooks.WebhookPayloadPullRequest>): string {
   return context.payload.pull_request.user.login
 }
 
-function getUserInfo (context: Context<Webhooks.WebhookPayloadPullRequest>): UserInfo {
+function getUserInfo(context: Context<Webhooks.WebhookPayloadPullRequest>): UserInfo {
   const info: UserInfo = {
     username: getPullAuthor(context)
   }
   return info
 }
 
-function initPullRelatedRequest (context: Context<Webhooks.WebhookPayloadPullRequest>): any {
+function initPullRelatedRequest(context: Context<Webhooks.WebhookPayloadPullRequest>): any {
   const pullNumber = context.payload.pull_request.number
   const repo = context.payload.repository.name
   const owner = context.payload.repository.owner.login
@@ -23,7 +24,7 @@ function initPullRelatedRequest (context: Context<Webhooks.WebhookPayloadPullReq
   return { pull_number: pullNumber, owner, repo }
 }
 
-async function reviewChange (context: Context<Webhooks.WebhookPayloadPullRequest>, action: string): Promise<void> {
+async function reviewChange(context: Context<Webhooks.WebhookPayloadPullRequest>, action: string): Promise<void> {
   const req = initPullRelatedRequest(context)
   if (action !== 'PENDING') {
     req.event = action
@@ -33,7 +34,7 @@ async function reviewChange (context: Context<Webhooks.WebhookPayloadPullRequest
   context.log.info(`Got response from GitHub with status: ${JSON.stringify(res.status)}`)
 }
 
-async function getChangedFiles (context: Context<Webhooks.WebhookPayloadPullRequest>) {
+async function getChangedFiles(context: Context<Webhooks.WebhookPayloadPullRequest>) {
   const changedFilesResponse = await context.github.pulls.listFiles(initPullRelatedRequest(context))
   const changedFiles: string[] = []
   for (const changedFileData of changedFilesResponse.data) {
@@ -43,7 +44,7 @@ async function getChangedFiles (context: Context<Webhooks.WebhookPayloadPullRequ
   return changedFiles
 }
 
-async function getPreviousReviewIds (context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<ReviewLookupResult> {
+async function getPreviousReviewIds(context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<ReviewLookupResult> {
   const reviewsResponse = await context.github.pulls.listReviews(initPullRelatedRequest(context))
   let hasReview: boolean = false
   const reviewIds: Number[] = []
@@ -58,16 +59,16 @@ async function getPreviousReviewIds (context: Context<Webhooks.WebhookPayloadPul
   return { hasReview, reviewIds }
 }
 
-async function dismissApproval (context: Context<Webhooks.WebhookPayloadPullRequest>, reviewId: Number): Promise<void> {
+async function dismissApproval(context: Context<Webhooks.WebhookPayloadPullRequest>, reviewId: Number): Promise<void> {
   const req = initPullRelatedRequest(context)
   req.review_id = reviewId
-  req.message = 'The approval is no longer valid'
+  req.message = composeReviewDismissalMsg()
   context.log.info('Try to dismiss the review')
   const dismissResponse = await context.github.pulls.dismissReview(req)
   context.log.info(`Dissmiss review #${reviewId} in PR #${req.pull_number} with status ${dismissResponse.status} and review state ${dismissResponse.data.state}`)
 }
 
-export async function dismissAllApprovals (context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
+export async function dismissAllApprovals(context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
   const reviewLookupResult = await getPreviousReviewIds(context)
   for (const reviewId of reviewLookupResult.reviewIds) {
     await dismissApproval(context, reviewId)
@@ -75,7 +76,7 @@ export async function dismissAllApprovals (context: Context<Webhooks.WebhookPayl
   context.log.info(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`)
 }
 
-export async function maybeApproveChange (context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
+export async function maybeApproveChange(context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
   const changedFiles = await getChangedFiles(context)
   context.log.info(`Files changed in the pull request are ${JSON.stringify(changedFiles)}`)
   const rules = await getOwnershipRules(context)

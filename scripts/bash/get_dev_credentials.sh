@@ -12,6 +12,6 @@ fi
 
 git clone https://${GITHUB_TOKEN}@github.com/tianhaoz95/approveman-credentials.git $CRED_LOCATION
 
-source $CRED_LOCATION/set_environment_variables.sh
+source $CRED_LOCATION/set_dev_environment_variables.sh
 
 echo "Please source this file instead of executing since it sets environment variables."
