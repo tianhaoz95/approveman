@@ -1,0 +1,1 @@
+web: cd approveman && npm run build && npm start
