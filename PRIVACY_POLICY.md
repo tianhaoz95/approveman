@@ -18,7 +18,7 @@ Although the app ask for read & write access to the contents, the app will never
 
 * Read access to [single file](https://developer.github.com/v3/apps/permissions/#permission-on-single-file): `.github/approveman.yml`
 
-The app can be configured by created a `.github/approveman.yml` file. The app does not have access to any other files in your repository.
+The app can be configured by created a `.github/approveman.yml` file. The app will not access any other files in your repository.
 
 ## Sharing of data with 3rd party services
 
