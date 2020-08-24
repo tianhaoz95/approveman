@@ -24,14 +24,20 @@ function initPullRelatedRequest(context: Context<Webhooks.WebhookPayloadPullRequ
   return { pull_number: pullNumber, owner, repo }
 }
 
-async function reviewChange(context: Context<Webhooks.WebhookPayloadPullRequest>, action: string): Promise<void> {
+async function approveChange(context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
   const req = initPullRelatedRequest(context)
-  if (action !== 'PENDING') {
-    req.event = action
-  }
+  req.event = 'APPROVE'
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`)
-  const res = await context.github.pulls.createReview(req)
-  context.log.info(`Got response from GitHub with status: ${JSON.stringify(res.status)}`)
+  try {
+    const res = await context.github.pulls.createReview(req)
+    if (res.status === 200) {
+      context.log.info('Approve changes succeeded.')
+    } else {
+      context.log.error(`Approve change rejected with: ${JSON.stringify(res.data)}`)
+    }
+  } catch (err) {
+    context.log.error(`Approve change failed with: ${JSON.stringify(err)}`)
+  }
 }
 
 async function getChangedFiles(context: Context<Webhooks.WebhookPayloadPullRequest>) {
@@ -83,7 +89,7 @@ export async function maybeApproveChange(context: Context<Webhooks.WebhookPayloa
   context.log.info(`Matching against rules: ${JSON.stringify(rules)}`)
   if (ownsAllFiles(rules.directoryMatchingRules, changedFiles, getUserInfo(context), context)) {
     context.log.info('The user owns all modified files, approve PR.')
-    await reviewChange(context, 'APPROVE')
+    await approveChange(context)
   } else {
     context.log.info('The user does not own all modified files. Undo previous approvals if any.')
     await dismissAllApprovals(context)
