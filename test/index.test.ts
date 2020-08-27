@@ -11,6 +11,7 @@ import {
 } from "./utils/review";
 import fs from "fs";
 import path from "path";
+import { StatusCodes } from "http-status-codes";
 
 jest.setTimeout(30000);
 
@@ -48,7 +49,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(200, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({ name: "pull_request", payload: prReopenedPayload });
   });
 
@@ -58,7 +59,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(200, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({
       name: "pull_request",
       payload: prSynchronizePayload,
@@ -71,7 +72,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(200, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({ name: "pull_request", payload: prOpenedPayload });
   });
 
@@ -81,7 +82,9 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(200, [{ filename: "docs/personal/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [
+        { filename: "docs/personal/tianhaoz95/test.md" },
+      ]);
     await probot.receive({ name: "pull_request", payload: prOpenedPayload });
   });
 
@@ -91,7 +94,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(200, [{ filename: "some/random/file.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
     setSinglePreviousReview();
     verifyReviewDismissed();
     await probot.receive({ name: "pull_request", payload: prOpenedPayload });
