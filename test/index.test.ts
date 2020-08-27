@@ -9,8 +9,8 @@ import {
   setSinglePreviousReview,
   verifyReviewDismissed,
 } from "./utils/review";
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 jest.setTimeout(30000);
 
@@ -28,9 +28,9 @@ describe("Approveman tests", () => {
   beforeAll((done: Function) => {
     fs.readFile(
       path.join(__dirname, "fixtures/mock-cert.pem"),
-      (err: Error, cert: string) => {
+      (err: NodeJS.ErrnoException | null, cert: Buffer) => {
         if (err) return done(err);
-        mockCert = cert;
+        mockCert = cert.toString();
         done();
       },
     );

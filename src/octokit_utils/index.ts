@@ -130,7 +130,7 @@ const dismissApproval = async function (
   reviewId: Number,
 ): Promise<void> {
   const req = initPullRelatedRequest(context);
-  req.review_id = reviewId;
+  req["review_id"] = reviewId;
   req.message = composeReviewDismissalMsg();
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
@@ -151,9 +151,9 @@ export const dismissAllApprovals = async function (
   context.log.info(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`);
 };
 
-export const maybeApproveChange = async function (
+export const maybeApproveChange = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): Promise<void> {
+): Promise<void> => {
   const startTime = new Date().toISOString();
   const changedFiles = await getChangedFiles(context);
   context.log.info(
