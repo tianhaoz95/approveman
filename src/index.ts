@@ -13,6 +13,6 @@ export = (app: Application) => {
     async (context) => {
       context.log.info("Pull request creation event detected");
       await maybeApproveChange(context);
-    }
+    },
   );
 };

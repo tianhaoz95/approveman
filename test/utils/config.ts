@@ -4,7 +4,7 @@ const path = require("path");
 
 export function setConfigToBasic(configId: string): void {
   const rawContent = fs.readFileSync(
-    path.join(__dirname, "..", "fixtures", "config", `${configId}.yml`)
+    path.join(__dirname, "..", "fixtures", "config", `${configId}.yml`),
   );
   const contentBuf = Buffer.from(rawContent);
   const encodedContent = contentBuf.toString("base64");

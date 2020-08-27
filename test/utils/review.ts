@@ -10,7 +10,7 @@ export function checkApproved(pullNumber: Number = 1): void {
           event: "APPROVE",
         });
         return true;
-      }
+      },
     )
     .reply(200);
 }
@@ -35,7 +35,7 @@ export function setSinglePreviousReview(): void {
 
 export function verifyReviewDismissed(
   reviewId: Number = 1,
-  pullNumber: Number = 1
+  pullNumber: Number = 1,
 ): void {
   nock("https://api.github.com")
     .put(
@@ -45,7 +45,7 @@ export function verifyReviewDismissed(
           message: composeReviewDismissalMsg(),
         });
         return true;
-      }
+      },
     )
     .reply(200);
 }

@@ -8,13 +8,13 @@ function matchRule(
   rule: DirectoryMatchingRule,
   filename: string,
   info: UserInfo,
-  context: Context<Webhooks.WebhookPayloadPullRequest>
+  context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): boolean {
   const renderedRule = Mustache.render(rule.path, info);
   context.log.info(`Rendered rules to ${renderedRule}`);
   const isMatch = minimatch(filename, renderedRule);
   context.log.info(
-    `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`
+    `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`,
   );
   return isMatch;
 }
@@ -23,7 +23,7 @@ function matchOneOfRules(
   rules: DirectoryMatchingRule[],
   filename: string,
   info: UserInfo,
-  context: Context<Webhooks.WebhookPayloadPullRequest>
+  context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): boolean {
   let matchOneOf = false;
   for (const rule of rules) {
@@ -38,7 +38,7 @@ export function ownsAllFiles(
   rules: DirectoryMatchingRule[],
   filenames: string[],
   info: UserInfo,
-  context: Context<Webhooks.WebhookPayloadPullRequest>
+  context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): boolean {
   let ownsAll = true;
   for (const filename of filenames) {

@@ -19,7 +19,7 @@
     "dev": "npm run build:watch",
     "start": "probot run ./lib/src/index.js",
     "lint": "prettier --write **.ts",
-    "format": "prettier --write .",
+    "format": "prettier --write **.ts **.json **.js",
     "test": "jest && prettier --check **.ts",
     "test:silent": "LOG_LEVEL=warn jest && prettier --check **.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"

@@ -32,7 +32,7 @@ describe("Approveman tests", () => {
         if (err) return done(err);
         mockCert = cert;
         done();
-      }
+      },
     );
   });
 
