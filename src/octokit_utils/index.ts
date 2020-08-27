@@ -61,7 +61,7 @@ async function createPassingStatus(context: Context<Webhooks.WebhookPayloadPullR
   })
   const response = await context.github.checks.create(statusOptions);
   context.log.info(`Create passing status finished with status ${response.status}`);
-  if (response.status !== 200) {
+  if (response.status !== 201) {
     context.log.error(`Create passing status failed with status ${response.status} and error: ${JSON.stringify(response.data)}`)
   }
 }
