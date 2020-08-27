@@ -1,5 +1,6 @@
 import nock from "nock";
 import { composeReviewDismissalMsg } from "../../src/msg_composer";
+import { StatusCodes } from "http-status-codes";
 
 export const checkApproved = (pullNumber: Number = 1): void => {
   nock("https://api.github.com")
@@ -12,23 +13,23 @@ export const checkApproved = (pullNumber: Number = 1): void => {
         return true;
       },
     )
-    .reply(200);
+    .reply(StatusCodes.OK);
 };
 
-export const setPreviousReviews = (reviews: any[]): void => {
+export const setPreviousReviews = (reviews: Object[]): void => {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/approveman-test/pulls/1/reviews")
-    .reply(200, reviews);
+    .reply(StatusCodes.OK, reviews);
 };
 
 export const setSinglePreviousReview = (): void => {
   setPreviousReviews([
     {
       id: 1,
+      state: "APPROVED",
       user: {
         login: "approveman[bot]",
       },
-      state: "APPROVED",
     },
   ]);
 };
@@ -47,5 +48,5 @@ export const verifyReviewDismissed = (
         return true;
       },
     )
-    .reply(200);
+    .reply(StatusCodes.OK);
 };
