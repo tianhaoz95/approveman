@@ -1,9 +1,10 @@
-import { Context } from 'probot' // eslint-disable-line no-unused-vars
+import { Context, Octokit } from 'probot' // eslint-disable-line no-unused-vars
 import Webhooks from 'probot/node_modules/@octokit/webhooks' // eslint-disable-line no-unused-vars
 import { UserInfo, ReviewLookupResult } from '../types' // eslint-disable-line no-unused-vars
 import { getOwnershipRules } from '../config_parser'
 import { ownsAllFiles } from '../rule_matcher'
 import { composeReviewDismissalMsg } from '../msg_composer'
+import { APP_CHECK_NAME } from '../config'
 
 function getPullAuthor(context: Context<Webhooks.WebhookPayloadPullRequest>): string {
   return context.payload.pull_request.user.login
@@ -37,6 +38,31 @@ async function approveChange(context: Context<Webhooks.WebhookPayloadPullRequest
     }
   } catch (err) {
     context.log.error(`Approve change failed with: ${JSON.stringify(err)}`)
+  }
+}
+
+async function createPassingStatus(context: Context<Webhooks.WebhookPayloadPullRequest>, startTime: string, endTime: string): Promise<void> {
+  const statusOptions: (Octokit.RequestOptions & Octokit.ChecksCreateParams) = context.repo({
+    name: APP_CHECK_NAME,
+    head_sha: context.payload.pull_request.head.sha,
+    status: 'completed',
+    started_at: startTime,
+    completed_at: endTime,
+    conclusion: 'success',
+    output: {
+      title: 'test',
+      summary: 'test',
+      text: 'test',
+    },
+    request: {
+      retries: 3,
+      retryAfter: 3,
+    },
+  })
+  const response = await context.github.checks.create(statusOptions);
+  context.log.info(`Create passing status finished with status ${response.status}`);
+  if (response.status !== 200) {
+    context.log.error(`Create passing status failed with status ${response.status} and error: ${JSON.stringify(response.data)}`)
   }
 }
 
@@ -83,6 +109,7 @@ export async function dismissAllApprovals(context: Context<Webhooks.WebhookPaylo
 }
 
 export async function maybeApproveChange(context: Context<Webhooks.WebhookPayloadPullRequest>): Promise<void> {
+  const startTime = new Date().toISOString()
   const changedFiles = await getChangedFiles(context)
   context.log.info(`Files changed in the pull request are ${JSON.stringify(changedFiles)}`)
   const rules = await getOwnershipRules(context)
@@ -90,6 +117,8 @@ export async function maybeApproveChange(context: Context<Webhooks.WebhookPayloa
   if (ownsAllFiles(rules.directoryMatchingRules, changedFiles, getUserInfo(context), context)) {
     context.log.info('The user owns all modified files, approve PR.')
     await approveChange(context)
+    const endTime = new Date().toISOString()
+    await createPassingStatus(context, startTime, endTime)
   } else {
     context.log.info('The user does not own all modified files. Undo previous approvals if any.')
     await dismissAllApprovals(context)
