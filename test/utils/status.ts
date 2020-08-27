@@ -1,5 +1,6 @@
 import nock from "nock";
 import { APP_CHECK_NAME } from "../../src/config";
+import { StatusCodes } from "http-status-codes";
 
 export const checkSuccessStatus = (): void => {
   nock("https://api.github.com")
@@ -11,5 +12,5 @@ export const checkSuccessStatus = (): void => {
       });
       return true;
     })
-    .reply(201);
+    .reply(StatusCodes.CREATED);
 };
