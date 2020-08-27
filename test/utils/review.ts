@@ -1,12 +1,12 @@
 import nock from 'nock'
 import { composeReviewDismissalMsg } from '../../src/msg_composer'
 
-export function checkApproved(done: jest.DoneCallback, pullNumber: Number = 1): void {
+export function checkApproved(pullNumber: Number = 1): void {
   nock('https://api.github.com')
     .post(`/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`, (body: any) => {
-      done(expect(body).toMatchObject({
+      expect(body).toMatchObject({
         event: 'APPROVE'
-      }))
+      })
       return true
     })
     .reply(200)
@@ -30,12 +30,12 @@ export function setSinglePreviousReview(): void {
   ])
 }
 
-export function verifyReviewDismissed(done: jest.DoneCallback, reviewId: Number = 1, pullNumber: Number = 1): void {
+export function verifyReviewDismissed(reviewId: Number = 1, pullNumber: Number = 1): void {
   nock('https://api.github.com')
     .put(`/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`, (body: any) => {
-      done(expect(body).toMatchObject({
+      expect(body).toMatchObject({
         message: composeReviewDismissalMsg()
-      }))
+      })
       return true
     })
     .reply(200)

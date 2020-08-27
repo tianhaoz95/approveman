@@ -20,6 +20,7 @@
     "start": "probot run ./lib/src/index.js",
     "lint": "standard **/*.ts --fix",
     "test": "jest && standard **/*.ts",
+    "test:silent": "LOG_LEVEL=warn jest && standard **/*.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {

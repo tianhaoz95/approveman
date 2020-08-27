@@ -1,9 +1,11 @@
 {
-    "action": "reopened",
     "number": 1,
     "pull_request": {
         "user": {
             "login": "tianhaoz95"
+        },
+        "head": {
+            "sha": "fake_sha"
         },
         "body": "",
         "number": 1,
@@ -20,4 +22,5 @@
     "sender": {
         "login": "tianhaoz95"
     }
-}
+  }
+  
