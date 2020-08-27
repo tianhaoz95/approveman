@@ -2,7 +2,7 @@ import nock from "nock";
 const fs = require("fs");
 const path = require("path");
 
-export function setConfigToBasic(configId: string): void {
+export const setConfigToBasic = function (configId: string): void {
   const rawContent = fs.readFileSync(
     path.join(__dirname, "..", "fixtures", "config", `${configId}.yml`),
   );
@@ -21,13 +21,13 @@ export function setConfigToBasic(configId: string): void {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/approveman-test/contents/.github/approveman.yml")
     .reply(404);
-}
+};
 
-export function setConfigNotFound(): void {
+export const setConfigNotFound = function (): void {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/.github/contents/.github/approveman.yml")
     .reply(404);
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/approveman-test/contents/.github/approveman.yml")
     .reply(404);
-}
+};

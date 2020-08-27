@@ -4,7 +4,7 @@ import { DirectoryMatchingRule, UserInfo } from "../types"; // eslint-disable-li
 import Mustache from "mustache";
 import minimatch from "minimatch";
 
-function matchRule(
+const matchRule = function (
   rule: DirectoryMatchingRule,
   filename: string,
   info: UserInfo,
@@ -17,9 +17,9 @@ function matchRule(
     `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`,
   );
   return isMatch;
-}
+};
 
-function matchOneOfRules(
+const matchOneOfRules = function (
   rules: DirectoryMatchingRule[],
   filename: string,
   info: UserInfo,
@@ -32,9 +32,9 @@ function matchOneOfRules(
     }
   }
   return matchOneOf;
-}
+};
 
-export function ownsAllFiles(
+export const ownsAllFiles = function (
   rules: DirectoryMatchingRule[],
   filenames: string[],
   info: UserInfo,
@@ -47,4 +47,4 @@ export function ownsAllFiles(
     }
   }
   return ownsAll;
-}
+};

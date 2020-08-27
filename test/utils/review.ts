@@ -1,7 +1,7 @@
 import nock from "nock";
 import { composeReviewDismissalMsg } from "../../src/msg_composer";
 
-export function checkApproved(pullNumber: Number = 1): void {
+export const checkApproved = function (pullNumber: Number = 1): void {
   nock("https://api.github.com")
     .post(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`,
@@ -13,15 +13,15 @@ export function checkApproved(pullNumber: Number = 1): void {
       },
     )
     .reply(200);
-}
+};
 
-export function setPreviousReviews(reviews: any[]): void {
+export const setPreviousReviews = function (reviews: any[]): void {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/approveman-test/pulls/1/reviews")
     .reply(200, reviews);
-}
+};
 
-export function setSinglePreviousReview(): void {
+export const setSinglePreviousReview = function (): void {
   setPreviousReviews([
     {
       id: 1,
@@ -31,9 +31,9 @@ export function setSinglePreviousReview(): void {
       state: "APPROVED",
     },
   ]);
-}
+};
 
-export function verifyReviewDismissed(
+export const verifyReviewDismissed = function (
   reviewId: Number = 1,
   pullNumber: Number = 1,
 ): void {
@@ -48,4 +48,4 @@ export function verifyReviewDismissed(
       },
     )
     .reply(200);
-}
+};

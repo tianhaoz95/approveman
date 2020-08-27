@@ -6,22 +6,22 @@ import { ownsAllFiles } from "../rule_matcher";
 import { composeReviewDismissalMsg } from "../msg_composer";
 import { APP_CHECK_NAME } from "../config";
 
-function getPullAuthor(
+const getPullAuthor = function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): string {
   return context.payload.pull_request.user.login;
-}
+};
 
-function getUserInfo(
+const getUserInfo = function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): UserInfo {
   const info: UserInfo = {
     username: getPullAuthor(context),
   };
   return info;
-}
+};
 
-function initPullRelatedRequest(
+const initPullRelatedRequest = function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): any {
   const pullNumber = context.payload.pull_request.number;
@@ -31,9 +31,9 @@ function initPullRelatedRequest(
     `Initializing pull related request with ${owner}/${repo} #${pullNumber}`,
   );
   return { pull_number: pullNumber, owner, repo };
-}
+};
 
-async function approveChange(
+const approveChange = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<void> {
   const req = initPullRelatedRequest(context);
@@ -51,9 +51,9 @@ async function approveChange(
   } catch (err) {
     context.log.error(`Approve change failed with: ${JSON.stringify(err)}`);
   }
-}
+};
 
-async function createPassingStatus(
+const createPassingStatus = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
   startTime: string,
   endTime: string,
@@ -87,9 +87,9 @@ async function createPassingStatus(
       } and error: ${JSON.stringify(response.data)}`,
     );
   }
-}
+};
 
-async function getChangedFiles(
+const getChangedFiles = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ) {
   const changedFilesResponse = await context.github.pulls.listFiles(
@@ -101,9 +101,9 @@ async function getChangedFiles(
   }
   context.log.info(`Changed files are: ${JSON.stringify(changedFiles)}`);
   return changedFiles;
-}
+};
 
-async function getPreviousReviewIds(
+const getPreviousReviewIds = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<ReviewLookupResult> {
   const reviewsResponse = await context.github.pulls.listReviews(
@@ -123,9 +123,9 @@ async function getPreviousReviewIds(
     }
   });
   return { hasReview, reviewIds };
-}
+};
 
-async function dismissApproval(
+const dismissApproval = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
   reviewId: Number,
 ): Promise<void> {
@@ -135,11 +135,13 @@ async function dismissApproval(
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
   context.log.info(
-    `Dissmiss review #${reviewId} in PR #${req.pull_number} with status ${dismissResponse.status} and review state ${dismissResponse.data.state}`,
+    `Dissmiss review #${reviewId} in PR #${req.pull_number} ` +
+      `with status ${dismissResponse.status} ` +
+      `and review state ${dismissResponse.data.state}`,
   );
-}
+};
 
-export async function dismissAllApprovals(
+export const dismissAllApprovals = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<void> {
   const reviewLookupResult = await getPreviousReviewIds(context);
@@ -147,9 +149,9 @@ export async function dismissAllApprovals(
     await dismissApproval(context, reviewId);
   }
   context.log.info(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`);
-}
+};
 
-export async function maybeApproveChange(
+export const maybeApproveChange = async function (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<void> {
   const startTime = new Date().toISOString();
@@ -178,4 +180,4 @@ export async function maybeApproveChange(
     await dismissAllApprovals(context);
     context.log.info("All previous approvals dismissed");
   }
-}
+};
