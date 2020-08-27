@@ -27,8 +27,9 @@ describe("Approveman tests", () => {
   let mockCert: string;
 
   beforeAll((done: Function) => {
+    const mockCertLocation = path.join(__dirname, "fixtures/mock-cert.pem");
     fs.readFile(
-      path.join(__dirname, "fixtures/mock-cert.pem"),
+      mockCertLocation,
       (err: NodeJS.ErrnoException | null, cert: Buffer) => {
         if (err) return done(err);
         mockCert = cert.toString();

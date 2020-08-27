@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 export const checkSuccessStatus = (): void => {
   nock("https://api.github.com")
-    .post("/repos/tianhaoz95/approveman-test/check-runs", (body: any) => {
+    .post("/repos/tianhaoz95/approveman-test/check-runs", (body: Object) => {
       expect(body).toMatchObject({
         conclusion: "success",
         name: APP_CHECK_NAME,

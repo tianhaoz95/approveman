@@ -6,7 +6,7 @@ export const checkApproved = (pullNumber: Number = 1): void => {
   nock("https://api.github.com")
     .post(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`,
-      (body: any) => {
+      (body: Object) => {
         expect(body).toMatchObject({
           event: "APPROVE",
         });
@@ -41,7 +41,7 @@ export const verifyReviewDismissed = (
   nock("https://api.github.com")
     .put(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,
-      (body: any) => {
+      (body: Object) => {
         expect(body).toMatchObject({
           message: composeReviewDismissalMsg(),
         });

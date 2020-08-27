@@ -30,7 +30,9 @@ const initPullRelatedRequest = function (
   context.log.info(
     `Initializing pull related request with ${owner}/${repo} #${pullNumber}`,
   );
-  return { pull_number: pullNumber, owner, repo };
+  let req: any = { owner, repo };
+  req["pull_number"] = pullNumber;
+  return req;
 };
 
 const approveChange = async (
@@ -60,21 +62,21 @@ const createPassingStatus = async (
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-    name: APP_CHECK_NAME,
-    head_sha: context.payload.pull_request.head.sha,
-    status: "completed",
-    started_at: startTime,
     completed_at: endTime,
     conclusion: "success",
+    head_sha: context.payload.pull_request.head.sha,
+    name: APP_CHECK_NAME,
     output: {
-      title: "test",
       summary: "test",
+      title: "test",
       text: "test",
     },
     request: {
       retries: 3,
       retryAfter: 3,
     },
+    status: "completed",
+    started_at: startTime,
   });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
