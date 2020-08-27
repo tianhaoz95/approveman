@@ -6,15 +6,15 @@ import { ownsAllFiles } from "../rule_matcher";
 import { composeReviewDismissalMsg } from "../msg_composer";
 import { APP_CHECK_NAME } from "../config";
 
-const getPullAuthor = function (
+const getPullAuthor = (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): string {
+): string => {
   return context.payload.pull_request.user.login;
 };
 
-const getUserInfo = function (
+const getUserInfo = (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): UserInfo {
+): UserInfo => {
   const info: UserInfo = {
     username: getPullAuthor(context),
   };
@@ -33,9 +33,9 @@ const initPullRelatedRequest = function (
   return { pull_number: pullNumber, owner, repo };
 };
 
-const approveChange = async function (
+const approveChange = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): Promise<void> {
+): Promise<void> => {
   const req = initPullRelatedRequest(context);
   req.event = "APPROVE";
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
@@ -53,11 +53,11 @@ const approveChange = async function (
   }
 };
 
-const createPassingStatus = async function (
+const createPassingStatus = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
   startTime: string,
   endTime: string,
-): Promise<void> {
+): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
     name: APP_CHECK_NAME,
@@ -89,9 +89,9 @@ const createPassingStatus = async function (
   }
 };
 
-const getChangedFiles = async function (
+const getChangedFiles = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-) {
+): Promise<string[]> => {
   const changedFilesResponse = await context.github.pulls.listFiles(
     initPullRelatedRequest(context),
   );
@@ -103,13 +103,13 @@ const getChangedFiles = async function (
   return changedFiles;
 };
 
-const getPreviousReviewIds = async function (
+const getPreviousReviewIds = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): Promise<ReviewLookupResult> {
+): Promise<ReviewLookupResult> => {
   const reviewsResponse = await context.github.pulls.listReviews(
     initPullRelatedRequest(context),
   );
-  let hasReview: boolean = false;
+  let hasReview = false;
   const reviewIds: Number[] = [];
   context.log.info(`Found ${reviewsResponse.data.length} reviews`);
   reviewsResponse.data.forEach((review) => {
@@ -125,10 +125,10 @@ const getPreviousReviewIds = async function (
   return { hasReview, reviewIds };
 };
 
-const dismissApproval = async function (
+const dismissApproval = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
   reviewId: Number,
-): Promise<void> {
+): Promise<void> => {
   const req = initPullRelatedRequest(context);
   req["review_id"] = reviewId;
   req.message = composeReviewDismissalMsg();
@@ -141,9 +141,9 @@ const dismissApproval = async function (
   );
 };
 
-export const dismissAllApprovals = async function (
+export const dismissAllApprovals = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): Promise<void> {
+): Promise<void> => {
   const reviewLookupResult = await getPreviousReviewIds(context);
   for (const reviewId of reviewLookupResult.reviewIds) {
     await dismissApproval(context, reviewId);

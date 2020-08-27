@@ -2,10 +2,10 @@ import { Context } from "probot"; // eslint-disable-line no-unused-vars
 import Webhooks from "probot/node_modules/@octokit/webhooks"; // eslint-disable-line no-unused-vars
 import { OwnershipRules, DirectoryMatchingRule } from "../types"; // eslint-disable-line no-unused-vars
 
-export const parseOwnershipRules = function (
+export const parseOwnershipRules = (
   rules: any,
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): OwnershipRules {
+): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
     directoryMatchingRules: [],
   };
@@ -32,7 +32,7 @@ export const parseOwnershipRules = function (
   return ownershipRules;
 };
 
-const getDefaultOwnershipRules = function (): OwnershipRules {
+const getDefaultOwnershipRules = (): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
     directoryMatchingRules: [
       {
@@ -44,9 +44,9 @@ const getDefaultOwnershipRules = function (): OwnershipRules {
   return ownershipRules;
 };
 
-export const getOwnershipRules = async function (
+export const getOwnershipRules = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): Promise<OwnershipRules> {
+): Promise<OwnershipRules> => {
   const config = await context.config("approveman.yml");
   context.log.info(`Found config: ${JSON.stringify(config)}`);
   if (config !== null) {

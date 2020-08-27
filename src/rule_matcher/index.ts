@@ -4,12 +4,12 @@ import { DirectoryMatchingRule, UserInfo } from "../types"; // eslint-disable-li
 import Mustache from "mustache";
 import minimatch from "minimatch";
 
-const matchRule = function (
+const matchRule = (
   rule: DirectoryMatchingRule,
   filename: string,
   info: UserInfo,
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): boolean {
+): boolean => {
   const renderedRule = Mustache.render(rule.path, info);
   context.log.info(`Rendered rules to ${renderedRule}`);
   const isMatch = minimatch(filename, renderedRule);
@@ -19,12 +19,12 @@ const matchRule = function (
   return isMatch;
 };
 
-const matchOneOfRules = function (
+const matchOneOfRules = (
   rules: DirectoryMatchingRule[],
   filename: string,
   info: UserInfo,
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): boolean {
+): boolean => {
   let matchOneOf = false;
   for (const rule of rules) {
     if (matchRule(rule, filename, info, context)) {
@@ -34,12 +34,12 @@ const matchOneOfRules = function (
   return matchOneOf;
 };
 
-export const ownsAllFiles = function (
+export const ownsAllFiles = (
   rules: DirectoryMatchingRule[],
   filenames: string[],
   info: UserInfo,
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): boolean {
+): boolean => {
   let ownsAll = true;
   for (const filename of filenames) {
     if (!matchOneOfRules(rules, filename, info, context)) {

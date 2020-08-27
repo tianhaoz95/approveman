@@ -1,8 +1,8 @@
 import nock from "nock";
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-export const setConfigToBasic = function (configId: string): void {
+export const setConfigToBasic = (configId: string): void => {
   const rawContent = fs.readFileSync(
     path.join(__dirname, "..", "fixtures", "config", `${configId}.yml`),
   );
@@ -23,7 +23,7 @@ export const setConfigToBasic = function (configId: string): void {
     .reply(404);
 };
 
-export const setConfigNotFound = function (): void {
+export const setConfigNotFound = (): void => {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/.github/contents/.github/approveman.yml")
     .reply(404);
