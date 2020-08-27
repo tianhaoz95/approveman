@@ -18,9 +18,10 @@
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
     "start": "probot run ./lib/src/index.js",
-    "lint": "standard **/*.ts --fix",
-    "test": "jest && standard **/*.ts",
-    "test:silent": "LOG_LEVEL=warn jest && standard **/*.ts",
+    "lint": "prettier --write **.ts",
+    "format": "prettier --write .",
+    "test": "jest && prettier --check **.ts",
+    "test:silent": "LOG_LEVEL=warn jest && prettier --check **.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
@@ -39,6 +40,7 @@
     "jest": "^24.9.0",
     "nock": "^12.0.0",
     "nodemon": "^2.0.0",
+    "prettier": "^2.1.1",
     "smee-client": "^1.1.0",
     "standard": "^14.3.1",
     "ts-jest": "^25.1.0",

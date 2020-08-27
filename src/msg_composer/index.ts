@@ -1,3 +1,3 @@
 export function composeReviewDismissalMsg(): string {
-    return 'The approval is no longer valid.'
+  return "The approval is no longer valid.";
 }
