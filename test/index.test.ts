@@ -56,7 +56,10 @@ describe("Approveman tests", () => {
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
-    await probot.receive({ name: "pull_request", payload: prReopenedPayload });
+    await probot.receive({
+      name: "pull_request",
+      payload: prReopenedPayload,
+    });
   });
 
   test("receive PR synchronize", async () => {
@@ -79,7 +82,10 @@ describe("Approveman tests", () => {
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
-    await probot.receive({ name: "pull_request", payload: prOpenedPayload });
+    await probot.receive({
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
   });
 
   test("read config", async () => {
@@ -91,7 +97,10 @@ describe("Approveman tests", () => {
       .reply(StatusCodes.OK, [
         { filename: "docs/personal/tianhaoz95/test.md" },
       ]);
-    await probot.receive({ name: "pull_request", payload: prOpenedPayload });
+    await probot.receive({
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
   });
 
   test("rules not satisfied", async () => {
@@ -103,7 +112,10 @@ describe("Approveman tests", () => {
       .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
     setSinglePreviousReview();
     verifyReviewDismissed();
-    await probot.receive({ name: "pull_request", payload: prOpenedPayload });
+    await probot.receive({
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
   });
 
   afterEach(() => {
