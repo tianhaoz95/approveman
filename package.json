@@ -52,7 +52,7 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-typescript": "^0.14.0",
     "jest": "^26.4.2",
-    "nock": "^12.0.0",
+    "nock": "^13.0.4",
     "nodemon": "^2.0.0",
     "prettier": "^2.1.1",
     "remark-cli": "^8.0.1",
