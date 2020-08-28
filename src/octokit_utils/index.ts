@@ -1,5 +1,4 @@
 import { Context, Octokit } from "probot"; // eslint-disable-line no-unused-vars
-import Webhooks from "probot/node_modules/@octokit/webhooks"; // eslint-disable-line no-unused-vars
 import { UserInfo, ReviewLookupResult } from "../types"; // eslint-disable-line no-unused-vars
 import { getOwnershipRules } from "../config_parser";
 import { ownsAllFiles } from "../rule_matcher";
@@ -8,13 +7,13 @@ import { APP_CHECK_NAME } from "../config";
 import { StatusCodes } from "http-status-codes";
 
 const getPullAuthor = (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): string => {
   return context.payload.pull_request.user.login;
 };
 
 const getUserInfo = (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): UserInfo => {
   const info: UserInfo = {
     username: getPullAuthor(context),
@@ -23,7 +22,7 @@ const getUserInfo = (
 };
 
 const initPullRelatedRequest = (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Record<string, unknown> => {
   const pullNumber = context.payload.pull_request.number;
   const repo = context.payload.repository.name;
@@ -37,7 +36,7 @@ const initPullRelatedRequest = (
 };
 
 const approveChange = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Promise<void> => {
   const req = (initPullRelatedRequest(
     context,
@@ -60,7 +59,7 @@ const approveChange = async (
 };
 
 const createPassingStatus = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
   startTime: string,
   endTime: string,
 ): Promise<void> => {
@@ -96,7 +95,7 @@ const createPassingStatus = async (
 };
 
 const getChangedFiles = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Promise<string[]> => {
   const req = (initPullRelatedRequest(
     context,
@@ -112,7 +111,7 @@ const getChangedFiles = async (
 };
 
 const getPreviousReviewIds = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Promise<ReviewLookupResult> => {
   const req = (initPullRelatedRequest(
     context,
@@ -136,7 +135,7 @@ const getPreviousReviewIds = async (
 };
 
 const dismissApproval = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
   reviewId: number,
 ): Promise<void> => {
   const pullReq = initPullRelatedRequest(context) as Record<string, string>;
@@ -154,7 +153,7 @@ const dismissApproval = async (
 };
 
 export const dismissAllApprovals = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Promise<void> => {
   const reviewLookupResult = await getPreviousReviewIds(context);
   for (const reviewId of reviewLookupResult.reviewIds) {
@@ -164,7 +163,7 @@ export const dismissAllApprovals = async (
 };
 
 export const maybeApproveChange = async (
-  context: Context<Webhooks.WebhookPayloadPullRequest>,
+  context: Context,
 ): Promise<void> => {
   const startTime = new Date().toISOString();
   const changedFiles = await getChangedFiles(context);
