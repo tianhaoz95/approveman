@@ -16,15 +16,15 @@ import { TEST_TIMEOUT } from "./utils/jest";
 
 jest.setTimeout(TEST_TIMEOUT);
 
-const prOpenedPayload: any = prGeneric;
-prOpenedPayload.action = "opened";
-const prReopenedPayload: any = prGeneric;
-prOpenedPayload.action = "reopened";
-const prSynchronizePayload: any = prGeneric;
-prOpenedPayload.action = "synchronize";
+const prOpenedPayload: Record<string, unknown> = prGeneric;
+prOpenedPayload["action"] = "opened";
+const prReopenedPayload: Record<string, unknown> = prGeneric;
+prOpenedPayload["action"] = "reopened";
+const prSynchronizePayload: Record<string, unknown> = prGeneric;
+prOpenedPayload["action"] = "synchronize";
 
 describe("Approveman tests", () => {
-  let probot: any;
+  let probot: Probot;
   let mockCert: string;
 
   beforeAll((done: jest.DoneCallback) => {
@@ -57,6 +57,7 @@ describe("Approveman tests", () => {
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({
+      id: "test_id",
       name: "pull_request",
       payload: prReopenedPayload,
     });
@@ -70,6 +71,7 @@ describe("Approveman tests", () => {
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({
+      id: "test_id",
       name: "pull_request",
       payload: prSynchronizePayload,
     });
@@ -83,6 +85,7 @@ describe("Approveman tests", () => {
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
     await probot.receive({
+      id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
     });
@@ -98,6 +101,7 @@ describe("Approveman tests", () => {
         { filename: "docs/personal/tianhaoz95/test.md" },
       ]);
     await probot.receive({
+      id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
     });
@@ -113,6 +117,7 @@ describe("Approveman tests", () => {
     setSinglePreviousReview();
     verifyReviewDismissed();
     await probot.receive({
+      id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
     });
