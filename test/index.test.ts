@@ -12,8 +12,9 @@ import {
 import fs from "fs";
 import path from "path";
 import { StatusCodes } from "http-status-codes";
+import { TEST_TIMEOUT } from "./utils/jest";
 
-jest.setTimeout(30000);
+jest.setTimeout(TEST_TIMEOUT);
 
 const prOpenedPayload: any = prGeneric;
 prOpenedPayload.action = "opened";
@@ -28,10 +29,13 @@ describe("Approveman tests", () => {
 
   beforeAll((done: Function) => {
     const mockCertLocation = path.join(__dirname, "fixtures/mock-cert.pem");
+    /* eslint-disable detect-non-literal-fs-filename */
     fs.readFile(
       mockCertLocation,
       (err: NodeJS.ErrnoException | null, cert: Buffer) => {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
         mockCert = cert.toString();
         done();
       },

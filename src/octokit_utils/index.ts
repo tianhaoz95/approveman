@@ -21,16 +21,16 @@ const getUserInfo = (
   return info;
 };
 
-const initPullRelatedRequest = function (
+const initPullRelatedRequest = (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): any {
+): any => {
   const pullNumber = context.payload.pull_request.number;
   const repo = context.payload.repository.name;
   const owner = context.payload.repository.owner.login;
   context.log.info(
     `Initializing pull related request with ${owner}/${repo} #${pullNumber}`,
   );
-  let req: any = { owner, repo };
+  const req: any = { owner, repo };
   req["pull_number"] = pullNumber;
   return req;
 };
@@ -68,15 +68,15 @@ const createPassingStatus = async (
     name: APP_CHECK_NAME,
     output: {
       summary: "test",
-      title: "test",
       text: "test",
+      title: "test",
     },
     request: {
       retries: 3,
       retryAfter: 3,
     },
-    status: "completed",
     started_at: startTime,
+    status: "completed",
   });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
