@@ -11,7 +11,6 @@ If you choose to use the app, then you agree to the collection and use of inform
 When installing the the app you grant it access to the following three scopes
 
 -   Read & write access to [pull requests](https://developer.github.com/v3/apps/permissions/#permission-on-pull-requests): the app needs read access to check the files changed in the pull requests and write access to approve the changes when necessary.
-
 -   Read & write access to [contents](https://developer.github.com/v3/apps/permissions/#permission-on-contents)
 
 Although the app ask for read & write access to the contents, the app will never read or write to the contents. The read & write access to contents is required for the reviews that the app sends out to take effect on protected branches. For more details, see ["About required reviews for pull requests"](https://docs.github.com/en/github/administering-a-repository/about-required-reviews-for-pull-requests).
