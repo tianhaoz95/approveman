@@ -9,4 +9,4 @@ A GitHub App that automatically approve specified changes.
 
 ## Testing
 
-https://github.com/tianhaoz95/approveman-test
+<https://github.com/tianhaoz95/approveman-test>
