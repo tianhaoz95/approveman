@@ -23,14 +23,14 @@ const getUserInfo = (
 
 const initPullRelatedRequest = (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-): any => {
+): Record<string, unknown> => {
   const pullNumber = context.payload.pull_request.number;
   const repo = context.payload.repository.name;
   const owner = context.payload.repository.owner.login;
   context.log.info(
     `Initializing pull related request with ${owner}/${repo} #${pullNumber}`,
   );
-  const req: any = { owner, repo };
+  const req: Record<string, unknown> = { owner, repo };
   req["pull_number"] = pullNumber;
   return req;
 };
@@ -38,7 +38,7 @@ const initPullRelatedRequest = (
 const approveChange = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<void> => {
-  const req = initPullRelatedRequest(context);
+  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsCreateReviewParamsDeprecatedNumber);
   req.event = "APPROVE";
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
@@ -94,8 +94,9 @@ const createPassingStatus = async (
 const getChangedFiles = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<string[]> => {
+  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsListFilesParamsDeprecatedNumber);
   const changedFilesResponse = await context.github.pulls.listFiles(
-    initPullRelatedRequest(context),
+    req
   );
   const changedFiles: string[] = [];
   for (const changedFileData of changedFilesResponse.data) {
@@ -108,8 +109,9 @@ const getChangedFiles = async (
 const getPreviousReviewIds = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<ReviewLookupResult> => {
+  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsListFilesParamsDeprecatedNumber);
   const reviewsResponse = await context.github.pulls.listReviews(
-    initPullRelatedRequest(context),
+    req
   );
   let hasReview = false;
   const reviewIds: number[] = [];
@@ -131,13 +133,14 @@ const dismissApproval = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
   reviewId: number,
 ): Promise<void> => {
-  const req = initPullRelatedRequest(context);
+  const pullReq = initPullRelatedRequest(context) as Record<string, string>;
+  const req = pullReq as unknown as (Octokit.RequestOptions & Octokit.PullsDismissReviewParamsDeprecatedNumber);
   req["review_id"] = reviewId;
   req.message = composeReviewDismissalMsg();
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
   context.log.info(
-    `Dissmiss review #${reviewId} in PR #${req.pull_number} ` +
+    `Dissmiss review #${reviewId} in PR #${pullReq["pull_number"]} ` +
       `with status ${dismissResponse.status} ` +
       `and review state ${dismissResponse.data.state}`,
   );
