@@ -1,16 +1,11 @@
 name: Run Tests
 on:
+  push:
   pull_request:
     branches:
       - "master"
   schedule:
     - cron: 0 2 * * *
-  push:
-    paths:
-      - "**.ts"
-      - "**.json"
-      - "**.js"
-      - ".github/workflows/run-tests.yml"
 jobs:
   test:
     name: Run tests
