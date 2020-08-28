@@ -5,6 +5,7 @@ import { getOwnershipRules } from "../config_parser";
 import { ownsAllFiles } from "../rule_matcher";
 import { composeReviewDismissalMsg } from "../msg_composer";
 import { APP_CHECK_NAME } from "../config";
+import { StatusCodes } from "http-status-codes";
 
 const getPullAuthor = (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
@@ -46,7 +47,7 @@ const approveChange = async (
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
     const res = await context.github.pulls.createReview(req);
-    if (res.status === 200) {
+    if (res.status === StatusCodes.OK) {
       context.log.info("Approve changes succeeded.");
     } else {
       context.log.error(
@@ -65,27 +66,27 @@ const createPassingStatus = async (
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-      completed_at: endTime,
-      conclusion: "success",
-      head_sha: context.payload.pull_request.head.sha,
-      name: APP_CHECK_NAME,
-      output: {
-        summary: "test",
-        text: "test",
-        title: "test",
+      "completed_at": endTime,
+      "conclusion": "success",
+      "head_sha": context.payload.pull_request.head.sha,
+      "name": APP_CHECK_NAME,
+      "output": {
+        "summary": "test",
+        "text": "test",
+        "title": "test",
       },
-      request: {
-        retries: 3,
-        retryAfter: 3,
+      "request": {
+        "retries": 3,
+        "retryAfter": 3,
       },
-      started_at: startTime,
-      status: "completed",
+      "started_at": startTime,
+      "status": "completed",
     });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
     `Create passing status finished with status ${response.status}`,
   );
-  if (response.status !== 201) {
+  if (response.status !== StatusCodes.CREATED) {
     context.log.error(
       `Create passing status failed with status ${
         response.status
