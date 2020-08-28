@@ -38,7 +38,10 @@ const initPullRelatedRequest = (
 const approveChange = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<void> => {
-  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsCreateReviewParamsDeprecatedNumber);
+  const req = (initPullRelatedRequest(
+    context,
+  ) as unknown) as Octokit.RequestOptions &
+    Octokit.PullsCreateReviewParamsDeprecatedNumber;
   req.event = "APPROVE";
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
@@ -62,22 +65,22 @@ const createPassingStatus = async (
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-      completed_at: endTime,
-      conclusion: "success",
-      head_sha: context.payload.pull_request.head.sha,
-      name: APP_CHECK_NAME,
-      output: {
-        summary: "test",
-        text: "test",
-        title: "test",
-      },
-      request: {
-        retries: 3,
-        retryAfter: 3,
-      },
-      started_at: startTime,
-      status: "completed",
-    });
+    completed_at: endTime,
+    conclusion: "success",
+    head_sha: context.payload.pull_request.head.sha,
+    name: APP_CHECK_NAME,
+    output: {
+      summary: "test",
+      text: "test",
+      title: "test",
+    },
+    request: {
+      retries: 3,
+      retryAfter: 3,
+    },
+    started_at: startTime,
+    status: "completed",
+  });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
     `Create passing status finished with status ${response.status}`,
@@ -94,10 +97,11 @@ const createPassingStatus = async (
 const getChangedFiles = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<string[]> => {
-  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsListFilesParamsDeprecatedNumber);
-  const changedFilesResponse = await context.github.pulls.listFiles(
-    req
-  );
+  const req = (initPullRelatedRequest(
+    context,
+  ) as unknown) as Octokit.RequestOptions &
+    Octokit.PullsListFilesParamsDeprecatedNumber;
+  const changedFilesResponse = await context.github.pulls.listFiles(req);
   const changedFiles: string[] = [];
   for (const changedFileData of changedFilesResponse.data) {
     changedFiles.push(changedFileData.filename);
@@ -109,10 +113,11 @@ const getChangedFiles = async (
 const getPreviousReviewIds = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<ReviewLookupResult> => {
-  const req = initPullRelatedRequest(context) as unknown as (Octokit.RequestOptions & Octokit.PullsListFilesParamsDeprecatedNumber);
-  const reviewsResponse = await context.github.pulls.listReviews(
-    req
-  );
+  const req = (initPullRelatedRequest(
+    context,
+  ) as unknown) as Octokit.RequestOptions &
+    Octokit.PullsListFilesParamsDeprecatedNumber;
+  const reviewsResponse = await context.github.pulls.listReviews(req);
   let hasReview = false;
   const reviewIds: number[] = [];
   context.log.info(`Found ${reviewsResponse.data.length} reviews`);
@@ -134,7 +139,8 @@ const dismissApproval = async (
   reviewId: number,
 ): Promise<void> => {
   const pullReq = initPullRelatedRequest(context) as Record<string, string>;
-  const req = pullReq as unknown as (Octokit.RequestOptions & Octokit.PullsDismissReviewParamsDeprecatedNumber);
+  const req = (pullReq as unknown) as Octokit.RequestOptions &
+    Octokit.PullsDismissReviewParamsDeprecatedNumber;
   req["review_id"] = reviewId;
   req.message = composeReviewDismissalMsg();
   context.log.info("Try to dismiss the review");

@@ -16,7 +16,9 @@ export const checkApproved = (pullNumber = 1): void => {
     .reply(StatusCodes.OK);
 };
 
-export const setPreviousReviews = (reviews: Record<string, unknown>[]): void => {
+export const setPreviousReviews = (
+  reviews: Record<string, unknown>[],
+): void => {
   nock("https://api.github.com")
     .get("/repos/tianhaoz95/approveman-test/pulls/1/reviews")
     .reply(StatusCodes.OK, reviews);
@@ -34,10 +36,7 @@ export const setSinglePreviousReview = (): void => {
   ]);
 };
 
-export const verifyReviewDismissed = (
-  reviewId = 1,
-  pullNumber = 1,
-): void => {
+export const verifyReviewDismissed = (reviewId = 1, pullNumber = 1): void => {
   nock("https://api.github.com")
     .put(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,

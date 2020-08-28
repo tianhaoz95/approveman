@@ -11,10 +11,15 @@ export const parseOwnershipRules = (
   };
   if ("ownership_rules" in rules) {
     context.log.info("Found ownership_rules in the config");
-    const ownershipRulesData = rules["ownership_rules"] as Record<string, unknown>;
+    const ownershipRulesData = rules["ownership_rules"] as Record<
+      string,
+      unknown
+    >;
     if ("directory_matching_rules" in ownershipRulesData) {
       context.log.info("Found directory_matching_rules in the config");
-      for (const rule of ownershipRulesData["directory_matching_rules"] as Record<string, string>[]) {
+      for (const rule of ownershipRulesData[
+        "directory_matching_rules"
+      ] as Record<string, string>[]) {
         const directoryMatchingRule: DirectoryMatchingRule = {
           name: "Default directory matching rule name",
           path: "Undefined",
@@ -47,7 +52,7 @@ const getDefaultOwnershipRules = (): OwnershipRules => {
 export const getOwnershipRules = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
 ): Promise<OwnershipRules> => {
-  const config = await context.config("approveman.yml") as unknown[];
+  const config = (await context.config("approveman.yml")) as unknown[];
   context.log.info(`Found config: ${JSON.stringify(config)}`);
   if (config !== null) {
     return parseOwnershipRules(config, context);
