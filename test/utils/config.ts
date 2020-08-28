@@ -11,7 +11,9 @@ export const setConfigToBasic = (configId: string): void => {
     "config",
     `${configId}.yml`,
   );
+  /* eslint-disable security/detect-non-literal-fs-filename */
   const rawContent = fs.readFileSync(configFileLocation);
+  /* eslint-enable security/detect-non-literal-fs-filename */
   const contentBuf = Buffer.from(rawContent);
   const encodedContent = contentBuf.toString("base64");
   nock("https://api.github.com")

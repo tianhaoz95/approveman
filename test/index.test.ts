@@ -27,8 +27,9 @@ describe("Approveman tests", () => {
   let probot: any;
   let mockCert: string;
 
-  beforeAll((done: Function) => {
+  beforeAll((done: jest.DoneCallback) => {
     const mockCertLocation = path.join(__dirname, "fixtures/mock-cert.pem");
+    /* eslint-disable security/detect-non-literal-fs-filename */
     fs.readFile(
       mockCertLocation,
       (err: NodeJS.ErrnoException | null, cert: Buffer) => {
@@ -39,6 +40,7 @@ describe("Approveman tests", () => {
         done();
       },
     );
+    /* eslint-enable security/detect-non-literal-fs-filename */
   });
 
   beforeEach(() => {

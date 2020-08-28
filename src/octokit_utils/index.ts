@@ -62,22 +62,22 @@ const createPassingStatus = async (
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-    completed_at: endTime,
-    conclusion: "success",
-    head_sha: context.payload.pull_request.head.sha,
-    name: APP_CHECK_NAME,
-    output: {
-      summary: "test",
-      text: "test",
-      title: "test",
-    },
-    request: {
-      retries: 3,
-      retryAfter: 3,
-    },
-    started_at: startTime,
-    status: "completed",
-  });
+      completed_at: endTime,
+      conclusion: "success",
+      head_sha: context.payload.pull_request.head.sha,
+      name: APP_CHECK_NAME,
+      output: {
+        summary: "test",
+        text: "test",
+        title: "test",
+      },
+      request: {
+        retries: 3,
+        retryAfter: 3,
+      },
+      started_at: startTime,
+      status: "completed",
+    });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
     `Create passing status finished with status ${response.status}`,
@@ -112,7 +112,7 @@ const getPreviousReviewIds = async (
     initPullRelatedRequest(context),
   );
   let hasReview = false;
-  const reviewIds: Number[] = [];
+  const reviewIds: number[] = [];
   context.log.info(`Found ${reviewsResponse.data.length} reviews`);
   reviewsResponse.data.forEach((review) => {
     context.log.info(review.user.login);
@@ -129,7 +129,7 @@ const getPreviousReviewIds = async (
 
 const dismissApproval = async (
   context: Context<Webhooks.WebhookPayloadPullRequest>,
-  reviewId: Number,
+  reviewId: number,
 ): Promise<void> => {
   const req = initPullRelatedRequest(context);
   req["review_id"] = reviewId;
