@@ -13,5 +13,5 @@ export interface OwnershipRules {
 
 export interface ReviewLookupResult {
   hasReview: boolean;
-  reviewIds: Number[];
+  reviewIds: number[];
 }

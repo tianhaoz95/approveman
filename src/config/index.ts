@@ -1,1 +1,1 @@
-export const APP_CHECK_NAME: string = 'ApproveMan'
+export const APP_CHECK_NAME = "ApproveMan";

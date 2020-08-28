@@ -1,42 +1,51 @@
-import nock from 'nock'
-import { composeReviewDismissalMsg } from '../../src/msg_composer'
+import nock from "nock";
+import { composeReviewDismissalMsg } from "../../src/msg_composer";
+import { StatusCodes } from "http-status-codes";
 
-export function checkApproved(done: jest.DoneCallback, pullNumber: Number = 1): void {
-  nock('https://api.github.com')
-    .post(`/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`, (body: any) => {
-      done(expect(body).toMatchObject({
-        event: 'APPROVE'
-      }))
-      return true
-    })
-    .reply(200)
-}
+export const checkApproved = (pullNumber = 1): void => {
+  nock("https://api.github.com")
+    .post(
+      `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`,
+      (body: Record<string, unknown>) => {
+        expect(body).toMatchObject({
+          event: "APPROVE",
+        });
+        return true;
+      },
+    )
+    .reply(StatusCodes.OK);
+};
 
-export function setPreviousReviews(reviews: any[]): void {
-  nock('https://api.github.com')
-    .get('/repos/tianhaoz95/approveman-test/pulls/1/reviews')
-    .reply(200, reviews)
-}
+export const setPreviousReviews = (
+  reviews: Record<string, unknown>[],
+): void => {
+  nock("https://api.github.com")
+    .get("/repos/tianhaoz95/approveman-test/pulls/1/reviews")
+    .reply(StatusCodes.OK, reviews);
+};
 
-export function setSinglePreviousReview(): void {
+export const setSinglePreviousReview = (): void => {
   setPreviousReviews([
     {
       id: 1,
+      state: "APPROVED",
       user: {
-        login: 'approveman[bot]'
+        login: "approveman[bot]",
       },
-      state: 'APPROVED'
-    }
-  ])
-}
+    },
+  ]);
+};
 
-export function verifyReviewDismissed(done: jest.DoneCallback, reviewId: Number = 1, pullNumber: Number = 1): void {
-  nock('https://api.github.com')
-    .put(`/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`, (body: any) => {
-      done(expect(body).toMatchObject({
-        message: composeReviewDismissalMsg()
-      }))
-      return true
-    })
-    .reply(200)
-}
+export const verifyReviewDismissed = (reviewId = 1, pullNumber = 1): void => {
+  nock("https://api.github.com")
+    .put(
+      `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,
+      (body: Record<string, unknown>) => {
+        expect(body).toMatchObject({
+          message: composeReviewDismissalMsg(),
+        });
+        return true;
+      },
+    )
+    .reply(StatusCodes.OK);
+};
