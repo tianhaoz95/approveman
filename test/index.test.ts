@@ -29,7 +29,6 @@ describe("Approveman tests", () => {
 
   beforeAll((done: Function) => {
     const mockCertLocation = path.join(__dirname, "fixtures/mock-cert.pem");
-    /* eslint-disable detect-non-literal-fs-filename */
     fs.readFile(
       mockCertLocation,
       (err: NodeJS.ErrnoException | null, cert: Buffer) => {
