@@ -2,7 +2,7 @@
 
 Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
 
-Please note that this project is released with a [Contributor Code of Conduct][code-of-conduct]. By participating in this project you agree to abide by its terms.
+Please note that this project is released with a Contributor Code of Conduct (`CODE_OF_CONDUCT.md`). By participating in this project you agree to abide by its terms.
 
 ## Issues and PRs
 
@@ -12,17 +12,17 @@ We'd also love PRs. If you're thinking of a large PR, we advise opening up an is
 
 ## Submitting a pull request
 
-1.  [Fork][fork] and clone the repository.
+1.  Fork and clone the repository.
 2.  Configure and install the dependencies: `npm install`.
 3.  Make sure the tests pass on your machine: `npm test`, note: these tests also apply the linter, so there's no need to lint separately.
 4.  Create a new branch: `git checkout -b my-branch-name`.
 5.  Make your change, add tests, and make sure the tests still pass.
-6.  Push to your fork and [submit a pull request][pr].
+6.  Push to your fork and submit a pull request.
 7.  Pat your self on the back and wait for your pull request to be reviewed and merged.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
 
--   Follow the [style guide][style] which is using standard. Any linting errors should be shown when running `npm test`.
+-   Follow the style guide which is using standard. Any linting errors should be shown when running `npm test`.
 -   Write and update tests.
 -   Keep your changes as focused as possible. If there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
 -   Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
