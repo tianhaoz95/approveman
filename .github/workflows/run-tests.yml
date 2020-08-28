@@ -24,4 +24,7 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/lcov.info
+      - name: Report coverage to Codecov
+        working-directory: coverage
+        run: bash <(curl -s https://codecov.io/bash)
 
