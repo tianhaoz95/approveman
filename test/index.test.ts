@@ -14,9 +14,9 @@ import path from "path";
 import { StatusCodes } from "http-status-codes";
 import { TEST_TIMEOUT } from "./utils/jest";
 
-// eslint-disable
+/* eslint-disable */
 jest.setTimeout(TEST_TIMEOUT);
-// eslint-enable
+/* eslint-enable */
 
 const prOpenedPayload: Record<string, unknown> = prGeneric;
 prOpenedPayload["action"] = "opened";
