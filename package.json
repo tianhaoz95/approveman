@@ -27,8 +27,8 @@
     "eslint:format": "eslint --fix src/**.ts test/**.ts",
     "prettier": "prettier --check .",
     "prettier:format": "prettier --write .",
-    "test": "jest && prettier --check .",
-    "test:silent": "LOG_LEVEL=warn jest && prettier --check .",
+    "test": "jest && npm run eslint",
+    "test:silent": "LOG_LEVEL=warn jest && npm run eslint",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
