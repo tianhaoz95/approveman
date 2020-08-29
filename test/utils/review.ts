@@ -1,5 +1,5 @@
 import nock from "nock";
-import { composeReviewDismissalMsg } from "../../src/msg_composer";
+import { composeReviewDismissalMsg } from "../../src/utils/msg_composer";
 import { StatusCodes } from "http-status-codes";
 
 export const checkApproved = (pullNumber = 1): void => {
@@ -16,6 +16,11 @@ export const checkApproved = (pullNumber = 1): void => {
     .reply(StatusCodes.OK);
 };
 
+/**
+ * Populates a pull request with fake previous reviews.
+ * 
+ * @param reviews A list of review that should exist on the pull request
+ */
 export const setPreviousReviews = (
   reviews: Record<string, unknown>[],
 ): void => {
@@ -24,6 +29,10 @@ export const setPreviousReviews = (
     .reply(StatusCodes.OK, reviews);
 };
 
+/**
+ * Populates a pull request with a single fake review
+ * with {@linkcode setPreviousReviews}.
+ */
 export const setSinglePreviousReview = (): void => {
   setPreviousReviews([
     {

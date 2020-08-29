@@ -20,6 +20,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "security/detect-non-literal-fs-filename": "error"
+    "security/detect-non-literal-fs-filename": "error",
+    "eol-last": ["error", "always"]
   }
 }

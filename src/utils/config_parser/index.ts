@@ -1,21 +1,22 @@
 import { Context } from "probot"; // eslint-disable-line no-unused-vars
 import { OwnershipRules, DirectoryMatchingRule } from "../types"; // eslint-disable-line no-unused-vars
+import { getDefaultOwnershipRules } from "./default";
 
 export const parseOwnershipRules = (
-  rules: unknown[],
-  context: Context,
+  rules: Record<string, unknown>,
+  context: Context | null,
 ): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
     directoryMatchingRules: [],
   };
   if ("ownership_rules" in rules) {
-    context.log.info("Found ownership_rules in the config");
+    context?.log.info("Found ownership_rules in the config");
     const ownershipRulesData = rules["ownership_rules"] as Record<
       string,
       unknown
     >;
     if ("directory_matching_rules" in ownershipRulesData) {
-      context.log.info("Found directory_matching_rules in the config");
+      context?.log.info("Found directory_matching_rules in the config");
       for (const rule of ownershipRulesData[
         "directory_matching_rules"
       ] as Record<string, string>[]) {
@@ -36,25 +37,13 @@ export const parseOwnershipRules = (
   return ownershipRules;
 };
 
-const getDefaultOwnershipRules = (): OwnershipRules => {
-  const ownershipRules: OwnershipRules = {
-    directoryMatchingRules: [
-      {
-        name: "Default matching rule",
-        path: "playground/{{username}}/**/*",
-      },
-    ],
-  };
-  return ownershipRules;
-};
-
 export const getOwnershipRules = async (
-  context: Context,
+  context: Context | null,
 ): Promise<OwnershipRules> => {
-  const config = (await context.config("approveman.yml")) as unknown[];
-  context.log.info(`Found config: ${JSON.stringify(config)}`);
-  if (config !== null) {
-    return parseOwnershipRules(config, context);
+  const config = await context?.config("approveman.yml");
+  context?.log.info(`Found config: ${JSON.stringify(config)}`);
+  if (config != null) {
+    return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
     return getDefaultOwnershipRules();
   }

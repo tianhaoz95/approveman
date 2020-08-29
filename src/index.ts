@@ -1,5 +1,5 @@
 import { Application } from "probot"; // eslint-disable-line no-unused-vars
-import { maybeApproveChange } from "./octokit_utils";
+import { maybeApproveChange } from "./core";
 
 export = (app: Application): void => {
   app.log.info("Starting ApproveMan server ...");

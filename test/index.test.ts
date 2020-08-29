@@ -104,11 +104,24 @@ describe("Approveman tests", () => {
 
   test("rules not satisfied", async () => {
     setConfigToBasic("basic");
-    checkApproved();
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
+  });
+
+  test("block not allowed files", async () => {
+    checkSuccessStatus();
+    nock("https://api.github.com")
+      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
+      .reply(StatusCodes.OK, [{ filename: ".github/config.yml" }]);
     setSinglePreviousReview();
     verifyReviewDismissed();
     await probot.receive({

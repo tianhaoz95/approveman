@@ -1,9 +1,9 @@
 import { Context, Octokit } from "probot"; // eslint-disable-line no-unused-vars
-import { UserInfo, ReviewLookupResult } from "../types"; // eslint-disable-line no-unused-vars
-import { getOwnershipRules } from "../config_parser";
-import { ownsAllFiles } from "../rule_matcher";
-import { composeReviewDismissalMsg } from "../msg_composer";
-import { APP_CHECK_NAME } from "../config";
+import { UserInfo, ReviewLookupResult } from "../utils/types"; // eslint-disable-line no-unused-vars
+import { getOwnershipRules } from "../utils/config_parser";
+import { ownsAllFiles, containsNotAllowedFile } from "../utils/rule_matcher";
+import { composeReviewDismissalMsg } from "../utils/msg_composer";
+import { APP_CHECK_NAME } from "../utils/config";
 import { StatusCodes } from "http-status-codes";
 
 const getPullAuthor = (
@@ -58,14 +58,26 @@ const approveChange = async (
   }
 };
 
+/**
+ * Create a check in the pull request to indicate that the app
+ * has received and processed the pull request event.
+ * 
+ * Note:
+ * 
+ * - It can only be passing or not exist at all.
+ * - It is for indicating that the event is handled.
+ * - It indicates nothing about whether the PR is approved.
+ * 
+ * @param context The request context created by Probot core.
+ * @param startTime The timestamp that this run started.
+ */
 const createPassingStatus = async (
   context: Context,
-  startTime: string,
-  endTime: string,
+  startTime: string
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-      "completed_at": endTime,
+      "completed_at": new Date().toISOString(),
       "conclusion": "success",
       "head_sha": context.payload.pull_request.head.sha,
       "name": APP_CHECK_NAME,
@@ -94,7 +106,7 @@ const createPassingStatus = async (
   }
 };
 
-const getChangedFiles = async (
+export const getChangedFiles = async (
   context: Context,
 ): Promise<string[]> => {
   const req = (initPullRelatedRequest(
@@ -162,6 +174,12 @@ export const dismissAllApprovals = async (
   context.log.info(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`);
 };
 
+/**
+ * Approves a pull request if all the files it contains are owned by the user that
+ * opens the pull request.
+ * 
+ * @param context The context for the webhook request constructed by Probot core.
+ */
 export const maybeApproveChange = async (
   context: Context,
 ): Promise<void> => {
@@ -170,6 +188,15 @@ export const maybeApproveChange = async (
   context.log.info(
     `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
   );
+  if (containsNotAllowedFile(changedFiles)) {
+    context.log.info(
+      "The user does not own all modified files. " + 
+      "Undo previous approvals if any.",
+    );
+    await dismissAllApprovals(context);
+    context.log.info("All previous approvals dismissed");
+    return;
+  }
   const rules = await getOwnershipRules(context);
   context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
   if (
@@ -182,11 +209,11 @@ export const maybeApproveChange = async (
   ) {
     context.log.info("The user owns all modified files, approve PR.");
     await approveChange(context);
-    const endTime = new Date().toISOString();
-    await createPassingStatus(context, startTime, endTime);
+    await createPassingStatus(context, startTime);
   } else {
     context.log.info(
-      "The user does not own all modified files. Undo previous approvals if any.",
+      "The user does not own all modified files. " + 
+      "Undo previous approvals if any.",
     );
     await dismissAllApprovals(context);
     context.log.info("All previous approvals dismissed");

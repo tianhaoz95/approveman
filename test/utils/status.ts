@@ -1,5 +1,5 @@
 import nock from "nock";
-import { APP_CHECK_NAME } from "../../src/config";
+import { APP_CHECK_NAME } from "../../src/utils/config";
 import { StatusCodes } from "http-status-codes";
 
 export const checkSuccessStatus = (): void => {
