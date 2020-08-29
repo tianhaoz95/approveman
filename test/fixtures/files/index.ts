@@ -4,7 +4,7 @@
 export const TS_PROJECT_FILES = [
   "package.json",
   "node_modules/some_package/index.ts",
-  "README.md"
+  "README.md",
 ];
 
 /**

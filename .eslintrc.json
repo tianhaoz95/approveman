@@ -21,6 +21,7 @@
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "security/detect-non-literal-fs-filename": "error",
-    "eol-last": ["error", "always"]
+    "eol-last": ["error", "always"],
+    "comma-dangle": ["error", "always"]
   }
 }

@@ -1,4 +1,4 @@
-import { OwnershipRules } from "../types"; // eslint-disable-line no-unused-vars
+import { OwnershipRules, } from "../types"; // eslint-disable-line no-unused-vars
 
 export const getDefaultOwnershipRules = (): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
