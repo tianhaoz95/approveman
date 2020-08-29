@@ -10,3 +10,4 @@ const prSynchronizePayload: Record<string, unknown> = prGeneric;
 prOpenedPayload["action"] = "synchronize";
 
 export { prOpenedPayload, prReopenedPayload, prSynchronizePayload};
+
