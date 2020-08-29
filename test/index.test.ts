@@ -1,7 +1,7 @@
 import nock from "nock";
 import approvemanApp from "../src";
 import { Probot } from "probot";
-import prGeneric from "./fixtures/basic/pr.json";
+import { prReopenedPayload, prSynchronizePayload, prOpenedPayload } from "./fixtures/payloads/basic";
 import { setConfigToBasic, setConfigNotFound } from "./utils/config";
 import { checkSuccessStatus } from "./utils/status";
 import {
@@ -17,13 +17,6 @@ import { TEST_TIMEOUT } from "./utils/jest";
 /* eslint-disable */
 jest.setTimeout(TEST_TIMEOUT);
 /* eslint-enable */
-
-const prOpenedPayload: Record<string, unknown> = prGeneric;
-prOpenedPayload["action"] = "opened";
-const prReopenedPayload: Record<string, unknown> = prGeneric;
-prOpenedPayload["action"] = "reopened";
-const prSynchronizePayload: Record<string, unknown> = prGeneric;
-prOpenedPayload["action"] = "synchronize";
 
 describe("Approveman tests", () => {
   let probot: Probot;
@@ -57,7 +50,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -71,7 +64,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -85,7 +78,7 @@ describe("Approveman tests", () => {
     checkSuccessStatus();
     nock("https://api.github.com")
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "experimental/tianhaoz95/test.md" }]);
+      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
