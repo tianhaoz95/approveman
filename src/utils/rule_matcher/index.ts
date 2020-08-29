@@ -27,7 +27,7 @@ export const isAllowedFile = (filename: string): boolean => {
     }
   });
   return isAllowed;
-}
+};
 
 export const containsNotAllowedFile = (filenames: string[]): boolean => {
   let contains = false;
@@ -37,7 +37,7 @@ export const containsNotAllowedFile = (filenames: string[]): boolean => {
     }
   });
   return contains;
-}
+};
 
 const matchOneOfRules = (
   rules: DirectoryMatchingRule[],
