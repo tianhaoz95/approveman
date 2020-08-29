@@ -40,8 +40,8 @@ const getDefaultOwnershipRules = (): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
     directoryMatchingRules: [
       {
-        name: "Default experimental matching rule",
-        path: "experimental/{{username}}/**/*",
+        name: "Default matching rule",
+        path: "playground/{{username}}/**/*",
       },
     ],
   };
