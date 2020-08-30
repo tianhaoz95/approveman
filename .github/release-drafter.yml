@@ -25,6 +25,9 @@ version-resolver:
   default: patch
 template: |
   ## What’s Changed
+
   $CHANGES
+
   $CONTRIBUTORS
+  
   $PREVIOUS_TAG
