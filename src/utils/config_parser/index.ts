@@ -1,10 +1,10 @@
-import { Context, } from "probot"; // eslint-disable-line no-unused-vars
-import { OwnershipRules, DirectoryMatchingRule, } from "../types"; // eslint-disable-line no-unused-vars
-import { getDefaultOwnershipRules, } from "./default";
+import { Context } from "probot"; // eslint-disable-line no-unused-vars
+import { OwnershipRules, DirectoryMatchingRule } from "../types"; // eslint-disable-line no-unused-vars
+import { getDefaultOwnershipRules } from "./default";
 
 export const parseOwnershipRules = (
   rules: Record<string, unknown>,
-  context: Context | null,
+  context: Context | null
 ): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
     directoryMatchingRules: [],
@@ -30,7 +30,7 @@ export const parseOwnershipRules = (
         if ("path" in rule) {
           directoryMatchingRule.path = rule["path"];
         }
-        ownershipRules.directoryMatchingRules.push(directoryMatchingRule,);
+        ownershipRules.directoryMatchingRules.push(directoryMatchingRule);
       }
     }
   }
@@ -38,12 +38,12 @@ export const parseOwnershipRules = (
 };
 
 export const getOwnershipRules = async (
-  context: Context | null,
+  context: Context | null
 ): Promise<OwnershipRules> => {
   const config = await context?.config("approveman.yml");
-  context?.log.info(`Found config: ${JSON.stringify(config,)}`);
+  context?.log.info(`Found config: ${JSON.stringify(config)}`);
   if (config !== null) {
-    return parseOwnershipRules(config as Record<string, unknown>, context,);
+    return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
     return getDefaultOwnershipRules();
   }

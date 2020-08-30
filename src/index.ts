@@ -1,8 +1,8 @@
-import { Application, } from "probot"; // eslint-disable-line no-unused-vars
-import { maybeApproveChange, } from "./core";
+import { Application } from "probot"; // eslint-disable-line no-unused-vars
+import { maybeApproveChange } from "./core";
 
-export = (app: Application,): void => {
-  app.log.info("Starting ApproveMan server ...",);
+export = (app: Application): void => {
+  app.log.info("Starting ApproveMan server ...");
 
   app.on(
     [
@@ -10,9 +10,9 @@ export = (app: Application,): void => {
       "pull_request.reopened",
       "pull_request.synchronize",
     ],
-    async (context,) => {
-      context.log.info("Pull request creation event detected",);
-      await maybeApproveChange(context,);
-    },
+    async (context) => {
+      context.log.info("Pull request creation event detected");
+      await maybeApproveChange(context);
+    }
   );
 };
