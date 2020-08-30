@@ -1,17 +1,17 @@
 {
-    "emeraldwalk.runonsave": {
-        "commands": [
-            {
-                "match": "\\.md$",
-                "cmd": "npm run remark:format"
-            }
-        ]
-    },
-    "files.exclude": {
-        "**/.git": false,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true
-    }
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.md$",
+        "cmd": "npm run remark:format"
+      }
+    ]
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  }
 }

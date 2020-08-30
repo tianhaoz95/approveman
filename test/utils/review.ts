@@ -21,7 +21,7 @@ export const checkApproved = (pullNumber = defaultPullNumber): void => {
 
 /**
  * Populates a pull request with fake previous reviews.
- * 
+ *
  * @param reviews A list of review that should exist on the pull request
  */
 export const setPreviousReviews = (
@@ -48,7 +48,10 @@ export const setSinglePreviousReview = (): void => {
   ]);
 };
 
-export const verifyReviewDismissed = (reviewId = defaultReviewId, pullNumber = defaultPullNumber): void => {
+export const verifyReviewDismissed = (
+  reviewId = defaultReviewId,
+  pullNumber = defaultPullNumber,
+): void => {
   nock("https://api.github.com")
     .put(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,

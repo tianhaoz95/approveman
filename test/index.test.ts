@@ -1,7 +1,11 @@
 import nock from "nock";
 import approvemanApp from "../src";
 import { Probot } from "probot";
-import { prReopenedPayload, prSynchronizePayload, prOpenedPayload } from "./fixtures/payloads/basic";
+import {
+  prReopenedPayload,
+  prSynchronizePayload,
+  prOpenedPayload,
+} from "./fixtures/payloads/basic";
 import { setConfigToBasic, setConfigNotFound } from "./utils/config";
 import { checkSuccessStatus } from "./utils/status";
 import {

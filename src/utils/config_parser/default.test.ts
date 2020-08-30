@@ -5,10 +5,8 @@ describe("Rule matcher tests", () => {
     const defaultRuleIndex = 0;
     /* eslint-disable */
     expect(
-      getDefaultOwnershipRules()
-        .directoryMatchingRules[defaultRuleIndex]
-        .path)
-      .toMatch("playground/{{username}}/**/*");
+      getDefaultOwnershipRules().directoryMatchingRules[defaultRuleIndex].path,
+    ).toMatch("playground/{{username}}/**/*");
     /* eslint-enable */
   });
 });

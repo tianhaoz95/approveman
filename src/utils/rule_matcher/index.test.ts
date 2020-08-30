@@ -10,11 +10,15 @@ describe("Rule matcher tests", () => {
   });
 
   test("identify third party GitHub workflow", () => {
-    expect(isAllowedFile("third_party/subproject/.github/workflows/test.yml")).toBe(false);
+    expect(
+      isAllowedFile("third_party/subproject/.github/workflows/test.yml"),
+    ).toBe(false);
   });
 
   test("identify third party GitHub config", () => {
-    expect(isAllowedFile("third_party/subproject/.github/config.yml")).toBe(false);
+    expect(isAllowedFile("third_party/subproject/.github/config.yml")).toBe(
+      false,
+    );
   });
 
   test("identify normal files", () => {
@@ -32,11 +36,7 @@ describe("Rule matcher tests", () => {
   });
 
   test("allow file list with only normal files", () => {
-    const fileList = [
-      "src/index.ts",
-      "package.json",
-      "src/tools/octokit.ts",
-    ];
+    const fileList = ["src/index.ts", "package.json", "src/tools/octokit.ts"];
     expect(containsNotAllowedFile(fileList)).toBe(false);
   });
 });
