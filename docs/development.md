@@ -1,5 +1,9 @@
 # Development
 
+## Quick links
+
+-   [The API documentation](https://approveman-api-docs.vercel.app/)
+
 ## Testing
 
 Order of preference: unit tests (strongly recommended) > integration tests (necessary evil) > manual tests (strongly not recommended).
