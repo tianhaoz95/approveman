@@ -69,21 +69,21 @@ const createPassingStatus = async (
 ): Promise<void> => {
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-      completed_at: new Date().toISOString(),
-      conclusion: "success",
-      head_sha: context.payload.pull_request.head.sha,
-      name: APP_CHECK_NAME,
-      output: {
-        summary: "test",
-        text: "test",
-        title: "test",
+      "completed_at": new Date().toISOString(),
+      "conclusion": "success",
+      "head_sha": context.payload.pull_request.head.sha,
+      "name": APP_CHECK_NAME,
+      "output": {
+        "summary": "test",
+        "text": "test",
+        "title": "test",
       },
-      request: {
-        retries: 3,
-        retryAfter: 3,
+      "request": {
+        "retries": 3,
+        "retryAfter": 3,
       },
-      started_at: startTime,
-      status: "completed",
+      "started_at": startTime,
+      "status": "completed",
     });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
