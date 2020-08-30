@@ -49,6 +49,10 @@
         "exports": "always-multiline",
         "functions": "always-multiline"
       }
+    ],
+    "no-magic-numbers": [
+      "error",
+      {}
     ]
   }
 }

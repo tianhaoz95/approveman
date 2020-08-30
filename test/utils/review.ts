@@ -2,7 +2,10 @@ import nock from "nock";
 import { composeReviewDismissalMsg } from "../../src/utils/msg_composer";
 import { StatusCodes } from "http-status-codes";
 
-export const checkApproved = (pullNumber = 1): void => {
+const defaultPullNumber = 1;
+const defaultReviewId = 1;
+
+export const checkApproved = (pullNumber = defaultPullNumber): void => {
   nock("https://api.github.com")
     .post(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`,
@@ -45,7 +48,7 @@ export const setSinglePreviousReview = (): void => {
   ]);
 };
 
-export const verifyReviewDismissed = (reviewId = 1, pullNumber = 1): void => {
+export const verifyReviewDismissed = (reviewId = defaultReviewId, pullNumber = defaultPullNumber): void => {
   nock("https://api.github.com")
     .put(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,
