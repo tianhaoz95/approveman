@@ -2,7 +2,7 @@ import { Context } from "probot"; // eslint-disable-line no-unused-vars
 import { DirectoryMatchingRule, UserInfo } from "../types"; // eslint-disable-line no-unused-vars
 import Mustache from "mustache";
 import minimatch from "minimatch";
-import { NOT_ALLOWED_FILES } from "../config";
+import { NOT_ALLOWED_FILES, APPROVEMAN_CONFIG_FILENAME } from "../config";
 
 /**
  * Matches a single file against a single rule to check for ownership.
@@ -25,6 +25,21 @@ export const matchRule = (
     `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`,
   );
   return isMatch;
+};
+
+/**
+ * Identifies if a pull request modifies the ApproveMan configuration.
+ *
+ * @param filenames A list of files that were modified in a pull request
+ */
+export const containsApproveManConfig = (filenames: string[]): boolean => {
+  let containsConfig = false;
+  filenames.forEach((filename) => {
+    if (minimatch(filename, APPROVEMAN_CONFIG_FILENAME)) {
+      containsConfig = true;
+    }
+  });
+  return containsConfig;
 };
 
 export const isAllowedFile = (filename: string): boolean => {

@@ -17,3 +17,34 @@ export const checkSuccessStatus = (): void => {
     )
     .reply(StatusCodes.CREATED);
 };
+
+export const checkStartedStatus = (): void => {
+  nock("https://api.github.com")
+    .post(
+      "/repos/tianhaoz95/approveman-test/check-runs",
+      (body: Record<string, unknown>) => {
+        expect(body).toMatchObject({
+          name: APP_CHECK_NAME,
+          status: "in_progress",
+        });
+        return true;
+      },
+    )
+    .reply(StatusCodes.CREATED);
+};
+
+export const checkCrashStatus = (): void => {
+  nock("https://api.github.com")
+    .post(
+      "/repos/tianhaoz95/approveman-test/check-runs",
+      (body: Record<string, unknown>) => {
+        expect(body).toMatchObject({
+          conclusion: "failure",
+          name: APP_CHECK_NAME,
+          status: "completed",
+        });
+        return true;
+      },
+    )
+    .reply(StatusCodes.CREATED);
+};
