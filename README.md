@@ -6,6 +6,7 @@
 ![Run Tests](https://github.com/tianhaoz95/approveman/workflows/Run%20Tests/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/tianhaoz95/approveman/branch/master/graph/badge.svg)](https://codecov.io/gh/tianhaoz95/approveman)
 ![CodeQL](https://github.com/tianhaoz95/approveman/workflows/CodeQL/badge.svg?branch=master)
+![Release Drafter](https://github.com/tianhaoz95/approveman/workflows/Release%20Drafter/badge.svg?branch=master)
 
 ApproveMan is a GitHub app that helps approve pull requests with safe changes.
 
