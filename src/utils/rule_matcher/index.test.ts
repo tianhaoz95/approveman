@@ -1,4 +1,9 @@
-import { isAllowedFile, containsNotAllowedFile, matchRule } from ".";
+import {
+  isAllowedFile,
+  containsNotAllowedFile,
+  matchRule,
+  containsApproveManConfig,
+} from ".";
 
 describe("Rule matcher tests", () => {
   test("identify single GitHub workflow", () => {
@@ -57,5 +62,12 @@ describe("Rule matcher tests", () => {
         null,
       ),
     ).toBe(false);
+  });
+
+  test("correctly identify ApproveMan config", () => {
+    expect(containsApproveManConfig(["src/test.md"])).toBe(false);
+    expect(
+      containsApproveManConfig(["src/test.md", ".github/approveman.yml"]),
+    ).toBe(true);
   });
 });

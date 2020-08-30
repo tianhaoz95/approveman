@@ -7,7 +7,11 @@ import {
   prOpenedPayload,
 } from "./fixtures/payloads/basic";
 import { setConfigToBasic, setConfigNotFound } from "./utils/config";
-import { checkSuccessStatus } from "./utils/status";
+import {
+  checkSuccessStatus,
+  checkStartedStatus,
+  checkCrashStatus,
+} from "./utils/status";
 import {
   checkApproved,
   setSinglePreviousReview,
@@ -46,6 +50,7 @@ describe("Approveman tests", () => {
     nock.disableNetConnect();
     probot = new Probot({ id: 123, cert: mockCert });
     probot.load(approvemanApp);
+    checkStartedStatus();
   });
 
   test("receive PR reopened", async () => {
@@ -132,6 +137,15 @@ describe("Approveman tests", () => {
       id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
+    });
+  });
+
+  test("handle unknown error elegantly", async () => {
+    checkCrashStatus();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: "???",
     });
   });
 

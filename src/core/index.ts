@@ -2,7 +2,15 @@ import { Context, Octokit } from "probot"; // eslint-disable-line no-unused-vars
 import { UserInfo, ReviewLookupResult } from "../utils/types"; // eslint-disable-line no-unused-vars
 import { getOwnershipRules } from "../utils/config_parser";
 import { ownsAllFiles, containsNotAllowedFile } from "../utils/rule_matcher";
-import { composeReviewDismissalMsg } from "../utils/msg_composer";
+import {
+  composeReviewDismissalMsg,
+  composeStatusCheckTitle,
+  composeStatusCheckSummary,
+  composeStatusCheckDetails,
+  composeCrashReportTitle,
+  composeCrashReportSummary,
+  composeCrashReportDetails,
+} from "../utils/msg_composer";
 import { APP_CHECK_NAME } from "../utils/config";
 import { StatusCodes } from "http-status-codes";
 
@@ -51,39 +59,54 @@ const approveChange = async (context: Context): Promise<void> => {
 };
 
 /**
- * Create a check in the pull request to indicate that the app
- * has received and processed the pull request event.
+ * Creates a check in the pull request.
  *
- * Note:
- *
- * - It can only be passing or not exist at all.
- * - It is for indicating that the event is handled.
- * - It indicates nothing about whether the PR is approved.
- *
- * @param context The request context created by Probot core.
- * @param startTime The timestamp that this run started.
+ * @param context The request context from Probot core.
+ * @param conclusion The conclusion of the run.
+ * @param status The status of the run.
+ * @param title The title that shows up when user clicks on the check.
+ * @param summary The summary that shows up under the title.
+ * @param details The details that shows up under the summary.
+ * @param startTime The string time that the run started.
  */
-const createPassingStatus = async (
+export const createStatus = async (
   context: Context,
+  conclusion:
+    | "success"
+    | "failure"
+    | "neutral"
+    | "cancelled"
+    | "timed_out"
+    | "action_required"
+    | undefined,
+  status: "in_progress" | "completed" | "queued",
+  title: string,
+  summary: string,
+  details: string,
   startTime: string,
 ): Promise<void> => {
+  /* eslint-disable */
+  const completedAt: string | undefined = conclusion
+    ? new Date().toISOString()
+    : undefined;
+  /* eslint-enable */
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
-      "completed_at": new Date().toISOString(),
-      "conclusion": "success",
+      "completed_at": completedAt,
+      conclusion,
       "head_sha": context.payload.pull_request.head.sha,
       "name": APP_CHECK_NAME,
       "output": {
-        "summary": "test",
-        "text": "test",
-        "title": "test",
+        summary,
+        "text": details,
+        title,
       },
       "request": {
         "retries": 3,
         "retryAfter": 3,
       },
       "started_at": startTime,
-      "status": "completed",
+      status,
     });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
@@ -96,6 +119,74 @@ const createPassingStatus = async (
       } and error: ${JSON.stringify(response.data)}`,
     );
   }
+};
+
+/**
+ * Create a check in the pull request to indicate that the app
+ * has received and processed the pull request event.
+ *
+ * Note:
+ *
+ * - It can only be passing or not exist at all.
+ * - It is for indicating that the event is handled.
+ * - It indicates nothing about whether the PR is approved.
+ *
+ * @param context The request context created by Probot core.
+ * @param startTime The timestamp that this run started.
+ */
+export const createPassingStatus = async (
+  context: Context,
+  startTime: string,
+): Promise<void> => {
+  await createStatus(
+    context,
+    "success",
+    "completed",
+    composeStatusCheckTitle(),
+    composeStatusCheckSummary(),
+    composeStatusCheckDetails(),
+    startTime,
+  );
+};
+
+/**
+ * Create a status in pull requets indicating that the run
+ * has started.
+ *
+ * @param context The request context from Probot core.
+ * @param startTime The string time that the run started.
+ */
+export const createStartStatus = async (
+  context: Context,
+  startTime: string,
+): Promise<void> => {
+  await createStatus(
+    context,
+    /* eslint-disable */
+    undefined,
+    /* eslint-enable */
+    "in_progress",
+    composeStatusCheckTitle(),
+    composeStatusCheckSummary(),
+    composeStatusCheckDetails(),
+    startTime,
+  );
+};
+
+export const createCrashStatus = async (
+  context: Context,
+  startTime: string,
+  error: Error,
+): Promise<void> => {
+  await createStatus(
+    context,
+    "failure",
+    "completed",
+    composeCrashReportTitle(),
+    composeCrashReportSummary(),
+    composeCrashReportDetails(error),
+    startTime,
+  );
 };
 
 export const getChangedFiles = async (context: Context): Promise<string[]> => {
@@ -167,41 +258,49 @@ export const dismissAllApprovals = async (context: Context): Promise<void> => {
  * opens the pull request.
  *
  * @param context The context for the webhook request constructed by Probot core.
+ * @param failOnPurpose Make the run fail on purpose. For testing purposes only.
  */
 export const maybeApproveChange = async (context: Context): Promise<void> => {
   const startTime = new Date().toISOString();
-  const changedFiles = await getChangedFiles(context);
-  context.log.info(
-    `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
-  );
-  if (containsNotAllowedFile(changedFiles)) {
+  try {
+    await createStartStatus(context, startTime);
+    const changedFiles = await getChangedFiles(context);
     context.log.info(
-      "The user does not own all modified files. " +
-        "Undo previous approvals if any.",
+      `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
     );
-    await dismissAllApprovals(context);
-    context.log.info("All previous approvals dismissed");
-    return;
-  }
-  const rules = await getOwnershipRules(context);
-  context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
-  if (
-    ownsAllFiles(
-      rules.directoryMatchingRules,
-      changedFiles,
-      getUserInfo(context),
-      context,
-    )
-  ) {
-    context.log.info("The user owns all modified files, approve PR.");
-    await approveChange(context);
-    await createPassingStatus(context, startTime);
-  } else {
-    context.log.info(
-      "The user does not own all modified files. " +
-        "Undo previous approvals if any.",
-    );
-    await dismissAllApprovals(context);
-    context.log.info("All previous approvals dismissed");
+    if (containsNotAllowedFile(changedFiles)) {
+      context.log.info(
+        "The user does not own all modified files. " +
+          "Undo previous approvals if any.",
+      );
+      await dismissAllApprovals(context);
+      context.log.info("All previous approvals dismissed");
+      await createPassingStatus(context, startTime);
+      return;
+    }
+    const rules = await getOwnershipRules(context);
+    context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
+    if (
+      ownsAllFiles(
+        rules.directoryMatchingRules,
+        changedFiles,
+        getUserInfo(context),
+        context,
+      )
+    ) {
+      context.log.info("The user owns all modified files, approve PR.");
+      await approveChange(context);
+      await createPassingStatus(context, startTime);
+    } else {
+      context.log.info(
+        "The user does not own all modified files. " +
+          "Undo previous approvals if any.",
+      );
+      await dismissAllApprovals(context);
+      context.log.info("All previous approvals dismissed");
+    }
+  } catch (err) {
+    context.log.info(`Unknown error occured: ${JSON.stringify(err)}`);
+    await createCrashStatus(context, startTime, err);
   }
 };
