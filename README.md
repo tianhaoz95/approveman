@@ -40,4 +40,10 @@ ownership_rules:
 Note:
 
 -   The default config contains `playground/{{username}}/**/*` if no config file is provided in the repository.
--   All pull requests that modifies files within `.github` directory is denied reguardless of the rules in configuration for safety.
+-   All pull requests that modify files within `.github` the directory is denied regardless of the rules in the configuration for safety.
+
+Here is an example of how it works:
+
+![approval demo](https://raw.githubusercontent.com/tianhaoz95/approveman/master/docs/asset/screenshots/approval.png)
+
+![check status demo](https://raw.githubusercontent.com/tianhaoz95/approveman/master/docs/asset/screenshots/check_status.png)
