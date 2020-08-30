@@ -4,7 +4,15 @@ import Mustache from "mustache";
 import minimatch from "minimatch";
 import { NOT_ALLOWED_FILES } from "../config";
 
-const matchRule = (
+/**
+ * Matches a single file against a single rule to check for ownership.
+ *
+ * @param rule The user defined rule to identify file ownership.
+ * @param filename The file in the pull request that should be checked.
+ * @param info The user information that can be used in rules.
+ * @param context The request context from Probot core.
+ */
+export const matchRule = (
   rule: DirectoryMatchingRule,
   filename: string,
   info: UserInfo,

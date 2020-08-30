@@ -1,4 +1,4 @@
-import { isAllowedFile, containsNotAllowedFile } from ".";
+import { isAllowedFile, containsNotAllowedFile, matchRule } from ".";
 
 describe("Rule matcher tests", () => {
   test("identify single GitHub workflow", () => {
@@ -38,5 +38,24 @@ describe("Rule matcher tests", () => {
   test("allow file list with only normal files", () => {
     const fileList = ["src/index.ts", "package.json", "src/tools/octokit.ts"];
     expect(containsNotAllowedFile(fileList)).toBe(false);
+  });
+
+  test("match rule filters correct filenames", () => {
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**.md" },
+        "playground/tianhaoz95/test.md",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(true);
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**.md" },
+        "other_location/tianhaoz95/test.md",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(false);
   });
 });
