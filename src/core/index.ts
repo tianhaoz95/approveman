@@ -157,20 +157,20 @@ export const createStatus = async (
   const statusOptions: Octokit.RequestOptions &
     Octokit.ChecksCreateParams = context.repo({
       "completed_at": completedAt,
-      "conclusion": conclusion,
+      conclusion,
       "head_sha": context.payload.pull_request.head.sha,
       "name": APP_CHECK_NAME,
       "output": {
-        "summary": summary,
+        summary,
         "text": details,
-        "title": title,
+        title,
       },
       "request": {
         "retries": 3,
         "retryAfter": 3,
       },
       "started_at": startTime,
-      "status": status,
+      status,
     });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
