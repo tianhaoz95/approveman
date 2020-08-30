@@ -5,6 +5,7 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/tianhaoz95/approveman.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/tianhaoz95/approveman/alerts/)
 ![Run Tests](https://github.com/tianhaoz95/approveman/workflows/Run%20Tests/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/tianhaoz95/approveman/branch/master/graph/badge.svg)](https://codecov.io/gh/tianhaoz95/approveman)
+![CodeQL](https://github.com/tianhaoz95/approveman/workflows/CodeQL/badge.svg?branch=master)
 
 ApproveMan is a GitHub app that helps approve pull requests with safe changes.
 
