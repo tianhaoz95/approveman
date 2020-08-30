@@ -1,4 +1,4 @@
 ---
 exclude_paths:
-  - 'CODE_OF_CONDUCT.md'
-  - 'docs/_sidebar.md'
+  - "CODE_OF_CONDUCT.md"
+  - "docs/_sidebar.md"

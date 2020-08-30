@@ -105,3 +105,4 @@ dist
 
 # TypeScript build artifacts
 lib
+public
