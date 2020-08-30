@@ -260,17 +260,10 @@ export const dismissAllApprovals = async (context: Context): Promise<void> => {
  * @param context The context for the webhook request constructed by Probot core.
  * @param failOnPurpose Make the run fail on purpose. For testing purposes only.
  */
-export const maybeApproveChange = async (
-  context: Context,
-  failOnPurpose = false,
-  error: Error | undefined = undefined,
-): Promise<void> => {
+export const maybeApproveChange = async (context: Context): Promise<void> => {
   const startTime = new Date().toISOString();
   try {
     await createStartStatus(context, startTime);
-    if (failOnPurpose) {
-      throw error;
-    }
     const changedFiles = await getChangedFiles(context);
     context.log.info(
       `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
