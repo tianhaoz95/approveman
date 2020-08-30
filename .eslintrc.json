@@ -43,11 +43,11 @@
     "comma-dangle": [
       "error",
       {
-        "arrays": "always",
+        "arrays": "always-multiline",
         "objects": "always",
         "imports": "never",
         "exports": "never",
-        "functions": "never"
+        "functions": "always"
       }
     ]
   }
