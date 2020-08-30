@@ -30,7 +30,7 @@ export const parseOwnershipRules = (
         if ("path" in rule) {
           directoryMatchingRule.path = rule["path"];
         }
-        ownershipRules.directoryMatchingRules.push(directoryMatchingRule,);
+        ownershipRules.directoryMatchingRules.push(directoryMatchingRule);
       }
     }
   }
@@ -41,9 +41,9 @@ export const getOwnershipRules = async (
   context: Context | null,
 ): Promise<OwnershipRules> => {
   const config = await context?.config("approveman.yml");
-  context?.log.info(`Found config: ${JSON.stringify(config,)}`);
+  context?.log.info(`Found config: ${JSON.stringify(config)}`);
   if (config !== null) {
-    return parseOwnershipRules(config as Record<string, unknown>, context,);
+    return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
     return getDefaultOwnershipRules();
   }

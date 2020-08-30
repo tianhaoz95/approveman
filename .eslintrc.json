@@ -44,10 +44,10 @@
       "error",
       {
         "arrays": "always-multiline",
-        "objects": "always",
-        "imports": "never",
-        "exports": "never",
-        "functions": "always"
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
       }
     ]
   }
