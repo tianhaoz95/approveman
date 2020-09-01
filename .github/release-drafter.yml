@@ -4,6 +4,7 @@ categories:
   - title: "🚀 Features"
     labels:
       - "feature"
+      - "feat"
       - "enhancement"
   - title: "🐛 Bug Fixes"
     labels:
@@ -11,7 +12,10 @@ categories:
       - "bugfix"
       - "bug"
   - title: "🧰 Maintenance"
-    label: "chore"
+    labels:
+      - "chore"
+      - "docs"
+      - "documentation"
 exclude-labels:
   - 'skip-changelog'
 version-resolver:
