@@ -50,7 +50,7 @@
     "@types/jest": "^26.0.12",
     "@types/nock": "^11.1.0",
     "@types/prettyjson": "0.0.29",
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^3.10.1",
     "eslint": "^7.8.0",
     "eslint-plugin-security": "^1.4.0",
