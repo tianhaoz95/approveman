@@ -1,1 +1,1 @@
-export const TEST_TIMEOUT = 30000;
+export const TEST_TIMEOUT = 10000;

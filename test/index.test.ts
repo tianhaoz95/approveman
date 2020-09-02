@@ -1,6 +1,6 @@
 import nock from "nock";
 import approvemanApp from "../src";
-import { Probot } from "probot";
+import { Probot, ProbotOctokit } from "probot";
 import {
   prReopenedPayload,
   prSynchronizePayload,
@@ -48,8 +48,17 @@ describe("Approveman tests", () => {
 
   beforeEach(() => {
     nock.disableNetConnect();
-    probot = new Probot({ id: 123, cert: mockCert });
-    probot.load(approvemanApp);
+    probot = new Probot({
+      id: 1,
+      githubToken: "test",
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false },
+      }),
+      privateKey: mockCert,
+    });
+    const app = probot.load(approvemanApp);
+    app.log.info("Test app constructed");
     checkStartedStatus();
   });
 

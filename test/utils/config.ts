@@ -17,7 +17,7 @@ export const setConfigToBasic = (configId: string): void => {
   const contentBuf = Buffer.from(rawContent);
   const encodedContent = contentBuf.toString("base64");
   nock("https://api.github.com")
-    .get("/repos/tianhaoz95/.github/contents/.github/approveman.yml")
+    .get("/repos/tianhaoz95/.github/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.OK, {
       content: encodedContent,
       encoding: "base64",
@@ -27,15 +27,15 @@ export const setConfigToBasic = (configId: string): void => {
       type: "file",
     });
   nock("https://api.github.com")
-    .get("/repos/tianhaoz95/approveman-test/contents/.github/approveman.yml")
+    .get("/repos/tianhaoz95/approveman-test/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
 };
 
 export const setConfigNotFound = (): void => {
   nock("https://api.github.com")
-    .get("/repos/tianhaoz95/.github/contents/.github/approveman.yml")
+    .get("/repos/tianhaoz95/.github/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
   nock("https://api.github.com")
-    .get("/repos/tianhaoz95/approveman-test/contents/.github/approveman.yml")
+    .get("/repos/tianhaoz95/approveman-test/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
 };
