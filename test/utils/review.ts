@@ -1,6 +1,6 @@
-import nock from "nock";
-import { composeReviewDismissalMsg } from "../../src/utils/msg_composer";
 import { StatusCodes } from "http-status-codes";
+import { composeReviewDismissalMsg } from "../../src/utils/msg_composer";
+import nock from "nock";
 
 const defaultPullNumber = 1;
 const defaultReviewId = 1;

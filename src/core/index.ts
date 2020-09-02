@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Context } from "probot";
-import type { UserInfo, ReviewLookupResult } from "../utils/types";
+import type { ReviewEvent, ReviewLookupResult, UserInfo } from "../utils/types";
 /* eslint-enable  @typescript-eslint/no-unused-vars*/
-import { getOwnershipRules } from "../utils/config_parser";
-import { ownsAllFiles, containsNotAllowedFile } from "../utils/rule_matcher";
 import {
-  composeReviewDismissalMsg,
-  composeStatusCheckTitle,
-  composeStatusCheckSummary,
-  composeStatusCheckDetails,
-  composeCrashReportTitle,
-  composeCrashReportSummary,
   composeCrashReportDetails,
+  composeCrashReportSummary,
+  composeCrashReportTitle,
+  composeReviewDismissalMsg,
+  composeStatusCheckDetails,
+  composeStatusCheckSummary,
+  composeStatusCheckTitle,
 } from "../utils/msg_composer";
+import { containsNotAllowedFile, ownsAllFiles } from "../utils/rule_matcher";
 import { APP_CHECK_NAME } from "../utils/config";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Context } from "probot";
+/* eslint-enable  @typescript-eslint/no-unused-vars*/
 import { StatusCodes } from "http-status-codes";
+import { getOwnershipRules } from "../utils/config_parser";
 
 const getPullAuthor = (context: Context): string => {
   return context.payload.pull_request.user.login;
@@ -26,8 +28,6 @@ const getUserInfo = (context: Context): UserInfo => {
   };
   return info;
 };
-
-type ReviewEvent = "APPROVE" | "REQUEST_CHANGES" | "COMMENT" | undefined;
 
 const approveChange = async (context: Context): Promise<void> => {
   const req = context.repo({

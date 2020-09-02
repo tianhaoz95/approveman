@@ -1,11 +1,11 @@
 import {
-  composeStatusCheckTitle,
-  composeStatusCheckDetails,
-  composeStatusCheckSummary,
-  composeReviewDismissalMsg,
   composeCrashReportDetails,
   composeCrashReportSummary,
   composeCrashReportTitle,
+  composeReviewDismissalMsg,
+  composeStatusCheckDetails,
+  composeStatusCheckSummary,
+  composeStatusCheckTitle,
 } from ".";
 
 describe("message composer tests", () => {

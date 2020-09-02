@@ -1,10 +1,12 @@
+import { APPROVEMAN_CONFIG_FILENAME, NOT_ALLOWED_FILES } from "../config";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { DirectoryMatchingRule, UserInfo } from "../types";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Context } from "probot";
-import { DirectoryMatchingRule, UserInfo } from "../types";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import Mustache from "mustache";
 import minimatch from "minimatch";
-import { NOT_ALLOWED_FILES, APPROVEMAN_CONFIG_FILENAME } from "../config";
 
 /**
  * Matches a single file against a single rule to check for ownership.

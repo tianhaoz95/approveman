@@ -1,26 +1,26 @@
-import nock from "nock";
-import approvemanApp from "../src";
 import { Probot, ProbotOctokit } from "probot";
-import {
-  prReopenedPayload,
-  prSynchronizePayload,
-  prOpenedPayload,
-} from "./fixtures/payloads/basic";
-import { setConfigToBasic, setConfigNotFound } from "./utils/config";
-import {
-  checkSuccessStatus,
-  checkStartedStatus,
-  checkCrashStatus,
-} from "./utils/status";
 import {
   checkApproved,
   setSinglePreviousReview,
   verifyReviewDismissed,
 } from "./utils/review";
-import fs from "fs";
-import path from "path";
+import {
+  checkCrashStatus,
+  checkStartedStatus,
+  checkSuccessStatus,
+} from "./utils/status";
+import {
+  prOpenedPayload,
+  prReopenedPayload,
+  prSynchronizePayload,
+} from "./fixtures/payloads/basic";
+import { setConfigNotFound, setConfigToBasic } from "./utils/config";
 import { StatusCodes } from "http-status-codes";
 import { TEST_TIMEOUT } from "./utils/jest";
+import approvemanApp from "../src";
+import fs from "fs";
+import nock from "nock";
+import path from "path";
 
 /* eslint-disable */
 jest.setTimeout(TEST_TIMEOUT);

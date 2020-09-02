@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { DirectoryMatchingRule, OwnershipRules } from "../types";
+/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Context } from "probot";
-import { OwnershipRules, DirectoryMatchingRule } from "../types";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { getDefaultOwnershipRules } from "./default";
 

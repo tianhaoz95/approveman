@@ -1,7 +1,7 @@
-import nock from "nock";
-import fs from "fs";
-import path from "path";
 import { StatusCodes } from "http-status-codes";
+import fs from "fs";
+import nock from "nock";
+import path from "path";
 
 export const setConfigToBasic = (configId: string): void => {
   const configFileLocation = path.join(

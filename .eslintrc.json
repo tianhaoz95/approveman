@@ -25,9 +25,23 @@
     "sort-keys": [
       "error",
       "asc",
-      { "caseSensitive": true, "natural": false, "minKeys": 2 }
+      {
+        "caseSensitive": true,
+        "natural": false,
+        "minKeys": 2
+      }
     ],
     "sort-keys-fix/sort-keys-fix": "warn",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": false
+      }
+    ],
     "comma-dangle": [
       "error",
       {

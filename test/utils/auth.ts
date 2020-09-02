@@ -1,5 +1,5 @@
-import nock from "nock";
 import { StatusCodes } from "http-status-codes";
+import nock from "nock";
 
 export const returnGitHubToken = (): void => {
   nock("https://api.github.com")
