@@ -49,12 +49,12 @@ describe("Approveman tests", () => {
   beforeEach(() => {
     nock.disableNetConnect();
     probot = new Probot({
-      id: 1,
-      githubToken: "test",
       Octokit: ProbotOctokit.defaults({
         retry: { enabled: false },
         throttle: { enabled: false },
       }),
+      githubToken: "test",
+      id: 1,
       privateKey: mockCert,
     });
     const app = probot.load(approvemanApp);

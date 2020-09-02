@@ -31,8 +31,8 @@ type ReviewEvent = "APPROVE" | "REQUEST_CHANGES" | "COMMENT" | undefined;
 
 const approveChange = async (context: Context): Promise<void> => {
   const req = context.repo({
-    "pull_number": context.payload.pull_request.number,
     "event": "APPROVE" as ReviewEvent,
+    "pull_number": context.payload.pull_request.number,
   });
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
@@ -226,9 +226,9 @@ const dismissApproval = async (
   reviewId: number,
 ): Promise<void> => {
   const req = context.repo({
+    "message": composeReviewDismissalMsg(),
     "pull_number": context.payload.pull_request.number,
     "review_id": reviewId,
-    "message": composeReviewDismissalMsg(),
   });
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
