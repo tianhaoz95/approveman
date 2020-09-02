@@ -1,26 +1,26 @@
-import nock from "nock";
-import approvemanApp from "../src";
-import { Probot } from "probot";
-import {
-  prReopenedPayload,
-  prSynchronizePayload,
-  prOpenedPayload,
-} from "./fixtures/payloads/basic";
-import { setConfigToBasic, setConfigNotFound } from "./utils/config";
-import {
-  checkSuccessStatus,
-  checkStartedStatus,
-  checkCrashStatus,
-} from "./utils/status";
+import { Probot, ProbotOctokit } from "probot";
 import {
   checkApproved,
   setSinglePreviousReview,
   verifyReviewDismissed,
 } from "./utils/review";
-import fs from "fs";
-import path from "path";
+import {
+  checkCrashStatus,
+  checkStartedStatus,
+  checkSuccessStatus,
+} from "./utils/status";
+import {
+  prOpenedPayload,
+  prReopenedPayload,
+  prSynchronizePayload,
+} from "./fixtures/payloads/basic";
+import { setConfigNotFound, setConfigToBasic } from "./utils/config";
 import { StatusCodes } from "http-status-codes";
 import { TEST_TIMEOUT } from "./utils/jest";
+import approvemanApp from "../src";
+import fs from "fs";
+import nock from "nock";
+import path from "path";
 
 /* eslint-disable */
 jest.setTimeout(TEST_TIMEOUT);
@@ -48,8 +48,17 @@ describe("Approveman tests", () => {
 
   beforeEach(() => {
     nock.disableNetConnect();
-    probot = new Probot({ id: 123, cert: mockCert });
-    probot.load(approvemanApp);
+    probot = new Probot({
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false },
+      }),
+      githubToken: "test",
+      id: 1,
+      privateKey: mockCert,
+    });
+    const app = probot.load(approvemanApp);
+    app.log.info("Test app constructed");
     checkStartedStatus();
   });
 

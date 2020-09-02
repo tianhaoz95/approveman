@@ -1,4 +1,6 @@
-import { Application } from "probot"; // eslint-disable-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Application } from "probot";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 import { maybeApproveChange } from "./core";
 
 export = (app: Application): void => {

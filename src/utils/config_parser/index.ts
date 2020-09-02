@@ -1,5 +1,9 @@
-import { Context } from "probot"; // eslint-disable-line no-unused-vars
-import { OwnershipRules, DirectoryMatchingRule } from "../types"; // eslint-disable-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { DirectoryMatchingRule, OwnershipRules } from "../types";
+/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Context } from "probot";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 import { getDefaultOwnershipRules } from "./default";
 
 export const parseOwnershipRules = (
@@ -42,7 +46,9 @@ export const getOwnershipRules = async (
 ): Promise<OwnershipRules> => {
   const config = await context?.config("approveman.yml");
   context?.log.info(`Found config: ${JSON.stringify(config)}`);
-  if (config !== null) {
+  /* eslint-disable */
+  if (config !== null && config !== undefined) {
+    /* eslint-enable */
     return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
     return getDefaultOwnershipRules();

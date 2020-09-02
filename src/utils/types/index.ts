@@ -15,3 +15,5 @@ export interface ReviewLookupResult {
   hasReview: boolean;
   reviewIds: number[];
 }
+
+export type ReviewEvent = "APPROVE" | "REQUEST_CHANGES" | "COMMENT" | undefined;

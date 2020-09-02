@@ -1,18 +1,22 @@
-import { Context, Octokit } from "probot"; // eslint-disable-line no-unused-vars
-import { UserInfo, ReviewLookupResult } from "../utils/types"; // eslint-disable-line no-unused-vars
-import { getOwnershipRules } from "../utils/config_parser";
-import { ownsAllFiles, containsNotAllowedFile } from "../utils/rule_matcher";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { ReviewEvent, ReviewLookupResult, UserInfo } from "../utils/types";
+/* eslint-enable  @typescript-eslint/no-unused-vars*/
 import {
-  composeReviewDismissalMsg,
-  composeStatusCheckTitle,
-  composeStatusCheckSummary,
-  composeStatusCheckDetails,
-  composeCrashReportTitle,
-  composeCrashReportSummary,
   composeCrashReportDetails,
+  composeCrashReportSummary,
+  composeCrashReportTitle,
+  composeReviewDismissalMsg,
+  composeStatusCheckDetails,
+  composeStatusCheckSummary,
+  composeStatusCheckTitle,
 } from "../utils/msg_composer";
+import { containsNotAllowedFile, ownsAllFiles } from "../utils/rule_matcher";
 import { APP_CHECK_NAME } from "../utils/config";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Context } from "probot";
+/* eslint-enable  @typescript-eslint/no-unused-vars*/
 import { StatusCodes } from "http-status-codes";
+import { getOwnershipRules } from "../utils/config_parser";
 
 const getPullAuthor = (context: Context): string => {
   return context.payload.pull_request.user.login;
@@ -25,24 +29,11 @@ const getUserInfo = (context: Context): UserInfo => {
   return info;
 };
 
-const initPullRelatedRequest = (context: Context): Record<string, unknown> => {
-  const pullNumber = context.payload.pull_request.number;
-  const repo = context.payload.repository.name;
-  const owner = context.payload.repository.owner.login;
-  context.log.info(
-    `Initializing pull related request with ${owner}/${repo} #${pullNumber}`,
-  );
-  const req: Record<string, unknown> = { owner, repo };
-  req["pull_number"] = pullNumber;
-  return req;
-};
-
 const approveChange = async (context: Context): Promise<void> => {
-  const req = (initPullRelatedRequest(
-    context,
-  ) as unknown) as Octokit.RequestOptions &
-    Octokit.PullsCreateReviewParamsDeprecatedNumber;
-  req.event = "APPROVE";
+  const req = context.repo({
+    "event": "APPROVE" as ReviewEvent,
+    "pull_number": context.payload.pull_request.number,
+  });
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
     const res = await context.github.pulls.createReview(req);
@@ -90,24 +81,23 @@ export const createStatus = async (
     ? new Date().toISOString()
     : undefined;
   /* eslint-enable */
-  const statusOptions: Octokit.RequestOptions &
-    Octokit.ChecksCreateParams = context.repo({
-      "completed_at": completedAt,
-      conclusion,
-      "head_sha": context.payload.pull_request.head.sha,
-      "name": APP_CHECK_NAME,
-      "output": {
-        summary,
-        "text": details,
-        title,
-      },
-      "request": {
-        "retries": 3,
-        "retryAfter": 3,
-      },
-      "started_at": startTime,
-      status,
-    });
+  const statusOptions = context.repo({
+    "completed_at": completedAt,
+    conclusion,
+    "head_sha": context.payload.pull_request.head.sha,
+    "name": APP_CHECK_NAME,
+    "output": {
+      summary,
+      "text": details,
+      title,
+    },
+    "request": {
+      "retries": 3,
+      "retryAfter": 3,
+    },
+    "started_at": startTime,
+    status,
+  });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
     `Create passing status finished with status ${response.status}`,
@@ -190,10 +180,9 @@ export const createCrashStatus = async (
 };
 
 export const getChangedFiles = async (context: Context): Promise<string[]> => {
-  const req = (initPullRelatedRequest(
-    context,
-  ) as unknown) as Octokit.RequestOptions &
-    Octokit.PullsListFilesParamsDeprecatedNumber;
+  const req = context.repo({
+    "pull_number": context.payload.pull_request.number,
+  });
   const changedFilesResponse = await context.github.pulls.listFiles(req);
   const changedFiles: string[] = [];
   for (const changedFileData of changedFilesResponse.data) {
@@ -206,22 +195,27 @@ export const getChangedFiles = async (context: Context): Promise<string[]> => {
 const getPreviousReviewIds = async (
   context: Context,
 ): Promise<ReviewLookupResult> => {
-  const req = (initPullRelatedRequest(
-    context,
-  ) as unknown) as Octokit.RequestOptions &
-    Octokit.PullsListFilesParamsDeprecatedNumber;
+  const req = context.repo({
+    "pull_number": context.payload.pull_request.number,
+  });
   const reviewsResponse = await context.github.pulls.listReviews(req);
   let hasReview = false;
   const reviewIds: number[] = [];
   context.log.info(`Found ${reviewsResponse.data.length} reviews`);
-  reviewsResponse.data.forEach((review) => {
-    context.log.info(review.user.login);
-    if (
-      review.user.login === "approveman[bot]" &&
-      review.state !== "DISMISSED"
-    ) {
-      hasReview = true;
-      reviewIds.push(review.id);
+  reviewsResponse.data.forEach((review: Record<string, unknown>) => {
+    if ("user" in review) {
+      const user = review["user"] as Record<string, unknown>;
+      if ("login" in user) {
+        const username = user["login"] as string;
+        context.log.info(`Found review left by ${username}`);
+        if (
+          username === "approveman[bot]" &&
+          (review["state"] as string) !== "DISMISSED"
+        ) {
+          hasReview = true;
+          reviewIds.push(review["id"] as number);
+        }
+      }
     }
   });
   return { hasReview, reviewIds };
@@ -231,15 +225,15 @@ const dismissApproval = async (
   context: Context,
   reviewId: number,
 ): Promise<void> => {
-  const pullReq = initPullRelatedRequest(context) as Record<string, string>;
-  const req = (pullReq as unknown) as Octokit.RequestOptions &
-    Octokit.PullsDismissReviewParamsDeprecatedNumber;
-  req["review_id"] = reviewId;
-  req.message = composeReviewDismissalMsg();
+  const req = context.repo({
+    "message": composeReviewDismissalMsg(),
+    "pull_number": context.payload.pull_request.number,
+    "review_id": reviewId,
+  });
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
   context.log.info(
-    `Dissmiss review #${reviewId} in PR #${pullReq["pull_number"]} ` +
+    `Dissmiss review #${reviewId} in PR #${req["pull_number"]} ` +
       `with status ${dismissResponse.status} ` +
       `and review state ${dismissResponse.data.state}`,
   );

@@ -1,8 +1,8 @@
 import {
-  isAllowedFile,
-  containsNotAllowedFile,
-  matchRule,
   containsApproveManConfig,
+  containsNotAllowedFile,
+  isAllowedFile,
+  matchRule,
 } from ".";
 
 describe("Rule matcher tests", () => {

@@ -1,6 +1,6 @@
-import nock from "nock";
 import { APP_CHECK_NAME } from "../../src/utils/config";
 import { StatusCodes } from "http-status-codes";
+import nock from "nock";
 
 export const checkSuccessStatus = (): void => {
   nock("https://api.github.com")
