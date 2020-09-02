@@ -46,7 +46,7 @@ export const getOwnershipRules = async (
 ): Promise<OwnershipRules> => {
   const config = await context?.config("approveman.yml");
   context?.log.info(`Found config: ${JSON.stringify(config)}`);
-  if (config !== null) {
+  if (config !== null && config !== undefined) {
     return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
     return getDefaultOwnershipRules();
