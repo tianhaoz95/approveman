@@ -2,9 +2,6 @@ import {
   GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND,
   GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND_DETAILS,
 } from "../config/err_msg";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Application } from "probot";
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 /**
  * Checks if the environment is OK for the app to boot up.
@@ -19,11 +16,14 @@ import { Application } from "probot";
  * @returns Nothing, but errors out if health check
  * does not pass.
  */
-export const healthCheck = (app: Application): void => {
-  app.log.info("Start health check");
+export const healthCheck = (
+  log: (msg: string) => void,
+  err: (msg: string) => void,
+): void => {
+  log("Start health check");
   if (process.env.GHE_HOST) {
-    if (process.env.APP_ACTOR_NAME_OVERRIDE) {
-      app.log.error(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND_DETAILS);
+    if (!process.env.APP_ACTOR_NAME_OVERRIDE) {
+      err(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND_DETAILS);
       throw Error(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND);
     }
   }
