@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:docs": "typedoc --out public src",
+    "build:docs": "typedoc --out public src test",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
     "start": "probot run ./lib/src/index.js",

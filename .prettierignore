@@ -1,5 +1,6 @@
 coverage
 lib
+public
 node_modules
 *.md
 .github/release-drafter.yml

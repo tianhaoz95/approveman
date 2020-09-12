@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import fs from "fs";
+import { getGitHubAPIEndpoint } from "./endpoint";
 import nock from "nock";
 import path from "path";
 
@@ -16,7 +17,7 @@ export const setConfigToBasic = (configId: string): void => {
   /* eslint-enable security/detect-non-literal-fs-filename */
   const contentBuf = Buffer.from(rawContent);
   const encodedContent = contentBuf.toString("base64");
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .get("/repos/tianhaoz95/.github/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.OK, {
       content: encodedContent,
@@ -26,16 +27,16 @@ export const setConfigToBasic = (configId: string): void => {
       size: encodedContent.length,
       type: "file",
     });
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .get("/repos/tianhaoz95/approveman-test/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
 };
 
 export const setConfigNotFound = (): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .get("/repos/tianhaoz95/.github/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .get("/repos/tianhaoz95/approveman-test/contents/.github%2Fapproveman.yml")
     .reply(StatusCodes.NOT_FOUND);
 };

@@ -1,3 +1,4 @@
+import { APP_CHECK_NAME, getAppActorName } from "../utils/config";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { ReviewEvent, ReviewLookupResult, UserInfo } from "../utils/types";
 /* eslint-enable  @typescript-eslint/no-unused-vars*/
@@ -11,7 +12,6 @@ import {
   composeStatusCheckTitle,
 } from "../utils/msg_composer";
 import { containsNotAllowedFile, ownsAllFiles } from "../utils/rule_matcher";
-import { APP_CHECK_NAME } from "../utils/config";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Context } from "probot";
 /* eslint-enable  @typescript-eslint/no-unused-vars*/
@@ -209,7 +209,7 @@ const getPreviousReviewIds = async (
         const username = user["login"] as string;
         context.log.info(`Found review left by ${username}`);
         if (
-          username === "approveman[bot]" &&
+          username === getAppActorName() &&
           (review["state"] as string) !== "DISMISSED"
         ) {
           hasReview = true;
