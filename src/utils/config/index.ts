@@ -29,10 +29,11 @@ export const DEFAULT_APP_ACTOR_NAME = "approveman[bot]";
 export const getAppActorName = (): string => {
   if (process.env.GHE_HOST) {
     if (process.env.APP_ACTOR_NAME_OVERRIDE) {
-      // eslint-disable-next-line no-magic-numbers
+      /* eslint-disable no-magic-numbers */
       if (process.env.APP_ACTOR_NAME_OVERRIDE.length === 0) {
         throw Error("Cannot set override app actor name to an empty string");
       }
+      /* eslint-enable no-magic-numbers */
       return process.env.APP_ACTOR_NAME_OVERRIDE;
     } else {
       throw Error(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND);

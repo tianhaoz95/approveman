@@ -48,7 +48,9 @@ describe("Approveman tests", () => {
   beforeEach(() => {
     // Clears the jest cache so that the environment will
     // not be contaminated between tests.
+    /* eslint-disable */
     jest.resetModules();
+    /* eslint-enable */
     // Makes a copy of the current environment variables
     // to keep the environment variables consistent across
     // tests.
