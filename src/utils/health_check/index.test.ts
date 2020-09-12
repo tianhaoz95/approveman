@@ -1,7 +1,9 @@
+import { Logger } from "tslog";
 import { healthCheck } from ".";
 
 describe("health check tests", () => {
   const defaultEnv = process.env;
+  const log: Logger = new Logger();
 
   beforeEach(() => {
     // Clears the jest cache so that the environment will
@@ -25,10 +27,10 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          console.log(msg);
+          log.info(msg);
         },
         (msg) => {
-          console.error(msg);
+          log.error(msg);
         },
       );
     }).not.toThrow();
@@ -39,10 +41,10 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          console.log(msg);
+          log.info(msg);
         },
         (msg) => {
-          console.error(msg);
+          log.error(msg);
         },
       );
     }).toThrow();
@@ -54,10 +56,10 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          console.log(msg);
+          log.info(msg);
         },
         (msg) => {
-          console.error(msg);
+          log.error(msg);
         },
       );
     }).not.toThrow();
