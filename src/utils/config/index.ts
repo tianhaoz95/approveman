@@ -10,6 +10,11 @@ export const NOT_ALLOWED_FILES = ["**/.github/**/*"];
  */
 export const APPROVEMAN_CONFIG_FILENAME = ".github/approveman.yml";
 
+/**
+ * The default app actor name, this is assigned by GitHub
+ * Marketplace, so all GitHub user will see this.
+ * By contrast, GitHub Enterprise users will see otherwise.
+ */
 export const DEFAULT_APP_ACTOR_NAME = "approveman[bot]";
 
 /**
