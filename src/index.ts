@@ -4,8 +4,7 @@ import { Application } from "probot";
 import { maybeApproveChange } from "./core";
 
 export = (app: Application): void => {
-  app.log.info("Starting ApproveMan server ...");
-
+  app.log.info("Start ApproveMan server");
   app.on(
     [
       "pull_request.opened",

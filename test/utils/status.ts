@@ -1,9 +1,10 @@
 import { APP_CHECK_NAME } from "../../src/utils/config";
 import { StatusCodes } from "http-status-codes";
+import { getGitHubAPIEndpoint } from "./endpoint";
 import nock from "nock";
 
 export const checkSuccessStatus = (): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .post(
       "/repos/tianhaoz95/approveman-test/check-runs",
       (body: Record<string, unknown>) => {
@@ -19,7 +20,7 @@ export const checkSuccessStatus = (): void => {
 };
 
 export const checkStartedStatus = (): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .post(
       "/repos/tianhaoz95/approveman-test/check-runs",
       (body: Record<string, unknown>) => {
@@ -34,7 +35,7 @@ export const checkStartedStatus = (): void => {
 };
 
 export const checkCrashStatus = (): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .post(
       "/repos/tianhaoz95/approveman-test/check-runs",
       (body: Record<string, unknown>) => {

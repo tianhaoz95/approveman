@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:docs": "typedoc --out public src",
+    "build:docs": "typedoc --out public src test",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
     "start": "probot run ./lib/src/index.js",
@@ -45,7 +45,8 @@
     "minimatch": "^3.0.4",
     "mustache": "^4.0.1",
     "prettyjson": "^1.2.1",
-    "probot": "^10.2.0"
+    "probot": "^10.2.0",
+    "tslog": "^2.8.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.13",

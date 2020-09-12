@@ -9,16 +9,13 @@ import {
   checkStartedStatus,
   checkSuccessStatus,
 } from "./utils/status";
-import {
-  prOpenedPayload,
-  prReopenedPayload,
-  prSynchronizePayload,
-} from "./fixtures/payloads/basic";
+import { prOpenedPayload, prReopenedPayload } from "./fixtures/payloads/basic";
 import { setConfigNotFound, setConfigToBasic } from "./utils/config";
 import { StatusCodes } from "http-status-codes";
 import { TEST_TIMEOUT } from "./utils/jest";
 import approvemanApp from "../src";
 import fs from "fs";
+import { getAppActorName } from "../src/utils/config";
 import { getGitHubAPIEndpoint } from "./utils/endpoint";
 import nock from "nock";
 import path from "path";
@@ -59,18 +56,6 @@ describe("Approveman tests", () => {
     // tests.
     process.env = { ...defaultEnv };
     nock.disableNetConnect();
-    probot = new Probot({
-      Octokit: ProbotOctokit.defaults({
-        retry: { enabled: false },
-        throttle: { enabled: false },
-      }),
-      githubToken: "test",
-      id: 1,
-      privateKey: mockCert,
-    });
-    const app = probot.load(approvemanApp);
-    app.log.info("Test app constructed");
-    checkStartedStatus();
   });
 
   afterEach(() => {
@@ -81,7 +66,44 @@ describe("Approveman tests", () => {
     nock.enableNetConnect();
   });
 
-  test("receive PR reopened", async () => {
+  test("enterprise without actor name should fail early", async () => {
+    process.env["GHE_HOST"] = "github.example.com";
+    probot = new Probot({
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false },
+      }),
+      githubToken: "test",
+      id: 1,
+      privateKey: mockCert,
+    });
+    probot.load(approvemanApp);
+    checkStartedStatus();
+    checkCrashStatus();
+    nock(getGitHubAPIEndpoint())
+      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
+      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prReopenedPayload,
+    });
+  });
+
+  test("enterprise functions properly after actor name set", async () => {
+    process.env["GHE_HOST"] = "github.example.com";
+    process.env["APP_ACTOR_NAME_OVERRIDE"] = "test_actor_name";
+    probot = new Probot({
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false },
+      }),
+      githubToken: "test",
+      id: 1,
+      privateKey: mockCert,
+    });
+    probot.load(approvemanApp);
+    checkStartedStatus();
     setConfigNotFound();
     checkApproved();
     checkSuccessStatus();
@@ -95,51 +117,20 @@ describe("Approveman tests", () => {
     });
   });
 
-  test("receive PR synchronize", async () => {
-    setConfigNotFound();
-    checkApproved();
-    checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: prSynchronizePayload,
+  test("enterprise dismisses approvals properly after actor name set", async () => {
+    process.env["GHE_HOST"] = "github.example.com";
+    process.env["APP_ACTOR_NAME_OVERRIDE"] = "test_actor_name";
+    probot = new Probot({
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false },
+      }),
+      githubToken: "test",
+      id: 1,
+      privateKey: mockCert,
     });
-  });
-
-  test("receive PR opened", async () => {
-    setConfigNotFound();
-    checkApproved();
-    checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: prOpenedPayload,
-    });
-  });
-
-  test("read config", async () => {
-    setConfigToBasic("basic");
-    checkApproved();
-    checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [
-        { filename: "docs/personal/tianhaoz95/test.md" },
-      ]);
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: prOpenedPayload,
-    });
-  });
-
-  test("rules not satisfied", async () => {
+    probot.load(approvemanApp);
+    checkStartedStatus();
     setConfigToBasic("basic");
     checkSuccessStatus();
     nock(getGitHubAPIEndpoint())
@@ -147,33 +138,11 @@ describe("Approveman tests", () => {
       .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
     setSinglePreviousReview();
     verifyReviewDismissed();
+    expect(getAppActorName()).not.toMatch("approveman[bot]");
     await probot.receive({
       id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
-    });
-  });
-
-  test("block not allowed files", async () => {
-    checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: ".github/config.yml" }]);
-    setSinglePreviousReview();
-    verifyReviewDismissed();
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: prOpenedPayload,
-    });
-  });
-
-  test("handle unknown error elegantly", async () => {
-    checkCrashStatus();
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: "???",
     });
   });
 });

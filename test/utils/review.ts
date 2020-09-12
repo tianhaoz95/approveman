@@ -1,12 +1,14 @@
 import { StatusCodes } from "http-status-codes";
 import { composeReviewDismissalMsg } from "../../src/utils/msg_composer";
+import { getAppActorName } from "../../src/utils/config";
+import { getGitHubAPIEndpoint } from "./endpoint";
 import nock from "nock";
 
 const defaultPullNumber = 1;
 const defaultReviewId = 1;
 
 export const checkApproved = (pullNumber = defaultPullNumber): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .post(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews`,
       (body: Record<string, unknown>) => {
@@ -27,7 +29,7 @@ export const checkApproved = (pullNumber = defaultPullNumber): void => {
 export const setPreviousReviews = (
   reviews: Record<string, unknown>[],
 ): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .get("/repos/tianhaoz95/approveman-test/pulls/1/reviews")
     .reply(StatusCodes.OK, reviews);
 };
@@ -42,7 +44,7 @@ export const setSinglePreviousReview = (): void => {
       id: 1,
       state: "APPROVED",
       user: {
-        login: "approveman[bot]",
+        login: getAppActorName(),
       },
     },
   ]);
@@ -52,7 +54,7 @@ export const verifyReviewDismissed = (
   reviewId = defaultReviewId,
   pullNumber = defaultPullNumber,
 ): void => {
-  nock("https://api.github.com")
+  nock(getGitHubAPIEndpoint())
     .put(
       `/repos/tianhaoz95/approveman-test/pulls/${pullNumber}/reviews/${reviewId}/dismissals`,
       (body: Record<string, unknown>) => {
