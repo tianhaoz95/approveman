@@ -1,3 +1,27 @@
 {
-  "files": ["README.md", "docs/README.md"]
+  "files": [
+    "README.md",
+    "docs/README.md"
+  ],
+  "projectName": "approveman",
+  "projectOwner": "tianhaoz95",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "contributors": [
+    {
+      "login": "tianhaoz95",
+      "name": "Tianhao Zhou",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16887772?v=4",
+      "profile": "https://tianhaoz.com",
+      "contributions": [
+        "code",
+        "bug",
+        "blog",
+        "doc",
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
 }
