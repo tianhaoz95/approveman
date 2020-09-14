@@ -1,0 +1,10 @@
+name: File Sync
+on: push
+jobs:
+  readme-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: check README content sync
+        run: ./scripts/bash/check_sync.sh
