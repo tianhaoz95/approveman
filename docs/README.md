@@ -1,6 +1,6 @@
 # Approveman
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tianhaoz95/approveman)
@@ -61,6 +61,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://tianhaoz.com"><img src="https://avatars3.githubusercontent.com/u/16887772?v=4" width="100px;" alt=""/><br /><sub><b>Tianhao Zhou</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Code">💻</a> <a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/epDHowwD"><img src="https://avatars1.githubusercontent.com/u/37585964?v=4" width="100px;" alt=""/><br /><sub><b>gnod</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/issues?q=author%3AepDHowwD" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
