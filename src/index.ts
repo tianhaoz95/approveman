@@ -1,10 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Application } from "probot";
 /* eslint-enable @typescript-eslint/no-unused-vars */
+import { healthCheck } from "./utils/health_check";
 import { maybeApproveChange } from "./core";
 
 export = (app: Application): void => {
-  app.log.info("Start ApproveMan server");
+  healthCheck(
+    (msg) => {
+      app.log.info(msg);
+    },
+    (msg) => {
+      app.log.error(msg);
+    },
+  );
+
   app.on(
     [
       "pull_request.opened",
