@@ -61,7 +61,7 @@
     "jest": "^26.4.2",
     "nock": "^13.0.4",
     "nodemon": "^2.0.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.1.2",
     "remark-cli": "^8.0.1",
     "remark-lint": "^7.0.1",
     "remark-preset-lint-recommended": "^4.0.1",
