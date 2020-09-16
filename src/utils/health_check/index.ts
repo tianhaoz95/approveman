@@ -27,5 +27,5 @@ export const healthCheck = (
       throw Error(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND);
     }
   }
-  log('Health check completed. Ready to launch the server.')
+  log("Health check completed. Ready to launch the server.");
 };
