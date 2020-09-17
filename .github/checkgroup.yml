@@ -4,7 +4,6 @@ subprojects:
       - "**"
     checks:
       - "WIP"
-      - "Semantic Pull Request"
       - "task-list-completed"
   - id: documentation
     paths:
