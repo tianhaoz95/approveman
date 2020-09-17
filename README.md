@@ -1,7 +1,10 @@
 # Approveman
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+---
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tianhaoz95/approveman)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/28428cd8486b4ac998d7a2a83fe0c3ff)](https://www.codacy.com/manual/tianhaoz/approveman?utm_source=github.com&utm_medium=referral&utm_content=tianhaoz95/approveman&utm_campaign=Badge_Grade)
@@ -26,6 +29,10 @@ For example, it's reasonable for a repository to set up a location with a user's
 In this case, if I want to add some notes in `[project_root]/playground/${username}/my-note.md`, there is no reason to ask another developer to review the change.
 
 ## Usage
+
+## For GitHub
+
+The app can be installed from the [GitHub Marketplace](https://github.com/marketplace/approveman).
 
 You can configure the behavior by adding rules into `.github/approveman.yml`.
 
@@ -67,6 +74,8 @@ export APP_ACTOR_NAME_OVERRIDE="project-name__approveman[bot]"
 npm run build # Build the TypeScript source
 npm start # Start the server
 ```
+
+After the server is up and running, the rest should be the same as the [GitHub setup](#for-github).
 
 ## Contributors ✨
 
