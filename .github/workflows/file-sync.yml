@@ -6,5 +6,7 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
-      - name: check README content sync
-        run: ./scripts/bash/check_sync.sh
+      - uses: tianhaoz95/mirror-action@v1.0.1
+        with:
+          original: "README.md"
+          mirror: "docs/README.md"

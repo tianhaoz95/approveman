@@ -14,5 +14,13 @@ then
   echo "Content in $MAIN_README and $DOC_README are the same. Done."
 else
   echo "ERROR: content in $MAIN_README and $DOC_README are different."
-  exit 1
+  echo "Found option $1."
+  if [ "$1" == "--fix" ]
+  then
+    echo "The --fix option found. Copy $MAIN_README to $DOC_README."
+    cp "$MAIN_README" "$DOC_README"
+  else
+    echo "No --fix option given. Abort."
+    exit 1
+  fi
 fi

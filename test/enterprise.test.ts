@@ -4,11 +4,7 @@ import {
   setSinglePreviousReview,
   verifyReviewDismissed,
 } from "./utils/review";
-import {
-  checkCrashStatus,
-  checkStartedStatus,
-  checkSuccessStatus,
-} from "./utils/status";
+import { checkStartedStatus, checkSuccessStatus } from "./utils/status";
 import { prOpenedPayload, prReopenedPayload } from "./fixtures/payloads/basic";
 import { setConfigNotFound, setConfigToBasic } from "./utils/config";
 import { StatusCodes } from "http-status-codes";
@@ -68,26 +64,18 @@ describe("Approveman tests", () => {
 
   test("enterprise without actor name should fail early", async () => {
     process.env["GHE_HOST"] = "github.example.com";
-    probot = new Probot({
-      Octokit: ProbotOctokit.defaults({
-        retry: { enabled: false },
-        throttle: { enabled: false },
-      }),
-      githubToken: "test",
-      id: 1,
-      privateKey: mockCert,
-    });
-    probot.load(approvemanApp);
-    checkStartedStatus();
-    checkCrashStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
-    await probot.receive({
-      id: "test_id",
-      name: "pull_request",
-      payload: prReopenedPayload,
-    });
+    expect(() => {
+      probot = new Probot({
+        Octokit: ProbotOctokit.defaults({
+          retry: { enabled: false },
+          throttle: { enabled: false },
+        }),
+        githubToken: "test",
+        id: 1,
+        privateKey: mockCert,
+      });
+      probot.load(approvemanApp);
+    }).toThrow();
   });
 
   test("enterprise functions properly after actor name set", async () => {

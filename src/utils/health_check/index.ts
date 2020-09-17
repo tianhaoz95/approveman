@@ -20,11 +20,12 @@ export const healthCheck = (
   log: (msg: string) => void,
   err: (msg: string) => void,
 ): void => {
-  log("Start health check");
+  log("Start health check.");
   if (process.env.GHE_HOST) {
     if (!process.env.APP_ACTOR_NAME_OVERRIDE) {
       err(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND_DETAILS);
       throw Error(GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND);
     }
   }
+  log("Health check completed. Ready to launch the server.");
 };
