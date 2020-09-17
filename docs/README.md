@@ -1,10 +1,12 @@
 # Approveman
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
----
+## Repository status
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tianhaoz95/approveman)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/28428cd8486b4ac998d7a2a83fe0c3ff)](https://www.codacy.com/manual/tianhaoz/approveman?utm_source=github.com&utm_medium=referral&utm_content=tianhaoz95/approveman&utm_campaign=Badge_Grade)
@@ -82,8 +84,11 @@ After the server is up and running, the rest should be the same as the [GitHub s
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://tianhaoz.com"><img src="https://avatars3.githubusercontent.com/u/16887772?v=4" width="100px;" alt=""/><br /><sub><b>Tianhao Zhou</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Code">💻</a> <a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Documentation">📖</a></td>
@@ -92,7 +97,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 </table>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
