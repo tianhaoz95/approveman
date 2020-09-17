@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
-      - use: tianhaoz95/mirror-action@v1.0.1
+      - uses: tianhaoz95/mirror-action@v1.0.1
         with:
           original: "README.md"
           mirror: "docs/README.md"
