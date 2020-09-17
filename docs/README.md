@@ -1,4 +1,4 @@
-# Approveman
+![logo](https://raw.githubusercontent.com/tianhaoz95/approveman/master/docs/asset/logo/title_rounded.png)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
