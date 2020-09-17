@@ -31,7 +31,8 @@
     "prettier": "prettier --check .",
     "prettier:format": "prettier --write .",
     "format": "npm run prettier:format && npm run eslint:format",
-    "test": "jest && npm run eslint",
+    "test": "npm run test:silent",
+    "test:debug": "jest && npm run eslint",
     "test:silent": "LOG_LEVEL=warn jest && npm run eslint",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
