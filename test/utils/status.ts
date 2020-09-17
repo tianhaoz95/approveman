@@ -13,6 +13,8 @@ export const checkSuccessStatus = (): void => {
           name: APP_CHECK_NAME,
           status: "completed",
         });
+        expect(body["started_at"]).not.toBeDefined();
+        expect(body["completed_at"]).toBeDefined();
         return true;
       },
     )
@@ -28,6 +30,8 @@ export const checkStartedStatus = (): void => {
           name: APP_CHECK_NAME,
           status: "in_progress",
         });
+        expect(body["started_at"]).toBeDefined();
+        expect(body["completed_at"]).not.toBeDefined();
         return true;
       },
     )
@@ -44,6 +48,8 @@ export const checkCrashStatus = (): void => {
           name: APP_CHECK_NAME,
           status: "completed",
         });
+        expect(body["started_at"]).not.toBeDefined();
+        expect(body["completed_at"]).toBeDefined();
         return true;
       },
     )
