@@ -18,6 +18,12 @@ For rare cases where you need to manually test the app behavior, please only ins
 
 ### Tools
 
+#### Prerequisites
+
+-   It is recommended to develop ApproveMan on a Linux or Mac OS since there are some utility bash scripts that help save you time. Powershell scripts are available but they are less maintained compared with bash scripts. If you happen to have a windows machine, you can use WSL2.
+
+#### Editor
+
 The recommended editor for development is Visual Studio Code since the project has a corresponding configuration file that should work out-of-box.
 
 #### Recommended VS Code extensions
@@ -27,6 +33,8 @@ The recommended editor for development is Visual Studio Code since the project h
 -   [GitHub issues (Optional)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.github-issues-prs)
 
 ## Workflow
+
+The workflow is pretty much taken straight from the Probot project.
 
 ### Issues and PRs
 
