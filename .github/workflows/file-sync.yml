@@ -10,3 +10,7 @@ jobs:
         with:
           original: "README.md"
           mirror: "docs/README.md"
+      - uses: tianhaoz95/mirror-action@v1.0.1
+        with:
+          original: "CONTRIBUTING.md"
+          mirror: "docs/development.md"

@@ -32,7 +32,7 @@ In this case, if I want to add some notes in `[project_root]/playground/${userna
 
 ## Usage
 
-## For GitHub
+### For GitHub
 
 The app can be installed from the [GitHub Marketplace](https://github.com/marketplace/approveman).
 

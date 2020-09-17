@@ -8,6 +8,10 @@
       {
         "match": "README.md",
         "cmd": "bash ${workspaceFolder}/scripts/bash/check_sync.sh --fix"
+      },
+      {
+        "match": "CONTRIBUTING.md",
+        "cmd": "bash ${workspaceFolder}/scripts/bash/check_sync.sh --fix"
       }
     ]
   },
