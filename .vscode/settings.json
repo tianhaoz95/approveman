@@ -4,6 +4,10 @@
       {
         "match": "\\.md$",
         "cmd": "npm run remark:format"
+      },
+      {
+        "match": "README.md",
+        "cmd": "bash ${workspaceFolder}/scripts/bash/check_sync.sh --fix"
       }
     ]
   },
