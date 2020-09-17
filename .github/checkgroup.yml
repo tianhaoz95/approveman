@@ -1,0 +1,21 @@
+subprojects:
+  - id: common
+    paths:
+      - "**"
+    checks:
+      - "WIP"
+      - "Semantic Pull Request"
+      - "task-list-completed"
+  - id: documentation
+    paths:
+      - "README.md"
+      - "docs/README.md"
+      - "CONTRIBUTING.md"
+      - "docs/development.md"
+    checks:
+      - "readme-sync"
+  - id: server
+    paths:
+      - "src/**"
+    checks:
+      - "server-test"

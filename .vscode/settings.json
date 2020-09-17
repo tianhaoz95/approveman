@@ -22,5 +22,13 @@
     "**/CVS": true,
     "**/.DS_Store": true
   },
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "cSpell.words": [
+    "Codacy",
+    "Codecov",
+    "Probot",
+    "lcov",
+    "subprojects",
+    "tianhaoz"
+  ]
 }
