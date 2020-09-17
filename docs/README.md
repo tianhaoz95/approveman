@@ -51,6 +51,23 @@ Here is an example of how it works:
 
 ![check status demo](https://raw.githubusercontent.com/tianhaoz95/approveman/master/docs/asset/screenshots/check_status.png)
 
+### For GitHub Enterprise
+
+To run a server for GitHub Enterprise, please also set `GHE_HOST` and `APP_ACTOR_NAME_OVERRIDE` before running the server:
+
+```bash
+# This will be the custom domain for your GitHub Enterprise
+export GHE_HOST="github.example.com"
+
+# The following is just an example, you will need to set it to
+# the app's actor name that you assign it with in GitHub Enterprise
+# integration.
+export APP_ACTOR_NAME_OVERRIDE="project-name__approveman[bot]"
+
+npm run build # Build the TypeScript source
+npm start # Start the server
+```
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
