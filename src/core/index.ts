@@ -172,7 +172,7 @@ const dismissApproval = async (
   context.log.info("Try to dismiss the review");
   const dismissResponse = await context.github.pulls.dismissReview(req);
   context.log.info(
-    `Dissmiss review #${reviewId} in PR #${req["pull_number"]} ` +
+    `Dismiss review #${reviewId} in PR #${req["pull_number"]} ` +
       `with status ${dismissResponse.status} ` +
       `and review state ${dismissResponse.data.state}`,
   );
@@ -208,6 +208,7 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       );
       await dismissAllApprovals(context);
       context.log.info("All previous approvals dismissed");
+      // TODO(tianhaoz95): this should be a neutral check instead.
       await createPassingStatus(context, startTime);
       return;
     }
@@ -231,9 +232,11 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       );
       await dismissAllApprovals(context);
       context.log.info("All previous approvals dismissed");
+      // TODO(tianhaoz95): this should be a neutral check instead.
+      await createPassingStatus(context, startTime);
     }
   } catch (err) {
-    context.log.info(`Unknown error occured: ${JSON.stringify(err)}`);
+    context.log.info(`Unknown error occurred: ${JSON.stringify(err)}`);
     await createCrashStatus(context, startTime, err);
   }
 };
