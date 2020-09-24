@@ -66,9 +66,7 @@ export const createStatus = async (
     status,
   });
   const response = await context.github.checks.create(statusOptions);
-  context.log.info(
-    `Posting status finished with status ${response.status}`,
-  );
+  context.log.info(`Posting status finished with status ${response.status}`);
   if (response.status !== StatusCodes.CREATED) {
     context.log.error(
       `Create passing status failed with status ${
