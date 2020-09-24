@@ -7,7 +7,7 @@ import type { UserInfo } from "../utils/types";
 
 /**
  * Parses the user information from the event payload.
- * 
+ *
  * @param context The Probot context.
  */
 export const getUserInfo = (context: Context): UserInfo => {

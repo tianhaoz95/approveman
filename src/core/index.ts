@@ -1,6 +1,7 @@
 import { containsNotAllowedFile, ownsAllFiles } from "../utils/rule_matcher";
 import {
   createCrashStatus,
+  createNeutralStatus,
   createPassingStatus,
   createStartStatus,
 } from "./check_status";
@@ -36,7 +37,7 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       await dismissAllApprovals(context);
       context.log.info("All previous approvals dismissed");
       // TODO(tianhaoz95): this should be a neutral check instead.
-      await createPassingStatus(context, startTime);
+      await createNeutralStatus(context, startTime);
       return;
     }
     const rules = await getOwnershipRules(context);
@@ -59,8 +60,7 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       );
       await dismissAllApprovals(context);
       context.log.info("All previous approvals dismissed");
-      // TODO(tianhaoz95): this should be a neutral check instead.
-      await createPassingStatus(context, startTime);
+      await createNeutralStatus(context, startTime);
     }
   } catch (err) {
     context.log.info(`Unknown error occurred: ${JSON.stringify(err)}`);

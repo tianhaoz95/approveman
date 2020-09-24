@@ -39,6 +39,8 @@ export const createStatus = async (
   details: string,
   startTime: string,
 ): Promise<void> => {
+  context.log.info(`Create ${status} status with conclusion ${conclusion}.`);
+  context.log.info(`title: ${title}, summary: ${summary}, details: ${details}`);
   /* eslint-disable */
   const completedAt: string | undefined = conclusion
     ? new Date().toISOString()
@@ -65,7 +67,7 @@ export const createStatus = async (
   });
   const response = await context.github.checks.create(statusOptions);
   context.log.info(
-    `Create passing status finished with status ${response.status}`,
+    `Posting status finished with status ${response.status}`,
   );
   if (response.status !== StatusCodes.CREATED) {
     context.log.error(
@@ -148,6 +150,28 @@ export const createCrashStatus = async (
     composeCrashReportTitle(),
     composeCrashReportSummary(),
     composeCrashReportDetails(error),
+    startTime,
+  );
+};
+
+/**
+ * Post a neutral check indicating that the app
+ * decide to act as noop for this pull request.
+ *
+ * @param context The Probot context.
+ * @param startTime The timestamp that the checks started at.
+ */
+export const createNeutralStatus = async (
+  context: Context,
+  startTime: string,
+): Promise<void> => {
+  await createStatus(
+    context,
+    "neutral",
+    "completed",
+    composeStatusCheckTitle(),
+    composeStatusCheckSummary(),
+    composeStatusCheckDetails(),
     startTime,
   );
 };

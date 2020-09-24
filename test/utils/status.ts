@@ -21,6 +21,24 @@ export const checkSuccessStatus = (): void => {
     .reply(StatusCodes.CREATED);
 };
 
+export const checkNeutralStatus = (): void => {
+  nock(getGitHubAPIEndpoint())
+    .post(
+      "/repos/tianhaoz95/approveman-test/check-runs",
+      (body: Record<string, unknown>) => {
+        expect(body).toMatchObject({
+          conclusion: "neutral",
+          name: APP_CHECK_NAME,
+          status: "completed",
+        });
+        expect(body["started_at"]).not.toBeDefined();
+        expect(body["completed_at"]).toBeDefined();
+        return true;
+      },
+    )
+    .reply(StatusCodes.CREATED);
+};
+
 export const checkStartedStatus = (): void => {
   nock(getGitHubAPIEndpoint())
     .post(
