@@ -29,7 +29,10 @@
     "Octokit",
     "Probot",
     "approveman",
+    "buildx",
+    "ghcr",
     "lcov",
+    "qemu",
     "repos",
     "subprojects",
     "tianhaoz"
