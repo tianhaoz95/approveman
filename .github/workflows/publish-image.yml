@@ -30,7 +30,7 @@ jobs:
           REPO: approveman
         run: |
           source query_image_tag.sh
-          echo "::set-output name=image_tag::$USERNAME/$REPO:$USE_TAG_NAME"
+          echo "::set-output name=image_tag::docker.pkg.github.com/$USERNAME/$REPO/approveman-server:$USE_TAG_NAME"
       - uses: docker/build-push-action@v2
         if: ${{ github.event_name == 'push' }}
         with:
