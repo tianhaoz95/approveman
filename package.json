@@ -1,8 +1,8 @@
 {
   "name": "approveman",
   "version": "1.0.0",
-  "private": true,
-  "description": "A GitHub app to help approve pull requests.",
+  "private": false,
+  "description": "A GitHub app to approve pull requests in safe locations.",
   "author": "Tianhao Zhou <tianhaoz@umich.edu>",
   "license": "ISC",
   "repository": "https://github.com/tianhaoz95/approveman.git",
@@ -13,10 +13,16 @@
     "github",
     "probot-app"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@tianhaoz95"
+  },
   "remarkConfig": {
     "plugins": [
       "remark-preset-lint-recommended"
     ]
+  },
+  "bin": {
+    "approveman": "./lib/src/cli.js"
   },
   "scripts": {
     "build": "tsc",

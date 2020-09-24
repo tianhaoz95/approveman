@@ -1,0 +1,25 @@
+name: Publish CLI
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+jobs:
+  publish-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm run build
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.USE_GITHUB_TOKEN }}
+          registry: https://npm.pkg.github.com/@tianhaoz95
+          dry-run: ${{ github.event_name == 'pull_request' }}
