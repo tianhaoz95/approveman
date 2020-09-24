@@ -27,10 +27,9 @@ jobs:
         working-directory: scripts/bash
         env:
           USERNAME: ${{ github.repository_owner }}
-          REPO: approveman
         run: |
           source query_image_tag.sh
-          echo "::set-output name=image_tag::ghcr.io/$USERNAME/$REPO/approveman-server:$USE_TAG_NAME"
+          echo "::set-output name=image_tag::ghcr.io/$USERNAME/approveman-server:$USE_TAG_NAME"
       - uses: docker/build-push-action@v2
         if: ${{ github.event_name == 'push' }}
         with:
