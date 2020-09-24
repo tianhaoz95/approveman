@@ -14,7 +14,7 @@
     "probot-app"
   ],
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/@tianhaoz95"
+    "registry": "https://npm.pkg.github.com/@tianhaoz95"
   },
   "remarkConfig": {
     "plugins": [
