@@ -62,6 +62,23 @@ Here is an example of how it works:
 
 ### For GitHub Enterprise
 
+#### Run with container
+
+After setting `GHE_HOST`, `APP_ID`, `WEBHOOK_PROXY_URL`, `WEBHOOK_SECRET`, use the following command to start the server:
+
+```bash
+sudo docker run \
+    --env GHE_HOST \
+    --env APP_ID \
+    --env WEBHOOK_PROXY_URL \
+    --env WEBHOOK_SECRET \
+    ghcr.io/tianhaoz95/approveman-server:v1.1.2 
+```
+
+For more details, see [GitHub Container Registry](https://github.com/users/tianhaoz95/packages/container/package/approveman-server).
+
+#### Run locally
+
 To run a server for GitHub Enterprise, please also set `GHE_HOST` and `APP_ACTOR_NAME_OVERRIDE` before running the server:
 
 ```bash
