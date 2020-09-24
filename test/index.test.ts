@@ -6,6 +6,7 @@ import {
 } from "./utils/review";
 import {
   checkCrashStatus,
+  checkNeutralStatus,
   checkStartedStatus,
   checkSuccessStatus,
 } from "./utils/status";
@@ -15,13 +16,12 @@ import {
   prSynchronizePayload,
 } from "./fixtures/payloads/basic";
 import { setConfigNotFound, setConfigToBasic } from "./utils/config";
-import { StatusCodes } from "http-status-codes";
 import { TEST_TIMEOUT } from "./utils/jest";
 import approvemanApp from "../src";
 import fs from "fs";
-import { getGitHubAPIEndpoint } from "./utils/endpoint";
 import nock from "nock";
 import path from "path";
+import { setPullRequestFiles } from "./utils/files";
 
 /* eslint-disable */
 jest.setTimeout(TEST_TIMEOUT);
@@ -85,9 +85,7 @@ describe("Approveman tests", () => {
     setConfigNotFound();
     checkApproved();
     checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
+    setPullRequestFiles(["playground/tianhaoz95/test.md"]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -99,9 +97,7 @@ describe("Approveman tests", () => {
     setConfigNotFound();
     checkApproved();
     checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
+    setPullRequestFiles(["playground/tianhaoz95/test.md"]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -113,9 +109,7 @@ describe("Approveman tests", () => {
     setConfigNotFound();
     checkApproved();
     checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "playground/tianhaoz95/test.md" }]);
+    setPullRequestFiles(["playground/tianhaoz95/test.md"]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -127,11 +121,7 @@ describe("Approveman tests", () => {
     setConfigToBasic("basic");
     checkApproved();
     checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [
-        { filename: "docs/personal/tianhaoz95/test.md" },
-      ]);
+    setPullRequestFiles(["docs/personal/tianhaoz95/test.md"]);
     await probot.receive({
       id: "test_id",
       name: "pull_request",
@@ -141,10 +131,42 @@ describe("Approveman tests", () => {
 
   test("rules not satisfied", async () => {
     setConfigToBasic("basic");
-    checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
+    checkNeutralStatus();
+    setPullRequestFiles(["some/random/file.md"]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
+  });
+
+  test("contains not satisfied files", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      "some/random/file.md",
+      "playground/tianhaoz95/README.md",
+      "playground/tianhaoz95/development.md",
+    ]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
+  });
+
+  test("contains files in under other username", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      "playground/tianhaoz95/README.md",
+      "playground/tianhaoz95/development.md",
+      "playground/otherid/README.md",
+    ]);
     setSinglePreviousReview();
     verifyReviewDismissed();
     await probot.receive({
@@ -155,10 +177,38 @@ describe("Approveman tests", () => {
   });
 
   test("block not allowed files", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([".github/config.yml"]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
+  });
+
+  test("block partially not allowed files", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      ".github/config.yml",
+      "playground/tianhaoz95/README.md",
+    ]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prOpenedPayload,
+    });
+  });
+
+  test("block empty file set", async () => {
+    setConfigToBasic("basic");
     checkSuccessStatus();
-    nock(getGitHubAPIEndpoint())
-      .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
-      .reply(StatusCodes.OK, [{ filename: ".github/config.yml" }]);
+    setPullRequestFiles([]);
     setSinglePreviousReview();
     verifyReviewDismissed();
     await probot.receive({

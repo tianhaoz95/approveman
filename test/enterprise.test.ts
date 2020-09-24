@@ -4,7 +4,11 @@ import {
   setSinglePreviousReview,
   verifyReviewDismissed,
 } from "./utils/review";
-import { checkStartedStatus, checkSuccessStatus } from "./utils/status";
+import {
+  checkNeutralStatus,
+  checkStartedStatus,
+  checkSuccessStatus,
+} from "./utils/status";
 import { prOpenedPayload, prReopenedPayload } from "./fixtures/payloads/basic";
 import { setConfigNotFound, setConfigToBasic } from "./utils/config";
 import { StatusCodes } from "http-status-codes";
@@ -120,7 +124,7 @@ describe("Approveman tests", () => {
     probot.load(approvemanApp);
     checkStartedStatus();
     setConfigToBasic("basic");
-    checkSuccessStatus();
+    checkNeutralStatus();
     nock(getGitHubAPIEndpoint())
       .get("/repos/tianhaoz95/approveman-test/pulls/1/files")
       .reply(StatusCodes.OK, [{ filename: "some/random/file.md" }]);
