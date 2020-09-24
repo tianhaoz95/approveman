@@ -21,4 +21,5 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.USE_GITHUB_TOKEN }}
+          registry: https://npm.pkg.github.com/@tianhaoz95
           dry-run: ${{ github.event_name == 'pull_request' }}
