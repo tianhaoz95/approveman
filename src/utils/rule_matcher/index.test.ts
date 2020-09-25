@@ -75,6 +75,28 @@ describe("Rule matcher tests", () => {
     ).toBe(true);
   });
 
+  test("should allow nested dot directory to match", () => {
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**/*" },
+        "playground/tianhaoz95/projects/.project/main.cc",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(true);
+  });
+
+  test("should allow nested dot file to match", () => {
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**/*" },
+        "playground/tianhaoz95/projects/project/.gitignore",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(true);
+  });
+
   test("should allow shallow files to match nested rule", () => {
     expect(
       matchRule(
