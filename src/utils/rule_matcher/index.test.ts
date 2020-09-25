@@ -48,7 +48,7 @@ describe("Rule matcher tests", () => {
   test("match rule filters correct filenames", () => {
     expect(
       matchRule(
-        { name: "test rule", path: "playground/{{username}}/**.md" },
+        { name: "test rule", path: "playground/{{username}}/**/*.md" },
         "playground/tianhaoz95/test.md",
         { username: "tianhaoz95" },
         null,
@@ -56,12 +56,34 @@ describe("Rule matcher tests", () => {
     ).toBe(true);
     expect(
       matchRule(
-        { name: "test rule", path: "playground/{{username}}/**.md" },
+        { name: "test rule", path: "playground/{{username}}/**/*.md" },
         "other_location/tianhaoz95/test.md",
         { username: "tianhaoz95" },
         null,
       ),
     ).toBe(false);
+  });
+
+  test("should allow nested files to match", () => {
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**/*.md" },
+        "playground/tianhaoz95/projects/project/test.md",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(true);
+  });
+
+  test("should allow shallow files to match nested rule", () => {
+    expect(
+      matchRule(
+        { name: "test rule", path: "playground/{{username}}/**/*.md" },
+        "playground/tianhaoz95/test.md",
+        { username: "tianhaoz95" },
+        null,
+      ),
+    ).toBe(true);
   });
 
   test("correctly identify ApproveMan config", () => {
