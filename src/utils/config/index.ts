@@ -1,4 +1,7 @@
 import { GITHUB_ENTERPRISE_APP_ACTOR_NOT_FOUND } from "./err_msg";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import minimatch from "minimatch";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 export const APP_CHECK_NAME = "ApproveMan";
 
@@ -48,4 +51,12 @@ export const getAppActorName = (): string => {
     }
   }
   return DEFAULT_APP_ACTOR_NAME;
+};
+
+/**
+ * The minimatch option that should be used to match
+ * user defined files against pull requests.
+ */
+export const MATCH_OPTIONS: minimatch.IOptions = {
+  dot: true,
 };

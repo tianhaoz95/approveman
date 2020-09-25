@@ -53,6 +53,7 @@ Note:
 
 -   The default config contains `playground/{{username}}/**/*` if no config file is provided in the repository.
 -   All pull requests that modify files within `.github` the directory is denied regardless of the rules in the configuration for safety.
+-   The globstar matches only the directories. More specifically, if you want all Markdown files in a directory, please use `playground/{{username}}/**/*.md` instead of `playground/{{username}}/**.md` which might work with some of the matching package variances.
 
 Here is an example of how it works:
 

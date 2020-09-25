@@ -1,4 +1,8 @@
-import { APPROVEMAN_CONFIG_FILENAME, NOT_ALLOWED_FILES } from "../config";
+import {
+  APPROVEMAN_CONFIG_FILENAME,
+  MATCH_OPTIONS,
+  NOT_ALLOWED_FILES,
+} from "../config";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DirectoryMatchingRule, UserInfo } from "../types";
 /* eslint-enable @typescript-eslint/no-unused-vars */
@@ -24,7 +28,7 @@ export const matchRule = (
 ): boolean => {
   const renderedRule = Mustache.render(rule.path, info);
   context?.log.info(`Rendered rules to ${renderedRule}`);
-  const isMatch = minimatch(filename, renderedRule);
+  const isMatch = minimatch(filename, renderedRule, MATCH_OPTIONS);
   context?.log.info(
     `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`,
   );
@@ -49,7 +53,7 @@ export const containsApproveManConfig = (filenames: string[]): boolean => {
 export const isAllowedFile = (filename: string): boolean => {
   let isAllowed = true;
   NOT_ALLOWED_FILES.forEach((notAllowedFile) => {
-    if (minimatch(filename, notAllowedFile)) {
+    if (minimatch(filename, notAllowedFile, MATCH_OPTIONS)) {
       isAllowed = false;
     }
   });
