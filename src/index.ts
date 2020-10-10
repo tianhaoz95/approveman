@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Application } from "probot";
+import { Application, Context } from "probot";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { healthCheck } from "./utils/health_check";
 import { maybeApproveChange } from "./core";
@@ -20,7 +20,9 @@ export = (app: Application): void => {
       "pull_request.reopened",
       "pull_request.synchronize",
     ],
-    async (context) => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    async (context: Context<any>) => {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       context.log.info("Pull request creation event detected");
       await maybeApproveChange(context);
     },
