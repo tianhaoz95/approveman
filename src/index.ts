@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Application } from "probot";
+import { Application, Context } from "probot";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { healthCheck } from "./utils/health_check";
 import { maybeApproveChange } from "./core";
@@ -20,7 +20,11 @@ export = (app: Application): void => {
       "pull_request.reopened",
       "pull_request.synchronize",
     ],
-    async (context) => {
+    // TODO(tianhaoz95): change this to strongly typed webhook
+    // event to make it safer.
+    /* eslint-disable */
+    async (context: Context<any>) => {
+      /* eslint-enable */
       context.log.info("Pull request creation event detected");
       await maybeApproveChange(context);
     },
