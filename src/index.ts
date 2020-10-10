@@ -20,9 +20,11 @@ export = (app: Application): void => {
       "pull_request.reopened",
       "pull_request.synchronize",
     ],
-    /* eslint-disable @typescript-eslint/no-explicit-any */
+    // TODO(tianhaoz95): change this to strongly typed webhook
+    // event to make it safer.
+    /* eslint-disable */
     async (context: Context<any>) => {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
+      /* eslint-enable */
       context.log.info("Pull request creation event detected");
       await maybeApproveChange(context);
     },
