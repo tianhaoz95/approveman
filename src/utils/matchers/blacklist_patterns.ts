@@ -1,5 +1,7 @@
-import { GITHUB_REPOSITORY_CONFIG_FILE_PATTERN } from "../config";
-import { MATCH_OPTIONS } from "../config";
+import {
+  GITHUB_REPOSITORY_CONFIG_FILE_PATTERN,
+  MATCH_OPTIONS,
+} from "../config";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OwnershipRules } from "../types";
 /* eslint-enable @typescript-eslint/no-unused-vars */
