@@ -5,13 +5,11 @@ import minimatch from "minimatch";
 
 export const APP_CHECK_NAME = "ApproveMan";
 
-export const NOT_ALLOWED_FILES = ["**/.github/**/*"];
-
 /**
- * The configuration file for ApproveMan. Detect this to do automatic
- * configuration validation.
+ * The filename pattern that represents the configuration files for
+ * the repository.
  */
-export const APPROVEMAN_CONFIG_FILENAME = ".github/approveman.yml";
+export const GITHUB_REPOSITORY_CONFIG_FILE_PATTERN = "**/.github/**/*";
 
 /**
  * The default app actor name, this is assigned by GitHub

@@ -1,4 +1,4 @@
-import { containsNotAllowedFile, ownsAllFiles } from "../utils/rule_matcher";
+import { containsNotAllowedFile, ownsAllFiles } from "../utils/matchers";
 import {
   createCrashStatus,
   createNeutralStatus,
@@ -29,7 +29,9 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
     context.log.info(
       `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
     );
-    if (containsNotAllowedFile(changedFiles)) {
+    const rules = await getOwnershipRules(context);
+    context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
+    if (containsNotAllowedFile(changedFiles, rules)) {
       context.log.info(
         "The user does not own all modified files. " +
           "Undo previous approvals if any.",
@@ -40,14 +42,14 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       await createNeutralStatus(context, startTime);
       return;
     }
-    const rules = await getOwnershipRules(context);
-    context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
     if (
       ownsAllFiles(
         rules.directoryMatchingRules,
         changedFiles,
         getUserInfo(context),
-        context,
+        (msg: string) => {
+          context.log.info(msg);
+        },
       )
     ) {
       context.log.info("The user owns all modified files, approve PR.");

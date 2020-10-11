@@ -5,7 +5,8 @@ describe("Rule matcher tests", () => {
     const defaultRuleIndex = 0;
     /* eslint-disable */
     expect(
-      getDefaultOwnershipRules().directoryMatchingRules[defaultRuleIndex].path,
+      getDefaultOwnershipRules(true).directoryMatchingRules[defaultRuleIndex]
+        .path,
     ).toMatch("playground/{{username}}/**/*");
     /* eslint-enable */
   });
