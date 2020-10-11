@@ -2,14 +2,18 @@
 import { OwnershipRules } from "../types";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
-export const getDefaultOwnershipRules = (): OwnershipRules => {
+export const getDefaultOwnershipRules = (
+  addPlayground: boolean,
+): OwnershipRules => {
   const ownershipRules: OwnershipRules = {
-    directoryMatchingRules: [
-      {
-        name: "Default matching rule",
-        path: "playground/{{username}}/**/*",
-      },
-    ],
+    allowDotGitHub: false,
+    directoryMatchingRules: [],
   };
+  if (addPlayground) {
+    ownershipRules.directoryMatchingRules.push({
+      name: "Default playground rule for prototyping.",
+      path: "playground/{{username}}/**/*",
+    });
+  }
   return ownershipRules;
 };

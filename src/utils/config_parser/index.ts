@@ -10,15 +10,18 @@ export const parseOwnershipRules = (
   rules: Record<string, unknown>,
   context: Context | null,
 ): OwnershipRules => {
-  const ownershipRules: OwnershipRules = {
-    directoryMatchingRules: [],
-  };
+  const ownershipRules: OwnershipRules = getDefaultOwnershipRules(false);
   if ("ownership_rules" in rules) {
     context?.log.info("Found ownership_rules in the config");
     const ownershipRulesData = rules["ownership_rules"] as Record<
       string,
       unknown
     >;
+    if ("allow_dot_github" in ownershipRulesData) {
+      ownershipRules.allowDotGitHub = ownershipRulesData[
+        "allow_dot_github"
+      ] as boolean;
+    }
     if ("directory_matching_rules" in ownershipRulesData) {
       context?.log.info("Found directory_matching_rules in the config");
       for (const rule of ownershipRulesData[
@@ -51,6 +54,6 @@ export const getOwnershipRules = async (
     /* eslint-enable */
     return parseOwnershipRules(config as Record<string, unknown>, context);
   } else {
-    return getDefaultOwnershipRules();
+    return getDefaultOwnershipRules(true);
   }
 };
