@@ -17,12 +17,12 @@ export const matchRule = (
   rule: DirectoryMatchingRule,
   filename: string,
   info: UserInfo,
-  log_msg: (msg: string) => void,
+  logMsg: (msg: string) => void,
 ): boolean => {
   const renderedRule = Mustache.render(rule.path, info);
-  log_msg(`Rendered rules to ${renderedRule}`);
+  logMsg(`Rendered rules to ${renderedRule}`);
   const isMatch = minimatch(filename, renderedRule, MATCH_OPTIONS);
-  log_msg(
+  logMsg(
     `File ${filename} and rule ${renderedRule} matching result is ${isMatch}`,
   );
   return isMatch;
@@ -32,11 +32,11 @@ const matchOneOfRules = (
   rules: DirectoryMatchingRule[],
   filename: string,
   info: UserInfo,
-  log_msg: (msg: string) => void,
+  logMsg: (msg: string) => void,
 ): boolean => {
   let matchOneOf = false;
   for (const rule of rules) {
-    if (matchRule(rule, filename, info, log_msg)) {
+    if (matchRule(rule, filename, info, logMsg)) {
       matchOneOf = true;
     }
   }
@@ -47,11 +47,11 @@ export const ownsAllFiles = (
   rules: DirectoryMatchingRule[],
   filenames: string[],
   info: UserInfo,
-  log_msg: (msg: string) => void,
+  logMsg: (msg: string) => void,
 ): boolean => {
   let ownsAll = true;
   for (const filename of filenames) {
-    if (!matchOneOfRules(rules, filename, info, log_msg)) {
+    if (!matchOneOfRules(rules, filename, info, logMsg)) {
       ownsAll = false;
     }
   }
