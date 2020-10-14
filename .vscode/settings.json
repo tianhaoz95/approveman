@@ -34,7 +34,10 @@
     "lcov",
     "qemu",
     "repos",
+    "smee",
     "subprojects",
-    "tianhaoz"
+    "tianhaoz",
+    "tslog",
+    "typedoc"
   ]
 }

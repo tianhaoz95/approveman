@@ -14,6 +14,7 @@ export interface OwnershipRules {
    * is safe, this is disabled by default.
    */
   allowDotGitHub: boolean;
+  globalBlacklistedUsers: string[];
   directoryMatchingRules: DirectoryMatchingRule[];
 }
 

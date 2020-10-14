@@ -1,4 +1,7 @@
 ownership_rules:
+  global_blacklisted_users:
+    - bad_user_1
+    - bad_user_2
   directory_matching_rules:
     - name: personal projects in playground
       path: playground/{{username}}/**/*

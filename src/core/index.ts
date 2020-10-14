@@ -1,4 +1,8 @@
-import { containsNotAllowedFile, ownsAllFiles } from "../utils/matchers";
+import {
+  containsNotAllowedFile,
+  isUserBlacklisted,
+  ownsAllFiles,
+} from "../utils/matchers";
 import {
   createCrashStatus,
   createNeutralStatus,
@@ -31,6 +35,19 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
     );
     const rules = await getOwnershipRules(context);
     context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
+    const userInfo = getUserInfo(context);
+    // TODO(tianhaoz95): consolidate there precondition checks into
+    // a separate file with name check_prerequisites.ts to make it
+    // more readable.
+    if (isUserBlacklisted(userInfo.username, rules)) {
+      context.log("The user is blacklisted.");
+      await dismissAllApprovals(context);
+      context.log.info("All previous approvals dismissed");
+      // TODO(tianhaoz95): consider making this a failing check
+      // if that makes more sense.
+      await createNeutralStatus(context, startTime);
+      return;
+    }
     if (containsNotAllowedFile(changedFiles, rules)) {
       context.log.info(
         "The user does not own all modified files. " +
@@ -38,7 +55,6 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       );
       await dismissAllApprovals(context);
       context.log.info("All previous approvals dismissed");
-      // TODO(tianhaoz95): this should be a neutral check instead.
       await createNeutralStatus(context, startTime);
       return;
     }
@@ -46,7 +62,7 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
       ownsAllFiles(
         rules.directoryMatchingRules,
         changedFiles,
-        getUserInfo(context),
+        userInfo,
         (msg: string) => {
           context.log.info(msg);
         },

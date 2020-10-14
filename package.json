@@ -39,7 +39,7 @@
     "format": "npm run prettier:format && npm run eslint:format",
     "test": "npm run test:silent",
     "test:debug": "jest && npm run eslint",
-    "test:silent": "LOG_LEVEL=warn jest && npm run eslint",
+    "test:silent": "LOG_LEVEL=fatal jest && npm run eslint",
     "test:watch": "LOG_LEVEL=fatal jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {

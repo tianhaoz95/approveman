@@ -1,0 +1,25 @@
+{
+  "number": 1,
+  "pull_request": {
+    "user": {
+      "login": "bad_user_1"
+    },
+    "head": {
+      "sha": "fake_sha"
+    },
+    "body": "",
+    "number": 1,
+    "draft": false
+  },
+  "repository": {
+    "name": "approveman-test",
+    "full_name": "tianhaoz95/approveman-test",
+    "private": false,
+    "owner": {
+      "login": "tianhaoz95"
+    }
+  },
+  "sender": {
+    "login": "bad_user_1"
+  }
+}
