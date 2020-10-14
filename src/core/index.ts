@@ -1,4 +1,8 @@
-import { containsNotAllowedFile, ownsAllFiles } from "../utils/matchers";
+import {
+  containsNotAllowedFile,
+  isUserBlacklisted,
+  ownsAllFiles,
+} from "../utils/matchers";
 import {
   createCrashStatus,
   createNeutralStatus,
@@ -13,7 +17,6 @@ import { dismissAllApprovals } from "./dismiss_approval";
 import { getChangedFiles } from "./get_files";
 import { getOwnershipRules } from "../utils/config_parser";
 import { getUserInfo } from "./get_info";
-import { isUserBlacklisted } from "../utils/matchers";
 
 /**
  * Approves a pull request if all the files it contains are owned by the user that
