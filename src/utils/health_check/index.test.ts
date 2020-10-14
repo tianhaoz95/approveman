@@ -3,7 +3,7 @@ import { healthCheck } from ".";
 
 describe("health check tests", () => {
   const defaultEnv = process.env;
-  const log: Logger = new Logger();
+  const log: Logger = new Logger({ minLevel: "error" });
 
   beforeEach(() => {
     // Clears the jest cache so that the environment will
@@ -44,7 +44,7 @@ describe("health check tests", () => {
           log.info(msg);
         },
         (msg) => {
-          log.error(msg);
+          expect(msg).toContain("GitHub Enterprise");
         },
       );
     }).toThrow();

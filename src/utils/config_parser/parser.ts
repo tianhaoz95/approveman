@@ -22,6 +22,14 @@ export const parseOwnershipRules = (
         "allow_dot_github"
       ] as boolean;
     }
+    if ("global_blacklisted_users" in ownershipRulesData) {
+      const blacklistedUsernames: string[] = ownershipRulesData[
+        "global_blacklisted_users"
+      ] as string[];
+      blacklistedUsernames.forEach((blacklistedUsername) => {
+        ownershipRules.globalBlacklistedUsers.push(blacklistedUsername);
+      });
+    }
     if ("directory_matching_rules" in ownershipRulesData) {
       context?.log.info("Found directory_matching_rules in the config");
       for (const rule of ownershipRulesData[

@@ -11,6 +11,11 @@ import {
   checkSuccessStatus,
 } from "./utils/status";
 import {
+  prFromBlacklistedUserOpenedPayload,
+  prFromBlacklistedUserReopenedPayload,
+  prFromBlacklistedUserSynchronizePayload,
+} from "./fixtures/payloads/blacklist_user";
+import {
   prOpenedPayload,
   prReopenedPayload,
   prSynchronizePayload,
@@ -156,6 +161,57 @@ describe("Approveman tests", () => {
       id: "test_id",
       name: "pull_request",
       payload: prOpenedPayload,
+    });
+  });
+
+  test("blocks pr opened by globally blacklisted user", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      "some/random/file.md",
+      "playground/tianhaoz95/README.md",
+      "playground/tianhaoz95/development.md",
+    ]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prFromBlacklistedUserOpenedPayload,
+    });
+  });
+
+  test("blocks pr reopened by globally blacklisted user", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      "some/random/file.md",
+      "playground/tianhaoz95/README.md",
+      "playground/tianhaoz95/development.md",
+    ]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prFromBlacklistedUserReopenedPayload,
+    });
+  });
+
+  test("blocks pr sync by globally blacklisted user", async () => {
+    setConfigToBasic("basic");
+    checkNeutralStatus();
+    setPullRequestFiles([
+      "some/random/file.md",
+      "playground/tianhaoz95/README.md",
+      "playground/tianhaoz95/development.md",
+    ]);
+    setSinglePreviousReview();
+    verifyReviewDismissed();
+    await probot.receive({
+      id: "test_id",
+      name: "pull_request",
+      payload: prFromBlacklistedUserSynchronizePayload,
     });
   });
 
