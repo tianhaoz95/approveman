@@ -97,6 +97,32 @@ npm start # Start the server
 
 After the server is up and running, the rest should be the same as the [GitHub setup](#for-github).
 
+## Available config
+
+The following is a full configuration with default values:
+
+```yml
+ownership_rules:
+  # If files inside .github directory should be allowed.
+  # When it is set of true, rules like .github/workflows/playground__{{username}}-*.yml
+  # can be enable with certain rules.
+  # When it is set of false (default value), a pull request will not be approved
+  # reguardless of rules if any files inside the .github folder is touched.
+  allow_dot_github: false
+  # A list of usernames that should not get their pull requests approved even
+  # validated by rules. This can be used when some users are spotted to abuse
+  # the auto approval and checks in unwanted content that violates the code of
+  # conduct or other policies set by the owner.
+  global_blacklisted_users: []
+  # The rules for matching directory ownership. A pull request is determined to be safe
+  # when all the files modified satisfy at least one of the rules.
+  directory_matching_rules:
+      # The name of the rules that is used mainly for logging.
+    - name: "Default playground rule for prototyping."
+      # The directory that certain user with {{username}} owns.
+      path: "playground/{{username}}/**/*"
+```
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
