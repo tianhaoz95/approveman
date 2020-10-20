@@ -56,7 +56,7 @@
     "tslog": "^2.9.1"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^26.0.15",
     "@types/nock": "^11.1.0",
     "@types/prettyjson": "0.0.29",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
