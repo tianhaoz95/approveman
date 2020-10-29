@@ -53,7 +53,7 @@
     "mustache": "^4.0.1",
     "prettyjson": "^1.2.1",
     "probot": "^10.9.5",
-    "tslog": "^2.9.1"
+    "tslog": "^2.10.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
