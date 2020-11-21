@@ -1,20 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Application, Context } from "probot";
+import { Context } from "probot";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { healthCheck } from "./utils/health_check";
 import { maybeApproveChange } from "./core";
 
-export = (app: Application): void => {
+const approvemanApp = (
+  // TODO(tianhaoz95): make it a non-any type when available
+  // The latest version of Probot is not
+  // exposing the ApplicationOptions type, for more updates
+  // check https://github.com/probot/probot/pull/1405.
+  /* eslint-disable */
+  opt: any,
+  /* eslint-enable */
+): void => {
   healthCheck(
     (msg) => {
-      app.log.info(msg);
+      opt.app.log.info(msg);
     },
     (msg) => {
-      app.log.error(msg);
+      opt.app.log.error(msg);
     },
   );
 
-  app.on(
+  opt.app.on(
     [
       "pull_request.opened",
       "pull_request.reopened",
@@ -30,3 +38,5 @@ export = (app: Application): void => {
     },
   );
 };
+
+export default approvemanApp;
