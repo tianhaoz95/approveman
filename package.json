@@ -43,7 +43,7 @@
     "test:watch": "LOG_LEVEL=fatal jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "@octokit/rest": "^18.0.9",
+    "@octokit/rest": "^18.0.10",
     "@octokit/webhooks": "^7.15.1",
     "@types/minimatch": "^3.0.3",
     "@types/mustache": "^4.0.1",
