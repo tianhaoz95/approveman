@@ -50,7 +50,7 @@
     "@types/node": "^14.14.10",
     "http-status-codes": "^2.1.4",
     "minimatch": "^3.0.4",
-    "mustache": "^4.0.1",
+    "mustache": "^4.1.0",
     "prettyjson": "^1.2.1",
     "probot": "^10.17.2",
     "tslog": "^3.0.1"
