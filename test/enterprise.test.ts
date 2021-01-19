@@ -95,7 +95,8 @@ describe("Approveman Enterprise tests", () => {
       id: 1,
       privateKey: mockCert,
     });
-    probot.load(approvemanApp);
+    // probot.load(approvemanApp);
+    approvemanApp(probot);
     checkStartedStatus();
     setConfigNotFound();
     checkApproved();

@@ -10,19 +10,19 @@ const approvemanApp = (
   // exposing the ApplicationOptions type, for more updates
   // check https://github.com/probot/probot/pull/1405.
   /* eslint-disable */
-  opt: any,
+  app: any,
   /* eslint-enable */
 ): void => {
   healthCheck(
     (msg) => {
-      opt.app.log.info(msg);
+      app.log.info(msg);
     },
     (msg) => {
-      opt.app.log.error(msg);
+      app.log.error(msg);
     },
   );
 
-  opt.app.on(
+  app.on(
     [
       "pull_request.opened",
       "pull_request.reopened",
