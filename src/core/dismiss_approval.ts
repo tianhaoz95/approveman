@@ -13,7 +13,7 @@ const getPreviousReviewIds = async (
   const req = context.repo({
     "pull_number": context.payload.pull_request.number,
   });
-  const reviewsResponse = await context.github.pulls.listReviews(req);
+  const reviewsResponse = await context.octokit.pulls.listReviews(req);
   let hasReview = false;
   const reviewIds: number[] = [];
   context.log.info(`Found ${reviewsResponse.data.length} reviews`);
@@ -46,7 +46,7 @@ const dismissApproval = async (
     "review_id": reviewId,
   });
   context.log.info("Try to dismiss the review");
-  const dismissResponse = await context.github.pulls.dismissReview(req);
+  const dismissResponse = await context.octokit.pulls.dismissReview(req);
   context.log.info(
     `Dismiss review #${reviewId} in PR #${req["pull_number"]} ` +
       `with status ${dismissResponse.status} ` +

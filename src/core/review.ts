@@ -18,7 +18,7 @@ export const approveChange = async (context: Context): Promise<void> => {
   });
   context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
-    const res = await context.github.pulls.createReview(req);
+    const res = await context.octokit.pulls.createReview(req);
     if (res.status === StatusCodes.OK) {
       context.log.info("Approve changes succeeded.");
     } else {

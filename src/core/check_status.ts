@@ -65,7 +65,7 @@ export const createStatus = async (
     "started_at": startedAt,
     status,
   });
-  const response = await context.github.checks.create(statusOptions);
+  const response = await context.octokit.checks.create(statusOptions);
   context.log.info(`Posting status finished with status ${response.status}`);
   if (response.status !== StatusCodes.CREATED) {
     context.log.error(
