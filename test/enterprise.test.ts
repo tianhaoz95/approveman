@@ -24,7 +24,7 @@ import path from "path";
 jest.setTimeout(TEST_TIMEOUT);
 /* eslint-enable */
 
-describe("Approveman tests", () => {
+describe("Approveman Enterprise tests", () => {
   let probot: Probot;
   let mockCert: string;
   const defaultEnv = process.env;
