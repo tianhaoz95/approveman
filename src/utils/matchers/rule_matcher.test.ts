@@ -4,7 +4,7 @@ import { matchRule } from "./rule_matchers";
 describe("Rule matcher tests", () => {
   const log: Logger = new Logger({ minLevel: "error" });
   const log_msg = (msg: string): void => {
-    log.info(msg);
+    log.trace(msg);
   };
 
   test("should allow nested files to match", () => {

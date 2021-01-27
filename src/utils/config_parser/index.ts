@@ -11,7 +11,7 @@ export const getOwnershipRules = async (
   context: Context | null,
 ): Promise<OwnershipRules> => {
   const config = await context?.config("approveman.yml");
-  context?.log.info(`Found config: ${JSON.stringify(config)}`);
+  context?.log.trace(`Found config: ${JSON.stringify(config)}`);
   /* eslint-disable */
   if (config !== null && config !== undefined) {
     /* eslint-enable */

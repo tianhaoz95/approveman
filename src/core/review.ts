@@ -16,11 +16,11 @@ export const approveChange = async (context: Context): Promise<void> => {
     "event": "APPROVE" as ReviewEvent,
     "pull_number": context.payload.pull_request.number,
   });
-  context.log.info(`Reviewing PR with request ${JSON.stringify(req)}`);
+  context.log.trace(`Reviewing PR with request ${JSON.stringify(req)}`);
   try {
-    const res = await context.github.pulls.createReview(req);
+    const res = await context.octokit.pulls.createReview(req);
     if (res.status === StatusCodes.OK) {
-      context.log.info("Approve changes succeeded.");
+      context.log.trace("Approve changes succeeded.");
     } else {
       context.log.error(
         `Approve change rejected with: ${JSON.stringify(res.data)}`,

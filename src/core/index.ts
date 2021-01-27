@@ -30,31 +30,31 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
   try {
     await createStartStatus(context, startTime);
     const changedFiles = await getChangedFiles(context);
-    context.log.info(
+    context.log.trace(
       `Files changed in the pull request are ${JSON.stringify(changedFiles)}`,
     );
     const rules = await getOwnershipRules(context);
-    context.log.info(`Matching against rules: ${JSON.stringify(rules)}`);
+    context.log.trace(`Matching against rules: ${JSON.stringify(rules)}`);
     const userInfo = getUserInfo(context);
     // TODO(tianhaoz95): consolidate there precondition checks into
     // a separate file with name check_prerequisites.ts to make it
     // more readable.
     if (isUserBlacklisted(userInfo.username, rules)) {
-      context.log("The user is blacklisted.");
+      context.log.trace("The user is blacklisted.");
       await dismissAllApprovals(context);
-      context.log.info("All previous approvals dismissed");
+      context.log.trace("All previous approvals dismissed");
       // TODO(tianhaoz95): consider making this a failing check
       // if that makes more sense.
       await createNeutralStatus(context, startTime);
       return;
     }
     if (containsNotAllowedFile(changedFiles, rules)) {
-      context.log.info(
+      context.log.trace(
         "The user does not own all modified files. " +
           "Undo previous approvals if any.",
       );
       await dismissAllApprovals(context);
-      context.log.info("All previous approvals dismissed");
+      context.log.trace("All previous approvals dismissed");
       await createNeutralStatus(context, startTime);
       return;
     }
@@ -64,24 +64,24 @@ export const maybeApproveChange = async (context: Context): Promise<void> => {
         changedFiles,
         userInfo,
         (msg: string) => {
-          context.log.info(msg);
+          context.log.trace(msg);
         },
       )
     ) {
-      context.log.info("The user owns all modified files, approve PR.");
+      context.log.trace("The user owns all modified files, approve PR.");
       await approveChange(context);
       await createPassingStatus(context, startTime);
     } else {
-      context.log.info(
+      context.log.trace(
         "The user does not own all modified files. " +
           "Undo previous approvals if any.",
       );
       await dismissAllApprovals(context);
-      context.log.info("All previous approvals dismissed");
+      context.log.trace("All previous approvals dismissed");
       await createNeutralStatus(context, startTime);
     }
   } catch (err) {
-    context.log.info(`Unknown error occurred: ${JSON.stringify(err)}`);
+    context.log.trace(`Unknown error occurred: ${JSON.stringify(err)}`);
     await createCrashStatus(context, startTime, err);
   }
 };

@@ -56,9 +56,15 @@ describe("Approveman tests", () => {
   beforeEach(() => {
     // Clears the jest cache so that the environment will
     // not be contaminated between tests.
-    /* eslint-disable */
-    jest.resetModules();
-    /* eslint-enable */
+    
+    // Temporarily comment this out because it is resetting some internal
+    // states of Probot that are needed between test runs.
+    //
+    // TODO(tianhaoz95): investigate where can this be added back to make
+    // the tests more reliable.
+    // 
+    // jest.resetModules();
+
     // Makes a copy of the current environment variables
     // to keep the environment variables consistent across
     // tests.
@@ -70,11 +76,10 @@ describe("Approveman tests", () => {
         throttle: { enabled: false },
       }),
       githubToken: "test",
-      id: 1,
+      logLevel: "trace",
       privateKey: mockCert,
     });
-    const app = probot.load(approvemanApp);
-    app.log.info("Test app constructed");
+    approvemanApp(probot);
     checkStartedStatus();
   });
 
@@ -261,7 +266,7 @@ describe("Approveman tests", () => {
     });
   });
 
-  test("block empty file set", async () => {
+  test("approve empty file set", async () => {
     setConfigToBasic("basic");
     checkSuccessStatus();
     setPullRequestFiles([]);

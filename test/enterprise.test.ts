@@ -24,7 +24,7 @@ import path from "path";
 jest.setTimeout(TEST_TIMEOUT);
 /* eslint-enable */
 
-describe("Approveman tests", () => {
+describe("Approveman Enterprise tests", () => {
   let probot: Probot;
   let mockCert: string;
   const defaultEnv = process.env;
@@ -75,10 +75,9 @@ describe("Approveman tests", () => {
           throttle: { enabled: false },
         }),
         githubToken: "test",
-        id: 1,
         privateKey: mockCert,
       });
-      probot.load(approvemanApp);
+      approvemanApp(probot);
     }).toThrow();
   });
 
@@ -90,11 +89,12 @@ describe("Approveman tests", () => {
         retry: { enabled: false },
         throttle: { enabled: false },
       }),
+      baseUrl: "https://github.example.com/api/v3",
       githubToken: "test",
-      id: 1,
       privateKey: mockCert,
     });
-    probot.load(approvemanApp);
+    // probot.load(approvemanApp);
+    approvemanApp(probot);
     checkStartedStatus();
     setConfigNotFound();
     checkApproved();
@@ -117,11 +117,11 @@ describe("Approveman tests", () => {
         retry: { enabled: false },
         throttle: { enabled: false },
       }),
+      baseUrl: "https://github.example.com/api/v3",
       githubToken: "test",
-      id: 1,
       privateKey: mockCert,
     });
-    probot.load(approvemanApp);
+    approvemanApp(probot);
     checkStartedStatus();
     setConfigToBasic("basic");
     checkNeutralStatus();

@@ -13,16 +13,16 @@ const getPreviousReviewIds = async (
   const req = context.repo({
     "pull_number": context.payload.pull_request.number,
   });
-  const reviewsResponse = await context.github.pulls.listReviews(req);
+  const reviewsResponse = await context.octokit.pulls.listReviews(req);
   let hasReview = false;
   const reviewIds: number[] = [];
-  context.log.info(`Found ${reviewsResponse.data.length} reviews`);
+  context.log.trace(`Found ${reviewsResponse.data.length} reviews`);
   reviewsResponse.data.forEach((review: Record<string, unknown>) => {
     if ("user" in review) {
       const user = review["user"] as Record<string, unknown>;
       if ("login" in user) {
         const username = user["login"] as string;
-        context.log.info(`Found review left by ${username}`);
+        context.log.trace(`Found review left by ${username}`);
         if (
           username === getAppActorName() &&
           (review["state"] as string) !== "DISMISSED"
@@ -45,9 +45,9 @@ const dismissApproval = async (
     "pull_number": context.payload.pull_request.number,
     "review_id": reviewId,
   });
-  context.log.info("Try to dismiss the review");
-  const dismissResponse = await context.github.pulls.dismissReview(req);
-  context.log.info(
+  context.log.trace("Try to dismiss the review");
+  const dismissResponse = await context.octokit.pulls.dismissReview(req);
+  context.log.trace(
     `Dismiss review #${reviewId} in PR #${req["pull_number"]} ` +
       `with status ${dismissResponse.status} ` +
       `and review state ${dismissResponse.data.state}`,
@@ -59,5 +59,5 @@ export const dismissAllApprovals = async (context: Context): Promise<void> => {
   for (const reviewId of reviewLookupResult.reviewIds) {
     await dismissApproval(context, reviewId);
   }
-  context.log.info(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`);
+  context.log.trace(`Dismissed ${reviewLookupResult.reviewIds.length} reviews`);
 };
