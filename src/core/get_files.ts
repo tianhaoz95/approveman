@@ -16,6 +16,6 @@ export const getChangedFiles = async (context: Context): Promise<string[]> => {
   for (const changedFileData of changedFilesResponse.data) {
     changedFiles.push(changedFileData.filename);
   }
-  context.log.info(`Changed files are: ${JSON.stringify(changedFiles)}`);
+  context.log.trace(`Changed files are: ${JSON.stringify(changedFiles)}`);
   return changedFiles;
 };

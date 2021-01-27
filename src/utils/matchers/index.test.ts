@@ -35,7 +35,7 @@ describe("Rule matcher tests with default rules", () => {
           username: "tianhaoz95",
         },
         (msg: string) => {
-          log.info(msg);
+          log.trace(msg);
         },
       ),
     ).toBeTruthy();
@@ -50,7 +50,7 @@ describe("Rule matcher tests with default rules", () => {
           username: "tianhaoz95",
         },
         (msg: string) => {
-          log.info(msg);
+          log.trace(msg);
         },
       ),
     ).toBeTruthy();
@@ -67,7 +67,7 @@ describe("Rule matcher tests with default rules", () => {
           username: "tianhaoz95",
         },
         (msg: string) => {
-          log.info(msg);
+          log.trace(msg);
         },
       ),
     ).toBeFalsy();
@@ -85,7 +85,7 @@ describe("Rule matcher tests with default rules", () => {
             username: "tianhaoz95",
           },
           (msg: string) => {
-            log.info(msg);
+            log.trace(msg);
           },
         ),
       ).toBeFalsy();

@@ -27,7 +27,7 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          log.info(msg);
+          log.trace(msg);
         },
         (msg) => {
           log.error(msg);
@@ -41,7 +41,7 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          log.info(msg);
+          log.trace(msg);
         },
         (msg) => {
           expect(msg).toContain("GitHub Enterprise");
@@ -56,7 +56,7 @@ describe("health check tests", () => {
     expect(() => {
       healthCheck(
         (msg) => {
-          log.info(msg);
+          log.trace(msg);
         },
         (msg) => {
           log.error(msg);

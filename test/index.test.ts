@@ -70,11 +70,9 @@ describe("Approveman tests", () => {
         throttle: { enabled: false },
       }),
       githubToken: "test",
-      id: 1,
       privateKey: mockCert,
     });
-    const app = probot.load(approvemanApp);
-    app.log.info("Test app constructed");
+    approvemanApp(probot);
     checkStartedStatus();
   });
 
@@ -261,7 +259,7 @@ describe("Approveman tests", () => {
     });
   });
 
-  test("block empty file set", async () => {
+  test("approve empty file set", async () => {
     setConfigToBasic("basic");
     checkSuccessStatus();
     setPullRequestFiles([]);

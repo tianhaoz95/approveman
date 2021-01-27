@@ -75,10 +75,9 @@ describe("Approveman Enterprise tests", () => {
           throttle: { enabled: false },
         }),
         githubToken: "test",
-        id: 1,
         privateKey: mockCert,
       });
-      probot.load(approvemanApp);
+      approvemanApp(probot);
     }).toThrow();
   });
 
@@ -92,7 +91,6 @@ describe("Approveman Enterprise tests", () => {
       }),
       baseUrl: "https://github.example.com/api/v3",
       githubToken: "test",
-      id: 1,
       privateKey: mockCert,
     });
     // probot.load(approvemanApp);
@@ -121,10 +119,9 @@ describe("Approveman Enterprise tests", () => {
       }),
       baseUrl: "https://github.example.com/api/v3",
       githubToken: "test",
-      id: 1,
       privateKey: mockCert,
     });
-    probot.load(approvemanApp);
+    approvemanApp(probot);
     checkStartedStatus();
     setConfigToBasic("basic");
     checkNeutralStatus();

@@ -39,8 +39,8 @@ export const createStatus = async (
   details: string,
   startTime: string,
 ): Promise<void> => {
-  context.log.info(`Create ${status} status with conclusion ${conclusion}.`);
-  context.log.info(`title: ${title}, summary: ${summary}, details: ${details}`);
+  context.log.trace(`Create ${status} status with conclusion ${conclusion}.`);
+  context.log.trace(`title: ${title}, summary: ${summary}, details: ${details}`);
   /* eslint-disable */
   const completedAt: string | undefined = conclusion
     ? new Date().toISOString()
@@ -66,7 +66,7 @@ export const createStatus = async (
     status,
   });
   const response = await context.octokit.checks.create(statusOptions);
-  context.log.info(`Posting status finished with status ${response.status}`);
+  context.log.trace(`Posting status finished with status ${response.status}`);
   if (response.status !== StatusCodes.CREATED) {
     context.log.error(
       `Create passing status failed with status ${

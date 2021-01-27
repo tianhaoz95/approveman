@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Context } from "probot";
+import { Context, Probot } from "probot";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { healthCheck } from "./utils/health_check";
 import { maybeApproveChange } from "./core";
@@ -10,12 +10,12 @@ const approvemanApp = (
   // exposing the ApplicationOptions type, for more updates
   // check https://github.com/probot/probot/pull/1405.
   /* eslint-disable */
-  app: any,
+  app: Probot,
   /* eslint-enable */
 ): void => {
   healthCheck(
     (msg) => {
-      app.log.info(msg);
+      app.log.trace(msg);
     },
     (msg) => {
       app.log.error(msg);
@@ -33,7 +33,7 @@ const approvemanApp = (
     /* eslint-disable */
     async (context: Context<any>) => {
       /* eslint-enable */
-      context.log.info("Pull request creation event detected");
+      context.log.trace("Pull request creation event detected");
       await maybeApproveChange(context);
     },
   );

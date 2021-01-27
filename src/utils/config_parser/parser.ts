@@ -12,7 +12,7 @@ export const parseOwnershipRules = (
 ): OwnershipRules => {
   const ownershipRules: OwnershipRules = getDefaultOwnershipRules(false);
   if ("ownership_rules" in rules) {
-    context?.log.info("Found ownership_rules in the config");
+    context?.log.trace("Found ownership_rules in the config");
     const ownershipRulesData = rules["ownership_rules"] as Record<
       string,
       unknown
@@ -31,7 +31,7 @@ export const parseOwnershipRules = (
       });
     }
     if ("directory_matching_rules" in ownershipRulesData) {
-      context?.log.info("Found directory_matching_rules in the config");
+      context?.log.trace("Found directory_matching_rules in the config");
       for (const rule of ownershipRulesData[
         "directory_matching_rules"
       ] as Record<string, string>[]) {

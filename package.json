@@ -38,7 +38,7 @@
     "prettier:format": "prettier --write .",
     "format": "npm run prettier:format && npm run eslint:format",
     "test": "npm run test:silent",
-    "test:debug": "jest && npm run eslint",
+    "test:debug": "LOG_LEVEL=trace jest && npm run eslint",
     "test:silent": "LOG_LEVEL=fatal jest && npm run eslint",
     "test:watch": "LOG_LEVEL=fatal jest --watch --notify --notifyMode=change --coverage"
   },
@@ -52,7 +52,7 @@
     "minimatch": "^3.0.4",
     "mustache": "^4.1.0",
     "prettyjson": "^1.2.1",
-    "probot": "^10.19.0",
+    "probot": "^11.0.5",
     "tslog": "^3.1.0"
   },
   "devDependencies": {
