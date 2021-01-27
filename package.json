@@ -37,10 +37,8 @@
     "prettier": "prettier --check .",
     "prettier:format": "prettier --write .",
     "format": "npm run prettier:format && npm run eslint:format",
-    "test": "npm run test:silent",
-    "test:debug": "LOG_LEVEL=trace jest && npm run eslint",
-    "test:silent": "LOG_LEVEL=fatal jest && npm run eslint",
-    "test:watch": "LOG_LEVEL=fatal jest --watch --notify --notifyMode=change --coverage"
+    "test": "jest && npm run eslint",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.15",

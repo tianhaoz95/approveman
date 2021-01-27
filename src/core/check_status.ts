@@ -40,7 +40,9 @@ export const createStatus = async (
   startTime: string,
 ): Promise<void> => {
   context.log.trace(`Create ${status} status with conclusion ${conclusion}.`);
-  context.log.trace(`title: ${title}, summary: ${summary}, details: ${details}`);
+  context.log.trace(
+    `title: ${title}, summary: ${summary}, details: ${details}`,
+  );
   /* eslint-disable */
   const completedAt: string | undefined = conclusion
     ? new Date().toISOString()
