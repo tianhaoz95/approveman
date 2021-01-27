@@ -38,6 +38,7 @@
     "prettier:format": "prettier --write .",
     "format": "npm run prettier:format && npm run eslint:format",
     "test": "jest && npm run eslint",
+    "test:silent": "jest && npm run eslint",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
