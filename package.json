@@ -46,7 +46,7 @@
     "@octokit/webhooks": "^8.0.2",
     "@types/minimatch": "^3.0.3",
     "@types/mustache": "^4.1.1",
-    "@types/node": "^14.14.25",
+    "@types/node": "^14.14.26",
     "http-status-codes": "^2.1.4",
     "minimatch": "^3.0.4",
     "mustache": "^4.1.0",
