@@ -42,7 +42,7 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "@octokit/rest": "^18.1.0",
+    "@octokit/rest": "^18.1.1",
     "@octokit/webhooks": "^8.0.3",
     "@types/minimatch": "^3.0.3",
     "@types/mustache": "^4.1.1",
