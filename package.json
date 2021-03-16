@@ -60,7 +60,7 @@
     "@types/prettyjson": "0.0.29",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^3.10.1",
-    "eslint": "^7.21.0",
+    "eslint": "^7.22.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sort-keys-fix": "^1.1.1",
     "eslint-plugin-typescript": "^0.14.0",
@@ -74,7 +74,7 @@
     "smee-client": "^1.2.2",
     "standard": "^16.0.3",
     "ts-jest": "^26.5.3",
-    "typedoc": "^0.20.30",
+    "typedoc": "^0.20.32",
     "typescript": "^4.2.3"
   },
   "engines": {
