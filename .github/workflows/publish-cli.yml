@@ -19,6 +19,9 @@ jobs:
       - run: npm install
       - run: npm run build
       - uses: JS-DevTools/npm-publish@v1
+        if: >-
+          github.actor != 'dependabot[bot]' &&
+          github.actor != 'dependabot-preview[bot]'
         with:
           token: ${{ secrets.USE_GITHUB_TOKEN }}
           registry: https://npm.pkg.github.com/@tianhaoz95
