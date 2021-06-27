@@ -99,7 +99,18 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prReopenedPayload,
+      /**
+       * TODO(tianhaoz95): check if there is a proper type for payload
+       * 
+       * Starting from Probot v12.0.0 the Context is specifically typed
+       * for each even (e.g., pull_request.opened). As a result, the
+       * payload here is typed as well. For now, we will just cast from
+       * any and disable the type check, but in the long term, preferreably
+       * we want to give it the correct type.
+       */
+      /* eslint-disable */
+      payload: prReopenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -111,7 +122,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prSynchronizePayload,
+      /* eslint-disable */
+      payload: prSynchronizePayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -123,7 +136,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -135,7 +150,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -148,7 +165,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -165,7 +184,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -182,7 +203,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prFromBlacklistedUserOpenedPayload,
+      /* eslint-disable */
+      payload: prFromBlacklistedUserOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -199,7 +222,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prFromBlacklistedUserReopenedPayload,
+      /* eslint-disable */
+      payload: prFromBlacklistedUserReopenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -216,7 +241,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prFromBlacklistedUserSynchronizePayload,
+      /* eslint-disable */
+      payload: prFromBlacklistedUserSynchronizePayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -233,7 +260,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -246,7 +275,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -262,7 +293,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -275,7 +308,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -284,7 +319,9 @@ describe("Approveman tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: "???",
+      /* eslint-disable */
+      payload: {"foo": "bar"} as any,
+      /* eslint-enable */
     });
   });
 });

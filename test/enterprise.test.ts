@@ -105,7 +105,9 @@ describe("Approveman Enterprise tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prReopenedPayload,
+      /* eslint-disable */
+      payload: prReopenedPayload as any,
+      /* eslint-enable */
     });
   });
 
@@ -134,7 +136,9 @@ describe("Approveman Enterprise tests", () => {
     await probot.receive({
       id: "test_id",
       name: "pull_request",
-      payload: prOpenedPayload,
+      /* eslint-disable */
+      payload: prOpenedPayload as any,
+      /* eslint-enable */
     });
   });
 });

@@ -31,7 +31,7 @@ const approvemanApp = (
     // TODO(tianhaoz95): change this to strongly typed webhook
     // event to make it safer.
     /* eslint-disable */
-    async (context: Context<any>) => {
+    async (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">) => {
       /* eslint-enable */
       context.log.trace("Pull request creation event detected");
       await maybeApproveChange(context);

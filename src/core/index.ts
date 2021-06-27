@@ -25,7 +25,7 @@ import { getUserInfo } from "./get_info";
  * @param context The context for the webhook request constructed by Probot core.
  * @param failOnPurpose Make the run fail on purpose. For testing purposes only.
  */
-export const maybeApproveChange = async (context: Context): Promise<void> => {
+export const maybeApproveChange = async (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">): Promise<void> => {
   const startTime = new Date().toISOString();
   try {
     await createStartStatus(context, startTime);

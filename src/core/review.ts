@@ -11,7 +11,7 @@ import { StatusCodes } from "http-status-codes";
  *
  * @param context The Probot context.
  */
-export const approveChange = async (context: Context): Promise<void> => {
+export const approveChange = async (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">): Promise<void> => {
   const req = context.repo({
     "event": "APPROVE" as ReviewEvent,
     "pull_number": context.payload.pull_request.number,
