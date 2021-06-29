@@ -8,7 +8,7 @@ import { getDefaultOwnershipRules } from "./default";
 
 export const parseOwnershipRules = (
   rules: Record<string, unknown>,
-  context: Context | null,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize"> | null,
 ): OwnershipRules => {
   const ownershipRules: OwnershipRules = getDefaultOwnershipRules(false);
   if ("ownership_rules" in rules) {

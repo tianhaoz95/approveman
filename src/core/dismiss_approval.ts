@@ -8,7 +8,7 @@ import { composeReviewDismissalMsg } from "../utils/msg_composer";
 import { getAppActorName } from "../utils/config";
 
 const getPreviousReviewIds = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
 ): Promise<ReviewLookupResult> => {
   const req = context.repo({
     "pull_number": context.payload.pull_request.number,
@@ -37,7 +37,7 @@ const getPreviousReviewIds = async (
 };
 
 const dismissApproval = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   reviewId: number,
 ): Promise<void> => {
   const req = context.repo({
@@ -54,7 +54,7 @@ const dismissApproval = async (
   );
 };
 
-export const dismissAllApprovals = async (context: Context): Promise<void> => {
+export const dismissAllApprovals = async (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">): Promise<void> => {
   const reviewLookupResult = await getPreviousReviewIds(context);
   for (const reviewId of reviewLookupResult.reviewIds) {
     await dismissApproval(context, reviewId);

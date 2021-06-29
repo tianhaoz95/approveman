@@ -10,7 +10,7 @@ import type { UserInfo } from "../utils/types";
  *
  * @param context The Probot context.
  */
-export const getUserInfo = (context: Context): UserInfo => {
+export const getUserInfo = (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">): UserInfo => {
   const info: UserInfo = {
     username: context.payload.pull_request.user.login,
   };

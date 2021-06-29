@@ -24,7 +24,7 @@ import { StatusCodes } from "http-status-codes";
  * @param startTime The string time that the run started.
  */
 export const createStatus = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   conclusion:
     | "success"
     | "failure"
@@ -86,7 +86,7 @@ export const createStatus = async (
  * @param startTime The string time that the run started.
  */
 export const createStartStatus = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   startTime: string,
 ): Promise<void> => {
   await createStatus(
@@ -116,7 +116,7 @@ export const createStartStatus = async (
  * @param startTime The timestamp that this run started.
  */
 export const createPassingStatus = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   startTime: string,
 ): Promise<void> => {
   await createStatus(
@@ -139,7 +139,7 @@ export const createPassingStatus = async (
  * @param error The error that caused the status.
  */
 export const createCrashStatus = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   startTime: string,
   error: Error,
 ): Promise<void> => {
@@ -162,7 +162,7 @@ export const createCrashStatus = async (
  * @param startTime The timestamp that the checks started at.
  */
 export const createNeutralStatus = async (
-  context: Context,
+  context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">,
   startTime: string,
 ): Promise<void> => {
   await createStatus(
