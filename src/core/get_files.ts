@@ -7,7 +7,7 @@ import { Context } from "probot";
  *
  * @param context The Probot context
  */
-export const getChangedFiles = async (context: Context): Promise<string[]> => {
+export const getChangedFiles = async (context: Context<"pull_request.opened" | "pull_request.reopened" | "pull_request.synchronize">): Promise<string[]> => {
   const req = context.repo({
     "pull_number": context.payload.pull_request.number,
   });
