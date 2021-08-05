@@ -8,6 +8,7 @@ export const getDefaultOwnershipRules = (
   const ownershipRules: OwnershipRules = {
     allowDotGitHub: false,
     directoryMatchingRules: [],
+    globalAllowedUsers: [],
     globalBlacklistedUsers: [],
   };
   if (addPlayground) {

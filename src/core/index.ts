@@ -1,5 +1,6 @@
 import {
   containsNotAllowedFile,
+  isUserAllowed,
   isUserBlacklisted,
   ownsAllFiles,
 } from "../utils/matchers";
@@ -39,8 +40,8 @@ export const maybeApproveChange = async (context: Context<"pull_request.opened" 
     // TODO(tianhaoz95): consolidate there precondition checks into
     // a separate file with name check_prerequisites.ts to make it
     // more readable.
-    if (isUserBlacklisted(userInfo.username, rules)) {
-      context.log.trace("The user is blacklisted.");
+    if (isUserBlacklisted(userInfo.username, rules) || !isUserAllowed(userInfo.username, rules)) {
+      context.log.trace("The user is not approved.");
       await dismissAllApprovals(context);
       context.log.trace("All previous approvals dismissed");
       // TODO(tianhaoz95): consider making this a failing check

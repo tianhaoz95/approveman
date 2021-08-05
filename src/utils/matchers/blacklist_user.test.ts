@@ -7,6 +7,7 @@ describe("Blacklist user checker tests", () => {
   const rules: OwnershipRules = {
     allowDotGitHub: true,
     directoryMatchingRules: [],
+    globalAllowedUsers: [],
     globalBlacklistedUsers: ["bad_user_1", "bad_user_2"],
   };
 

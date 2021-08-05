@@ -22,6 +22,14 @@ export const parseOwnershipRules = (
         "allow_dot_github"
       ] as boolean;
     }
+    if ("global_allowed_users" in ownershipRulesData) {
+      const allowedUsernames: string[] = ownershipRulesData[
+        "global_allowed_users"
+      ] as string[];
+      allowedUsernames.forEach((allowedUsername) => {
+        ownershipRules.globalAllowedUsers.push(allowedUsername);
+      });
+    }
     if ("global_blacklisted_users" in ownershipRulesData) {
       const blacklistedUsernames: string[] = ownershipRulesData[
         "global_blacklisted_users"
