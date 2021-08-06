@@ -112,6 +112,14 @@ ownership_rules:
   # the auto approval and checks in unwanted content that violates the code of
   # conduct or other policies set by the owner.
   global_blacklisted_users: []
+  # An optional list of usernames that should get their pull requests approved if
+  # validated by rules. This can be used when only some users are trusted "commit
+  # directly to the default branch", but you still want repository checks to be run for
+  # their changes.  If not specified or empty, all users are considered to be "allowed".
+  # This is also useful for automation usecases, automatically approving PRs created by
+  # specific machine users.
+  # N.B. Where a user is both "allowed" and "blacklisted", blacklisting takes precedence.
+  global_allowed_users: []
   # The rules for matching directory ownership. A pull request is determined to be safe
   # when all the files modified satisfy at least one of the rules.
   directory_matching_rules:
