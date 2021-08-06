@@ -1,7 +1,7 @@
 name: File Sync
 on:
   pull_request_target:
-    types: [labeled]
+    types: [labeled, synchronize, reopened]
 jobs:
   readme-sync:
     runs-on: ubuntu-latest

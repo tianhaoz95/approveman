@@ -1,7 +1,7 @@
 name: Auto Approval
 on:
   pull_request_target:
-    types: [labeled]
+    types: [labeled, synchronize, reopened]
 jobs:
   auto-approve-dependabot:
     runs-on: ubuntu-latest

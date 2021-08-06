@@ -2,7 +2,7 @@ name: Run Tests
 on:
   push:
   pull_request_target:
-    types: [labeled]
+    types: [labeled, synchronize, reopened]
   schedule:
     - cron: 0 2 * * *
 jobs:
