@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Approve Dependabot updates
         uses: hmarr/auto-approve-action@v2.0.0
-        if: >-
-          (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]') 
-          && contains(github.event.pull_request.labels.*.name, 'automated dependecy update')
+        if: |
+          github.actor == 'dependabot[bot]' || 
+            contains(github.event.pull_request.labels.*.name, 'safe to approve')
         with:
           github-token: "${{ secrets.USE_GITHUB_TOKEN }}"

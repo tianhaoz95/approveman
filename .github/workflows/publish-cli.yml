@@ -10,6 +10,9 @@ on:
 jobs:
   publish-cli:
     runs-on: ubuntu-latest
+    if: |
+      github.actor == 'dependabot[bot]' || 
+        contains(github.event.pull_request.labels.*.name, 'safe to test')
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
