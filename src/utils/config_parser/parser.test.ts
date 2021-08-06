@@ -17,6 +17,7 @@ describe("Configuration parser tests", () => {
           "path": "test_1/{{username}}/*",
         },
       ],
+      "global_allowed_users": ["good_user_1", "good_user_2", "bad_user_2"],
       "global_blacklisted_users": ["bad_user_1", "bad_user_2"],
     },
   };
@@ -44,5 +45,16 @@ describe("Configuration parser tests", () => {
     );
     expect(config.globalBlacklistedUsers).toContain("bad_user_1");
     expect(config.globalBlacklistedUsers).toContain("bad_user_2");
+  });
+
+  test("parse basic config to correct global allow list", () => {
+    const config = parseOwnershipRules(basicConfig, null);
+    const correctAllowedUserCount = 3;
+    expect(config.globalAllowedUsers.length).toEqual(
+      correctAllowedUserCount,
+    );
+    expect(config.globalAllowedUsers).toContain("good_user_1");
+    expect(config.globalAllowedUsers).toContain("good_user_2");
+    expect(config.globalAllowedUsers).toContain("bad_user_2");
   });
 });
