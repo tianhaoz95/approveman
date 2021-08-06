@@ -132,7 +132,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://tianhaoz.com"><img src="https://avatars3.githubusercontent.com/u/16887772?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tianhao Zhou</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Code">💻</a> <a href="https://github.com/tianhaoz95/approveman/commits?author=tianhaoz95" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/epDHowwD"><img src="https://avatars1.githubusercontent.com/u/37585964?v=4?s=100" width="100px;" alt=""/><br /><sub><b>gnod</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/issues?q=author%3AepDHowwD" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/scalen"><img src="https://avatars.githubusercontent.com/u/3024226?v=4?s=100" width="100px;" alt=""/><br /><sub><b>David Monks</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/commits?author=scalen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/scalen"><img src="https://avatars.githubusercontent.com/u/3024226?v=4?s=100" width="100px;" alt=""/><br /><sub><b>David Monks</b></sub></a><br /><a href="https://github.com/tianhaoz95/approveman/commits?author=scalen" title="Code">💻</a> <a href="https://github.com/tianhaoz95/approveman/commits?author=scalen" title="Documentation">📖</a></td>
   </tr>
 </table>
 
