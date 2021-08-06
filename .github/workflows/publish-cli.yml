@@ -1,8 +1,7 @@
 name: Publish CLI
 on:
-  pull_request:
-    branches:
-      - master
+  pull_request_target:
+    types: [labeled]
   push:
     branches:
       - master
@@ -25,4 +24,4 @@ jobs:
         with:
           token: ${{ secrets.USE_GITHUB_TOKEN }}
           registry: https://npm.pkg.github.com/@tianhaoz95
-          dry-run: ${{ github.event_name == 'pull_request' }}
+          dry-run: ${{ github.event_name == 'pull_request_target' }}
