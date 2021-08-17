@@ -73,7 +73,7 @@
     "remark-preset-lint-recommended": "^6.0.0",
     "smee-client": "^1.2.2",
     "standard": "^16.0.3",
-    "ts-jest": "^27.0.4",
+    "ts-jest": "^27.0.5",
     "typedoc": "^0.21.5",
     "typescript": "^4.3.5"
   },
