@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.10.0",
-    "@octokit/webhooks": "^9.14.2",
+    "@octokit/webhooks": "^9.15.0",
     "@types/minimatch": "^3.0.5",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.9.1",
