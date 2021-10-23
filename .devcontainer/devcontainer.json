@@ -19,7 +19,24 @@
 		"dbaeumer.vscode-eslint",
 		"visualstudioexptteam.vscodeintellicode",
 		"ms-vscode.vscode-typescript-tslint-plugin",
-		"ms-vscode.vscode-typescript-next"
+		"ms-vscode.vscode-typescript-next",
+		"streetsidesoftware.code-spell-checker",
+		"docsmsft.docs-authoring-pack",
+		"github.vscode-pull-request-github",
+		"codezombiech.gitignore",
+		"eamodio.gitlens",
+		"orta.vscode-jest",
+		"yzhang.markdown-all-in-one",
+		"leizongmin.node-module-intellisense",
+		"eg2.vscode-npm-script",
+		"christian-kohler.npm-intellisense",
+		"christian-kohler.path-intellisense",
+		"esbenp.prettier-vscode",
+		"gruntfuggly.todo-tree",
+		"rbbit.typescript-hero",
+		"ms-vscode.wordcount",
+		"hbenl.vscode-test-explorer",
+		"emeraldwalk.runonsave"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
