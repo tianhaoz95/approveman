@@ -83,6 +83,6 @@ export const maybeApproveChange = async (context: Context<"pull_request.opened" 
     }
   } catch (err) {
     context.log.trace(`Unknown error occurred: ${JSON.stringify(err)}`);
-    await createCrashStatus(context, startTime, err);
+    await createCrashStatus(context, startTime, err as Error);
   }
 };
