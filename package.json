@@ -53,6 +53,7 @@
     "prettyjson": "^1.2.1",
     "probot": "^12.1.1",
     "tslog": "^3.2.2"
+    
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
