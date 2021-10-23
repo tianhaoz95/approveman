@@ -53,6 +53,7 @@
     "prettyjson": "^1.2.1",
     "probot": "^12.1.1",
     "tslog": "^3.2.2"
+    
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
@@ -60,7 +61,7 @@
     "@types/prettyjson": "0.0.30",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-typescript": "^0.14.0",
