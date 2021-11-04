@@ -24,20 +24,46 @@
   },
   "editor.tabSize": 2,
   "cSpell.words": [
+    "approveman",
+    "Autobuild",
+    "buildx",
     "Codacy",
     "Codecov",
-    "Octokit",
-    "Probot",
-    "approveman",
-    "buildx",
+    "codeql",
+    "codezombiech",
+    "dbaeumer",
+    "docsmsft",
+    "eamodio",
+    "emeraldwalk",
+    "esbenp",
     "ghcr",
+    "gruntfuggly",
+    "hbenl",
+    "hmarr",
+    "kohler",
     "lcov",
+    "leizongmin",
+    "Octokit",
+    "orta",
+    "Probot",
     "qemu",
+    "rbbit",
     "repos",
+    "runonsave",
     "smee",
     "subprojects",
     "tianhaoz",
     "tslog",
-    "typedoc"
-  ]
+    "typedoc",
+    "visualstudioexptteam",
+    "vscodeintellicode",
+    "wordcount",
+    "yzhang"
+  ],
+  "markdownlint.config": {
+    "MD028": false,
+    "MD025": {
+      "front_matter_title": ""
+    }
+  }
 }
