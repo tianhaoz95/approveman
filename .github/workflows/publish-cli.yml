@@ -1,7 +1,6 @@
 name: Publish CLI
 on:
-  pull_request_target:
-    types: [labeled, synchronize, reopened]
+  pull_request:
   push:
     branches:
       - master
@@ -10,9 +9,6 @@ on:
 jobs:
   publish-cli:
     runs-on: ubuntu-latest
-    if: |
-      github.actor == 'dependabot[bot]' || 
-        contains(github.event.pull_request.labels.*.name, 'safe to test')
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -23,8 +19,8 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         if: >-
           github.actor != 'dependabot[bot]' &&
-          github.actor != 'dependabot-preview[bot]'
+          github.actor != 'dependabot-preview[bot]' &&
+          github.event_name == 'push'
         with:
           token: ${{ secrets.USE_GITHUB_TOKEN }}
           registry: https://npm.pkg.github.com/@tianhaoz95
-          dry-run: ${{ github.event_name == 'pull_request_target' }}

@@ -1,16 +1,14 @@
 name: Run Tests
 on:
   push:
-  pull_request_target:
-    types: [labeled, synchronize, reopened]
+    branches:
+      - master
+  pull_request:
   schedule:
     - cron: 0 2 * * *
 jobs:
   server-test:
     runs-on: ubuntu-latest
-    if: |
-      github.actor == 'dependabot[bot]' || 
-        contains(github.event.pull_request.labels.*.name, 'safe to test')
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -24,7 +22,8 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@master
         if: >-
           github.actor != 'dependabot[bot]' &&
-          github.actor != 'dependabot-preview[bot]'
+          github.actor != 'dependabot-preview[bot]' &&
+          github.event_name == 'push'
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/lcov.info
@@ -34,6 +33,5 @@ jobs:
           github.actor != 'dependabot[bot]' &&
           github.actor != 'dependabot-preview[bot]'
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
           fail_ci_if_error: true
