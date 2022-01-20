@@ -51,7 +51,7 @@
     "minimatch": "^3.0.4",
     "mustache": "^4.2.0",
     "prettyjson": "^1.2.5",
-    "probot": "^12.2.0",
+    "probot": "^12.2.1",
     "tslog": "^3.3.1"
     
   },
