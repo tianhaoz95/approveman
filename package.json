@@ -60,7 +60,7 @@
     "@types/nock": "^11.1.0",
     "@types/prettyjson": "0.0.30",
     "@typescript-eslint/eslint-plugin": "^5.24.0",
-    "@typescript-eslint/parser": "^5.23.0",
+    "@typescript-eslint/parser": "^5.24.0",
     "eslint": "^8.15.0",
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
