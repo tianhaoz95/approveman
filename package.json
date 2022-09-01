@@ -44,7 +44,7 @@
   "dependencies": {
     "@octokit/rest": "^19.0.4",
     "@octokit/webhooks": "^10.1.5",
-    "@types/minimatch": "^5.1.1",
+    "@types/minimatch": "^5.1.2",
     "@types/mustache": "^4.2.1",
     "@types/node": "^18.7.14",
     "http-status-codes": "^2.2.0",
