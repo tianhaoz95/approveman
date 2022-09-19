@@ -67,7 +67,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "jest": "^27.5.1",
     "nock": "^13.2.9",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "remark-cli": "^11.0.0",
     "remark-lint": "^9.1.1",
