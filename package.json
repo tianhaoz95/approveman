@@ -52,7 +52,7 @@
     "mustache": "^4.2.0",
     "prettyjson": "^1.2.5",
     "probot": "^12.3.0",
-    "tslog": "^3.3.4"
+    "tslog": "^4.7.2"
     
   },
   "devDependencies": {
