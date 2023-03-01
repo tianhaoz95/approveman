@@ -48,7 +48,7 @@
     "@types/mustache": "^4.2.2",
     "@types/node": "^18.14.2",
     "http-status-codes": "^2.2.0",
-    "minimatch": "^5.1.2",
+    "minimatch": "^7.4.1",
     "mustache": "^4.2.0",
     "prettyjson": "^1.2.5",
     "probot": "^12.3.0",
