@@ -4,6 +4,25 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+## :warning: Sunset Notice :warning:
+
+TODO(@tianhaoz95): add future plans and migration guide.
+
+What are not going to change:
+
+* The  project can still be self-hosted
+([auto-push to Heroku](./sunset/deploy-to-heroku.yml) or as a GitHub action, see
+https://probot.github.io/docs/deployment/#github-actions for details).
+* I will still maintain the project health including getting dependencies
+up-to-date and merging code contributions.
+
+What are changing:
+
+* There will not be hosted services.
+* There won't be new features planned.
+
+---
+
 ## Repository status
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tianhaoz95/approveman)
