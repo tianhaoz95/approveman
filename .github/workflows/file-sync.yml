@@ -4,7 +4,7 @@ jobs:
   readme-sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: tianhaoz95/mirror-action@v1.0.1
         with:
           original: "README.md"
